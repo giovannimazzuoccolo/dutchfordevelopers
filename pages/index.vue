@@ -1,5 +1,5 @@
 <template>
-  <LayoutPageWrapper />
+  <p>User is authenticated {{ $store.state.user }}</p>
 </template>
 
 <script lang="ts">

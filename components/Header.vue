@@ -1,11 +1,11 @@
 <template>
-<LayoutContainer>
+<Container>
 
   <header class="flex justify-between w-full items-center">
-    <LayoutLogo/>
-    <LayoutMainNavigation />
+    <Logo/>
+    <MainNavigation />
   </header>  
-</LayoutContainer>
+</Container>
 
 </template>
 <script>
