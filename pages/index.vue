@@ -1,5 +1,5 @@
 <template>
-  <p>User is authenticated {{ $store.state.user }}</p>
+  <Dashboard />
 </template>
 
 <script lang="ts">
