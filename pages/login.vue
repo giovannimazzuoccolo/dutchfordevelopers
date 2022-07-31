@@ -1,11 +1,11 @@
 <template>
     <Container>
         <div
-            class="flex w-full gap-4 justify-between items-center my-4"
+            class="flex w-full gap-4 justify-between flex-col items-center my-8 md:flex-row"
         >
             <div class="w-4/7">
                 <h1
-                    class="uppercase font-bold xl text-6xl text-main-blue"
+                    class="uppercase font-bold xl text-main-blue text-4xl md:text-6xl"
                 >
                     Learn dutch as you are learning a
                     <span class="text-main-orange"
