@@ -6,6 +6,7 @@
             viewBox="0 0 54 54"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            class="w-10 md:w-14 h-10 md:h-16"
         >
             <rect
                 width="54"
@@ -39,7 +40,7 @@
             </defs>
         </svg>
         <h1
-            class="uppercase leading-tight font-bold w-48 text-main-blue md:text-xl"
+            class="uppercase leading-tight font-bold text-sm w-32 text-main-blue md:text-xl md:w-48"
         >
             Dutch for developers
         </h1>
