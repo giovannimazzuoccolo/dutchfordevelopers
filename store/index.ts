@@ -1,22 +1,17 @@
-import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
-export const state = () => ({
-  user: ''
-})
+import Vuex from 'vuex'
+import { createLogger } from 'vuex'
+import user from './modules/user'
+import Vue from 'vue'
 
-export type RootState = ReturnType<typeof state>
+Vue.use(Vuex)
 
-export const getters: GetterTree<RootState, RootState> = {
-  user: state => state.user,
-}
+const debug = process.env.NODE_ENV !== 'production'
 
-export const mutations: MutationTree<RootState> = {
-  UPDATE_USER: (state, newName: string) => (state.user = newName),
-}
-
-export const actions: ActionTree<RootState, RootState> = {
-  async authenticate({ commit }) {
-    console.log(commit);
-    commit('UPDATE_USER', 'gio')
+export default () =>  new Vuex.Store({
+  modules: {
+    user
   },
-}
+  strict: debug,
+  plugins: debug ? [createLogger()] : []
+})
