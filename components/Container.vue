@@ -1,11 +1,13 @@
 <template>
-   <div class="container mx-auto px-2 py-2">
-   <slot />
-   </div>
+    <div
+        class="container mx-auto px-3 py-2 md:px-2 md:py-2"
+    >
+        <slot />
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Container'
+    name: 'Container',
 }
 </script>

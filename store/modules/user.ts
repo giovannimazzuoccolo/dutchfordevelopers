@@ -11,12 +11,12 @@ const state: UserState = {
     user: null
 }
 
-const getters: GetterTree<UserState, UserState> = {
+const getters: GetterTree<any, any> = {
     user: state => state.user,
     isUserAuthenticated: state => state.isUserAuthenticated
 }
 
-const actions: ActionTree<UserState, UserState> = {
+const actions: ActionTree<any, any> = {
     async authenticate({ commit }) {
 
         const userInfo = supabase.auth.user();

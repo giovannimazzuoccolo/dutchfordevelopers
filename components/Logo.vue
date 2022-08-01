@@ -40,7 +40,7 @@
             </defs>
         </svg>
         <h1
-            class="uppercase leading-tight font-bold text-sm w-32 text-main-blue md:text-xl md:w-48"
+            class="uppercase font-bold text-sm w-32 text-main-blue md:text-xl md:w-48 md:mt-2 md:leading-tight"
         >
             Dutch for developers
         </h1>

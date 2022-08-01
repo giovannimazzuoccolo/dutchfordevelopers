@@ -1,22 +1,27 @@
 <template>
     <nav>
-        <svg viewBox="0 0 100 80" width="32" height="32">
+        <svg
+            viewBox="0 0 100 80"
+            width="36"
+            height="36"
+            class="md:hidden relative -top-1"
+        >
             <rect
                 width="100"
                 height="20"
-                fill="#121054"
+                fill="#EC8A27"
             ></rect>
             <rect
                 y="30"
                 width="100"
                 height="20"
-                fill="#121054"
+                fill="#EC8A27"
             ></rect>
             <rect
                 y="60"
                 width="100"
                 height="20"
-                fill="#121054"
+                fill="#EC8A27"
             ></rect>
         </svg>
         <ul class="hidden md:flex uppercase gap-4">
@@ -24,16 +29,34 @@
             <li>About</li>
             <li>Contacts</li>
             <li
-                @click="$store.dispatch('authenticate')"
+                @click="
+                    $store.dispatch('login/openLoginDialog')
+                "
                 class="text-main-orange"
             >
                 Join now
             </li>
         </ul>
+        <UIDialog
+            :open="this.$store.state.login.isDialogOpen"
+        >
+            Enter in Dutch for developers
+        </UIDialog>
     </nav>
 </template>
 <script>
 export default {
     name: 'MainNavigation',
+    data() {
+        console.log(this.$store.state)
+        return {
+            menuOpen: false,
+        }
+    },
+    methods: {
+        openMenu() {
+            this.menuOpen = !this.menuOpen
+        },
+    },
 }
 </script>
