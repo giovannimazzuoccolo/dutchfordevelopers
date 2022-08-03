@@ -1,7 +1,10 @@
 <template>
     <div>
-        <UIDialog>
-            <p>Do you want to register?</p>
+        <UIDialog
+            title="Enter"
+            :open="this.$store.state.login.isDialogOpen"
+        >
+            Enter in Dutch for developers
         </UIDialog>
         <Container>
             <div
@@ -32,3 +35,17 @@
         </Container>
     </div>
 </template>
+<script>
+export default {
+    name: 'Login', //move it into approprate page
+}
+/*
+
+ :onClose="
+                this.$store.dispatch(
+                    'login/openLoginDialog'
+                )
+            "
+
+            */
+</script>

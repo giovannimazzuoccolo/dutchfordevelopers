@@ -9,7 +9,7 @@
 export default {
     props: {
         text: String,
-        onClick: Function,
+        action: Function,
     },
 }
 </script>

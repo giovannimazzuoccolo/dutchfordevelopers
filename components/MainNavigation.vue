@@ -37,18 +37,12 @@
                 Join now
             </li>
         </ul>
-        <UIDialog
-            :open="this.$store.state.login.isDialogOpen"
-        >
-            Enter in Dutch for developers
-        </UIDialog>
     </nav>
 </template>
 <script>
 export default {
     name: 'MainNavigation',
     data() {
-        console.log(this.$store.state)
         return {
             menuOpen: false,
         }
