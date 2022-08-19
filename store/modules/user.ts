@@ -8,49 +8,50 @@ interface UserState {
 
 const state: UserState = {
     isUserAuthenticated: false,
-    user: null
+    user: null,
 }
 
 const getters: GetterTree<any, any> = {
-    user: state => state.user,
-    isUserAuthenticated: state => state.isUserAuthenticated
+    user: (state) => state.user,
+    isUserAuthenticated: (state) =>
+        state.isUserAuthenticated,
 }
 
 const actions: ActionTree<any, any> = {
     async authenticate({ commit }) {
-
-        const userInfo = supabase.auth.user();
-        console.log(userInfo);
+        const userInfo = supabase.auth.user()
+        console.log(userInfo)
         commit('UPDATE_USER', 'gio')
     },
     async signOut() {
         const { error } = await supabase.auth.signOut()
         if (error) {
-            console.error(error.message);
+            console.error(error.message)
         } else {
-            this.commit('IS_AUTHENTICATED');
-            this.$router.replace('/logout');
+            this.commit('IS_AUTHENTICATED')
+            this.$router.replace('/logout')
         }
     },
     async autoAuthenticate() {
-        const userInfo = supabase.auth.user();
+        const userInfo = supabase.auth.user()
         if (userInfo) {
-            this.commit('UPDATE_USER', userInfo);
+            this.commit('UPDATE_USER', userInfo)
         } else {
-            this.$router.replace('/login');
+            this.$router.replace('/login')
         }
-    }
+    },
 }
 
 const mutations: MutationTree<UserState> = {
-    IS_AUTHENTICATED: (state) => (state.isUserAuthenticated = !state.isUserAuthenticated),
+    IS_AUTHENTICATED: (state) =>
+        (state.isUserAuthenticated =
+            !state.isUserAuthenticated),
 }
-
 
 export default {
     namespaced: true,
     state,
     getters,
     actions,
-    mutations
+    mutations,
 }

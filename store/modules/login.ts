@@ -8,30 +8,29 @@ interface LoginState {
 
 const state: LoginState = {
     isDialogOpen: false,
-    loginDetails: null
+    loginDetails: null,
 }
 
 const getters: GetterTree<any, any> = {
-    loginDetails: state => state.loginDetails,
-    isDialogOpen: state => state.isDialogOpen
+    loginDetails: (state) => state.loginDetails,
+    isDialogOpen: (state) => state.isDialogOpen,
 }
 
 const actions: ActionTree<any, any> = {
     openLoginDialog() {
         this.commit('login/LOGIN_DIALOG_CHANGE_STATE')
-    }
-
+    },
 }
 
 const mutations: MutationTree<LoginState> = {
-    LOGIN_DIALOG_CHANGE_STATE: (state) => (state.isDialogOpen = !state.isDialogOpen),
+    LOGIN_DIALOG_CHANGE_STATE: (state) =>
+        (state.isDialogOpen = !state.isDialogOpen),
 }
-
 
 export default {
     namespaced: true,
     state,
     getters,
     actions,
-    mutations
+    mutations,
 }

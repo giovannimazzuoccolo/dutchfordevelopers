@@ -11,14 +11,17 @@ module.exports = {
     extends: [
         '@nuxtjs',
         'plugin:nuxt/recommended',
-        'prettier'
+        'prettier',
     ],
     plugins: ['prettier'],
     rules: {
         'prettier/prettier': ['error'],
         'vue/html-indent': ['error', 4],
         'vue/singleline-html-element-content-newline': 0,
-        'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+        'vue/component-name-in-template-casing': [
+            'error',
+            'PascalCase',
+        ],
         'vue/valid-v-slot': [
             'error',
             {

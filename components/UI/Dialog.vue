@@ -10,8 +10,12 @@
             <h2 class="mt-2 text-xl">{{ title }}</h2>
             <slot></slot>
             <div class="w-full flex justify-end gap-2">
-                <UIButton text="Close" @click="close" />
-                <UIButton text="Save" />
+                <UIButton text="Close" click="close" />
+                <UIButton
+                    v-if="confirm"
+                    text="Confirm"
+                    click="confirm"
+                />
             </div>
         </dialog>
     </div>
@@ -21,6 +25,10 @@ export default {
     props: {
         open: Boolean,
         onClose: Promise,
+        confirm: {
+            type: Function,
+            required: false,
+        },
         title: String,
     },
 }
