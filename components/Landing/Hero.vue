@@ -12,7 +12,7 @@
                         >programming language</span
                     >
                 </h1>
-                <p class="py-4 text-lg">
+                <p class="py-4 text-xl">
                     A pragmatic approach for developers (and
                     not) living in The Netherlands
                 </p>

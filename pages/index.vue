@@ -1,17 +1,26 @@
 <template>
-    <Dashboard />
+    <div>
+        <UIDialog
+            title="Enter"
+            :open="this.$store.state.login.isDialogOpen"
+        >
+            Enter in Dutch for developers
+        </UIDialog>
+        <Container>
+            <LandingHero />
+            <LandingApproach />
+            <LandingLessionList />
+        </Container>
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import Dashboard from '~/components/Dashboard/Dashboard.vue'
 
 export default Vue.extend({
     name: 'IndexPage',
-    components: { Dashboard },
     created: async function () {
         console.log('hjello')
-
         const res = await this.$store.dispatch(
             'user/autoAuthenticate'
         )

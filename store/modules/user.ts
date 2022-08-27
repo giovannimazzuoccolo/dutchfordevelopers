@@ -37,15 +37,15 @@ const actions: ActionTree<any, any> = {
         if (userInfo) {
             this.commit('UPDATE_USER', userInfo)
         } else {
-            this.$router.replace('/login')
+            this.$router.replace('/')
         }
     },
 }
 
 const mutations: MutationTree<UserState> = {
     IS_AUTHENTICATED: (state) =>
-        (state.isUserAuthenticated =
-            !state.isUserAuthenticated),
+    (state.isUserAuthenticated =
+        !state.isUserAuthenticated),
 }
 
 export default {
