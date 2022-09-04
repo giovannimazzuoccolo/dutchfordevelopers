@@ -1,9 +1,11 @@
 <template>
     <details
-        class="p-4 bg-gray-100 m-2 cursor-pointer rounded-sm"
+        class="bg-gray-50 my-2 cursor-pointer rounded-sm w-full border min-w-full"
     >
-        <summary>{{ title }}</summary>
-        <p>
+        <summary class="text-lg mb-2 p-4">
+            {{ title }}
+        </summary>
+        <p class="p-4 bg-white">
             {{ text }}
         </p>
     </details>
