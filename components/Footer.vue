@@ -1,19 +1,29 @@
 <template>
     <footer class="w-full bg-main-blue py-4">
         <Container>
-            <div class="flex md:justify-between">
-                <p class="text-white">
+            <div
+                class="flex flex-col md:flex-row md:justify-between"
+            >
+                <p
+                    class="text-white max-w-md mb-2 md:mb-0 md:mr-2"
+                >
                     <strong>Dutch for developers</strong> is
                     a side project of
-                    <a href="">Giovanni Mazzuoccolo</a>
+                    <UILink href="" dark="true"
+                        >Giovanni Mazzuoccolo</UILink
+                    >
                 </p>
-                <p class="text-white">
+                <p
+                    class="text-white max-w-md mb-2 md:mb-0 md:mr-2"
+                >
                     Have you found an error or some
                     improvements? Do you want to contribute?
-                    <a
+                    <UILink
                         href="https://github.com/giovannimazzuoccolo/dutchfordevelopers"
                         target="_new"
-                        >Check out the github repository</a
+                        dark="true"
+                        >Check out the github
+                        repository</UILink
                     >.
                 </p>
             </div>
