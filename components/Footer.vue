@@ -9,7 +9,7 @@
                 >
                     <strong>Dutch for developers</strong> is
                     a side project of
-                    <UILink href="" dark="true"
+                    <UILink href="" :dark="true"
                         >Giovanni Mazzuoccolo</UILink
                     >
                 </p>
@@ -21,7 +21,7 @@
                     <UILink
                         href="https://github.com/giovannimazzuoccolo/dutchfordevelopers"
                         target="_new"
-                        dark="true"
+                        :dark="true"
                         >Check out the github
                         repository</UILink
                     >.

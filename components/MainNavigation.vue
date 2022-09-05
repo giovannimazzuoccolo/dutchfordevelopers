@@ -26,7 +26,7 @@
         </svg>
         <ul class="hidden md:flex uppercase gap-4">
             <li>Learn</li>
-            <li>About</li>
+            <li><NuxtLink to="/about">About</NuxtLink></li>
             <li>Contacts</li>
             <li
                 @click="
