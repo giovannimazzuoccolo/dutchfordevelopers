@@ -35,23 +35,35 @@
             <UITitle blue="are you?" orange="Who" />
             <UIArticleBlock>
                 I am Giovanni Mazzuoccolo, a front-end
-                developer that works in The Netherlands, you
-                can follow me on
+                developer working in The Netherlands, if you
+                want to get in touch, you can follow me on
                 <UILink
                     href="https://github.com/giovannimazzuoccolo"
-                    >github</UILink
+                    >Github</UILink
                 >, or if you want to talk, on
                 <UILink href="https://twitter.com/mazzjoe"
-                    >twitter</UILink
+                    >Twitter</UILink
                 >.<br />
                 <em
                     >Do you have an idea for a collaboration
-                    for Dutch for developers? </em
+                    with Dutch for developers? </em
                 ><br />
                 If you want to improve this website, feel
-                free to open an issue on github. If you want
+                free to open an issue on Github. If you want
                 a commercial collaboration, write an email
                 to hoi at dutchfordevelopers.com
+            </UIArticleBlock>
+            <UITitle blue="technology?" orange="Which" />
+            <UIArticleBlock>
+                Ok, this is getting technical, so feel free
+                to skip this part if you are not interested
+                :) <br />
+                The frontend is built in nuxt.js, a vue.js
+                framework. From 2017 to 2022, I always used
+                React.js to build SaSS products, and I just
+                wanted to try something new. The backend is
+                Supabase, which just keeps the progress of
+                the courses.
             </UIArticleBlock>
         </div>
         <p></p>
