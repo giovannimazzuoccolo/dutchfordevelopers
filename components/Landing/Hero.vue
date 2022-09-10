@@ -18,7 +18,11 @@
                 </p>
                 <UIButton
                     text="Start now for free"
-                    @click="doNothing"
+                    @click="
+                        $store.dispatch(
+                            'login/openLoginDialog'
+                        )
+                    "
                 />
             </div>
             <div class="w-3/7 hidden md:flex">

@@ -1,12 +1,16 @@
 <template>
-    <Container>
-        <header
-            class="flex justify-between w-full items-center"
-        >
-            <Logo />
-            <MainNavigation />
-        </header>
-    </Container>
+    <div
+        class="sticky top-0 backdrop-saturate-200 blur bg-main-header"
+    >
+        <Container>
+            <header
+                class="flex justify-between w-full items-center"
+            >
+                <Logo />
+                <MainNavigation />
+            </header>
+        </Container>
+    </div>
 </template>
 <script>
 export default {
