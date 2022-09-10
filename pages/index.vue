@@ -20,7 +20,6 @@ import Vue from 'vue'
 export default Vue.extend({
     name: 'IndexPage',
     created: async function () {
-        console.log('hjello')
         const res = await this.$store.dispatch(
             'user/autoAuthenticate'
         )
