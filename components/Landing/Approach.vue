@@ -2,7 +2,7 @@
     <div
         class="flex justify-center my-8 md:my-20 flex-col w-full"
     >
-        <UITitle orange="The" blue="Approach" />
+        <UITitle orange="The" blue="Approach" center />
 
         <div
             class="mx-auto p-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-4xl lg:px-12 rounded flex gap-4 my-4 flex-col items-center md:flex-row md:shadow"

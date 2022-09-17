@@ -76,6 +76,10 @@ export default {
         },
     },
 
+    router: {
+        linkActiveClass: 'text-main-orange' 
+    },
+
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
 

@@ -1,5 +1,6 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { supabase } from '~/supabase/init'
+import { isAlreadyInPath } from '~/utils/navigation'
 
 interface UserState {
     isUserAuthenticated: boolean
@@ -37,7 +38,10 @@ const actions: ActionTree<any, any> = {
         if (userInfo) {
             this.commit('UPDATE_USER', userInfo)
         } else {
-            this.$router.replace('/')
+            const { params } = this.$router.currentRoute;
+            if (isAlreadyInPath(this, params)) {
+                this.$router.replace('/')
+            }
         }
     },
 }

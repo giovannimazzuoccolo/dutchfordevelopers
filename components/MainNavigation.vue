@@ -27,12 +27,13 @@
         <ul class="hidden md:flex uppercase gap-4">
             <li>Learn</li>
             <li><NuxtLink to="/about">About</NuxtLink></li>
-            <li>Contacts</li>
+            <li>
+                <NuxtLink to="/contacts">Contacts</NuxtLink>
+            </li>
             <li
                 @click="
                     $store.dispatch('login/openLoginDialog')
                 "
-                class="text-main-orange"
             >
                 Join now
             </li>
