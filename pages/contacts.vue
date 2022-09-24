@@ -2,9 +2,15 @@
     <Container>
         <UIBlogWrapper>
             <UITitle blue="form" orange="Contact" />
+            <UIImage
+                src="contact-us/two-guys-talking.webp"
+                alt="Two guys talking"
+                extraspacing
+                rounded
+            />
             <UIArticleBlock>
                 Use the following form to contact Dutch for
-                Developers.
+                Developers. All fields are required.
             </UIArticleBlock>
             <form
                 name="dfd_contacts"
