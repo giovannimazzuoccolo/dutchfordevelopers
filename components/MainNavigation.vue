@@ -30,12 +30,14 @@
             <li>
                 <NuxtLink to="/contacts">Contacts</NuxtLink>
             </li>
+            <li v-if="!isLogged">
+                <NuxtLink to="/login">Join now</NuxtLink>
+            </li>
             <li
-                @click="
-                    $store.dispatch('login/openLoginDialog')
-                "
+                v-else
+                @click="$store.dispatch('user/signOut')"
             >
-                Join now
+                Logout
             </li>
         </ul>
     </nav>
@@ -51,6 +53,11 @@ export default {
     methods: {
         openMenu() {
             this.menuOpen = !this.menuOpen
+        },
+    },
+    computed: {
+        isLogged() {
+            return this.$store.getters['user/isLogged']
         },
     },
 }

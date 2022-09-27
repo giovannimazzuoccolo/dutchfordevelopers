@@ -1,5 +1,4 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import { supabase } from '~/supabase/init'
 
 interface LoginState {
     isDialogOpen: boolean

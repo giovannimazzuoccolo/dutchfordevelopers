@@ -15,7 +15,9 @@ module.exports = {
             colors: {
                 'main-orange': '#EC8A27',
                 'main-blue': '#121054',
-                'main-header': 'rgba(255,255,255,0.8)'
+                'main-header': 'rgba(255,255,255,0.8)',
+                'github': '#171515', // from https://gist.github.com/leemunroe/9162404
+                'linkedin': '#0e76a8'
             },
         },
     },

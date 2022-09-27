@@ -3,7 +3,11 @@
         <Container>
             <div class="my-2">
                 <h2 class="font-bold text-sm">
-                    Hallo {{ $store.state.user }},
+                    Hallo
+                    {{
+                        $store.state.user.userInfo
+                            .user_metadata.full_name
+                    }},
                 </h2>
                 <p class="text-sm">
                     You can start a new lession, play a

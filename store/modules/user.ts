@@ -3,40 +3,72 @@ import { supabase } from '~/supabase/init'
 import { isAlreadyInPath } from '~/utils/navigation'
 
 interface UserState {
-    isUserAuthenticated: boolean
-    user: object | null //TODO: define object
+    userInfo: object | null //TODO: define object
 }
 
 const state: UserState = {
-    isUserAuthenticated: false,
-    user: null,
+    userInfo: null,
 }
 
 const getters: GetterTree<any, any> = {
-    user: (state) => state.user,
-    isUserAuthenticated: (state) =>
-        state.isUserAuthenticated,
+    userInfo: (state) => state.userInfo,
+    isLogged: (state) => state.userInfo ? true : false
 }
 
 const actions: ActionTree<any, any> = {
+    async githubAuth() {
+        const { user, error } = await supabase.auth.signIn({
+            provider: 'github',
+        }, {
+            scopes: ''
+        })
+        if (!error) {
+            this.commit('user/UPDATE_USER', user);
+            this.$router.replace('/dashboard');
+        } else {
+            console.warn(error);
+            this.$router.replace('/error')
+        }
+    },
+
+    async linkedinAuth() {
+        const { user, error } =
+            await supabase.auth.signIn(
+                {
+                    provider: 'linkedin',
+                },
+                {
+                    scopes: '',
+                }
+            )
+        if (!error) {
+            this.commit('user/UPDATE_USER', user);
+            this.$router.replace('/dashboard');
+        } else {
+            console.warn(error);
+            this.$router.replace('/error')
+        }
+    },
+
     async authenticate({ commit }) {
         const userInfo = supabase.auth.user()
-        console.log(userInfo)
-        commit('UPDATE_USER', 'gio')
+        commit('UPDATE_USER', userInfo)
     },
     async signOut() {
         const { error } = await supabase.auth.signOut()
         if (error) {
             console.error(error.message)
         } else {
-            this.commit('IS_AUTHENTICATED')
+
             this.$router.replace('/logout')
         }
     },
     async autoAuthenticate() {
         const userInfo = supabase.auth.user()
+
         if (userInfo) {
-            this.commit('UPDATE_USER', userInfo)
+            this.commit('user/UPDATE_USER', userInfo)
+            this.$router.replace('/dashboard');
         } else {
             const { params } = this.$router.currentRoute;
             if (isAlreadyInPath(this, params)) {
@@ -47,9 +79,9 @@ const actions: ActionTree<any, any> = {
 }
 
 const mutations: MutationTree<UserState> = {
-    IS_AUTHENTICATED: (state) =>
-    (state.isUserAuthenticated =
-        !state.isUserAuthenticated),
+    UPDATE_USER: (state, user) => {
+        return state.userInfo = user;
+    },
 }
 
 export default {
