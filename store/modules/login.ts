@@ -1,6 +1,6 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
-interface LoginState {
+export interface LoginState {
     isDialogOpen: boolean
     loginDetails: object | null //TODO: define object
 }

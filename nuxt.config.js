@@ -77,11 +77,14 @@ export default {
     },
 
     router: {
-        linkActiveClass: 'text-main-orange' 
+        linkActiveClass: 'text-main-orange',
+        middleware: ['auth']
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
+
+
 
     //custom Giovanni Mazzuoccolo
     tailwindcss: {
