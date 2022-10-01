@@ -25,7 +25,10 @@
             ></rect>
         </svg>
         <ul class="hidden md:flex uppercase gap-4">
-            <li>Learn</li>
+            <li v-if="!isLogged" class="hover:underline">
+                <NuxtLink to="/discover">Discover</NuxtLink>
+            </li>
+            <li v-else>Learn</li>
             <li><NuxtLink to="/about">About</NuxtLink></li>
             <li>
                 <NuxtLink to="/contacts">Contacts</NuxtLink>
@@ -57,6 +60,9 @@ export default {
     },
     computed: {
         isLogged() {
+            console.log(
+                this.$store.getters['user/isLogged']
+            )
             return this.$store.getters['user/isLogged']
         },
     },

@@ -78,7 +78,7 @@ export default {
 
     router: {
         linkActiveClass: 'text-main-orange',
-        middleware: ['auth']
+        middleware: ['autoAuth']
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build

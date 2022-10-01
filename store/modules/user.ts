@@ -22,11 +22,14 @@ const actions: ActionTree<any, any> = {
         }, {
             scopes: ''
         })
+        debugger;
         if (!error) {
+            debugger;
             this.commit('user/UPDATE_USER', user);
-            this.$router.replace('/dashboard');
         } else {
             console.warn(error);
+            debugger;
+
             this.$router.replace('/error')
         }
     },
@@ -59,21 +62,18 @@ const actions: ActionTree<any, any> = {
         if (error) {
             console.error(error.message)
         } else {
-
+            this.commit('user/UPDATE_USER', null)
             this.$router.replace('/logout')
         }
     },
-    async autoAuthenticate() {
+    async autoAuthenticate(): Promise<Boolean> {
         const userInfo = supabase.auth.user()
 
         if (userInfo) {
             this.commit('user/UPDATE_USER', userInfo)
-            this.$router.replace('/dashboard');
+            return true;
         } else {
-            const { params } = this.$router.currentRoute;
-            if (isAlreadyInPath(this, params)) {
-                this.$router.replace('/')
-            }
+            return false;
         }
     },
 }
