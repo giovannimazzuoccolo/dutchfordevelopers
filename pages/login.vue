@@ -1,11 +1,16 @@
 <template>
     <Container>
         <UIBlogWrapper>
+            <UIBanner v-if="unauth"
+                >You need to login to view this
+                section</UIBanner
+            >
             <UITitle
                 orange="Enter in"
                 blue="Dutch for Developers"
                 center
             />
+
             <section
                 class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto"
             >
@@ -50,6 +55,28 @@ export default {
     name: 'Login',
     components: {
         'v-icon': Icon,
+    },
+    data() {
+        return {
+            unauth: false,
+        }
+    },
+    methods: {
+        isUnauth() {
+            this.unauth = true
+        },
+        closeUnauth() {
+            this.unauth = false
+        },
+    },
+    created() {
+        const { query } = this.$router.history.current
+        console.log(query, 'reason' in query)
+        if ('reason' in query) {
+            this.isUnauth()
+        } else {
+            this.closeUnauth()
+        }
     },
 }
 </script>

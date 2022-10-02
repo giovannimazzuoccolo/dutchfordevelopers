@@ -7,7 +7,7 @@ import { Middleware } from '@nuxt/types'
 const restricted: Middleware = async ({ store, redirect }) => {
 
     if (!store.getters['user/isLogged']) {
-        return redirect('/login')
+        return redirect('/login?reason=unauth')
     }
 };
 
