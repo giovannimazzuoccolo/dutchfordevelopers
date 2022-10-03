@@ -7,7 +7,7 @@
             class="md:hidden relative -top-1 cursor-pointer"
             @click="openMenu"
             role="button"
-            v-if="menuOpen"
+            v-if="!menuOpen"
         >
             <rect
                 width="100"
@@ -30,8 +30,10 @@
         <svg
             class="fill-current h-6 w-6 text-main-orange md:hidden"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            @click="openMenu"
+            viewBox="0 0 10 10"
+            width="36"
+            height="36"
+            @click="closeMenu"
             v-else
         >
             <title>Close</title>
@@ -41,7 +43,12 @@
         </svg>
         <ul
             class="md:flex uppercase gap-4"
-            :class="menuOpen ? 'hidden' : 'static'"
+            :class="
+                !menuOpen
+                    ? 'hidden'
+                    : ' absolute top-14 left-0 z-10 bg-gray-100 bg-opacity-90 w-full text-center flex flex-col gap-2 py-4 blur-xl'
+            "
+            @click="closeMenu"
         >
             <li v-if="!isLogged" class="hover:underline">
                 <NuxtLink to="/discover">Discover</NuxtLink>
@@ -75,8 +82,10 @@ export default {
     },
     methods: {
         openMenu() {
-            console.log('openmenu')
-            this.menuOpen = !this.menuOpen
+            this.menuOpen = true
+        },
+        closeMenu() {
+            this.menuOpen = false
         },
     },
     computed: {
