@@ -1,6 +1,5 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { supabase } from '~/supabase/init'
-import { isAlreadyInPath } from '~/utils/navigation'
 
 export interface UserState {
     userInfo: object | null //TODO: define object

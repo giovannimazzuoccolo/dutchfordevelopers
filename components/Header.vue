@@ -7,10 +7,7 @@
                 class="flex justify-between w-full items-center"
             >
                 <Logo />
-                <MainNavigation
-                    onClickMobileMenu
-                    isMenuOpen="menuOpen"
-                />
+                <MainNavigation />
             </header>
         </Container>
     </div>
@@ -18,16 +15,5 @@
 <script>
 export default {
     name: 'Header',
-    data() {
-        return {
-            menuOpen: false,
-        }
-    },
-    methods: {
-        openMenu() {
-            console.log('openmenu')
-            this.menuOpen = !this.menuOpen
-        },
-    },
 }
 </script>
