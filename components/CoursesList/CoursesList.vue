@@ -5,21 +5,16 @@
     <div v-else>Not A/B/C</div>-->
     <p>my text --- {{loadStatus}}</p>
 </template>
-<script lang="ts">
-export default {
-    mounted() {
-      console.log(this.$store);
+<script>
+import { mapState } from 'vuex'
+
+export default { 
+  mounted() {
       this.$store.dispatch('courses/getCourses');
     },
-    computed: {
-      loadStatus() { this.loadStatus = this.$store.getters['courses/request'] },
-      coursesData() { this.coursesData = this.$store.getters['courses/courses'] }
-    },
-    data() {
-      return {
-        loadStatus: 'idle',
-        coursesData: []
-      }
+    computed: mapState({ 
+      loadStatus: state=> state.courses.request,
+      coursesList: state=> state.courses.courses
+    }),
     }
-}
 </script>

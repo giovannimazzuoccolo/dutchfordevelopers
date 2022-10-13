@@ -33,17 +33,22 @@ const mutations: MutationTree<CoursesState> = {
     REQUEST_ERROR: (state) => {
         return state.request = REQUEST_STATUS.ERROR
     },
-    REQUEST_SUCCESS: (_, courses) => {
-        return { courses, request: REQUEST_STATUS.SUCCESS }
+    REQUEST_SUCCESS: (state) => {
+        return state.request = REQUEST_STATUS.SUCCESS 
+    },
+    ADD_DATA: (state, courses) => {
+        return state.courses = courses
     }
 }
 
 const actions: ActionTree<any, any> = {
     async getCourses() {
         this.commit('courses/REQUEST_STARTED');
-        const { data, error } = await supabase.from("courses").select("*");
+        const { data, error } = await supabase.from("courses").select();
         if (!error) {
-            this.commit('courses/REQUEST_SUCCESS', data);
+            debugger;
+            this.commit('courses/REQUEST_SUCCESS');
+            this.commit('courses/ADD_DATA', data);
         } else {
             this.commit('courses/REQUEST_ERROR');
         }
