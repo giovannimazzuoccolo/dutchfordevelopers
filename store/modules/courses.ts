@@ -22,7 +22,8 @@ export const state: CoursesState = {
 }
 
 const getters: GetterTree<any, any> = {
-    courses: (state) => state.courses
+    courses: (state) => state.courses,
+    request: (state) => state.request
 }
 
 const mutations: MutationTree<CoursesState> = {

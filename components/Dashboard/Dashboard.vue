@@ -19,6 +19,7 @@
             :selectedTab="tabSelection"
             :changeTab="changeTab"
         />
+        <CoursesList />
     </div>
 </template>
 <script lang="ts">
