@@ -11,20 +11,22 @@
                 </p>
                 <p class="text-center">
                     <small
-                        >You gonna be redirected to the home
-                        page in {{ seconds }} seconds</small
+                        >You are being redirected to the
+                        home page in
+                        {{ seconds }} seconds</small
                     >
                 </p>
             </section>
         </UIBlogWrapper>
     </Container>
 </template>
-<script>
+<script lang="ts">
 import 'vue-awesome/icons/brands/linkedin'
 import 'vue-awesome/icons/brands/github'
 import Icon from 'vue-awesome/components/Icon'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
     name: 'Login',
     components: {
         'v-icon': Icon,
@@ -54,5 +56,5 @@ export default {
     beforeUnmount() {
         clearInterval(this.counter)
     },
-}
+})
 </script>

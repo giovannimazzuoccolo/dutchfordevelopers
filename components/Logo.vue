@@ -46,8 +46,3 @@
         </h1>
     </a>
 </template>
-<script>
-export default {
-    name: 'Logo',
-}
-</script>

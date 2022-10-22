@@ -7,15 +7,17 @@
         <slot />
     </button>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     props: {
         text: String,
     },
     methods: {
-        callback: function (e) {
+        callback: function (e: MouseEvent) {
             this.$emit('click', e)
         },
     },
-}
+})
 </script>

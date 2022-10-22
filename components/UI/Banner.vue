@@ -23,8 +23,10 @@
         </div>
     </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     data() {
         return {
             shown: true,
@@ -35,5 +37,5 @@ export default {
             this.shown = false
         },
     },
-}
+})
 </script>
