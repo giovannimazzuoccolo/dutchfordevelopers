@@ -48,13 +48,21 @@
         </svg>
     </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     name: 'HamburgerMenu',
     props: {
-        openMenu: Function,
-        closeMenu: Function,
+        openMenu: {
+            type: Function,
+            required: true,
+        },
+        closeMenu: {
+            type: Function,
+            required: true,
+        },
         menuOpen: Boolean,
     },
-}
+})
 </script>

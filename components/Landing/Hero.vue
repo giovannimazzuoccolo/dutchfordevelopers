@@ -16,14 +16,11 @@
                     A pragmatic approach for developers (and
                     not) living in The Netherlands
                 </p>
-                <UIButton
-                    text="Start now for free"
-                    @click="
-                        $store.dispatch(
-                            'login/openLoginDialog'
-                        )
-                    "
-                />
+                <NuxtLink to="/dashboard">
+                    <UIButton
+                        text="Start now for free"
+                        @click="doNothing"
+                /></NuxtLink>
             </div>
             <div class="w-3/7 hidden md:flex">
                 <img
@@ -34,12 +31,14 @@
         </div>
     </Container>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     methods: {
         doNothing() {
-            console.log('this is nothing')
+            return false
         },
     },
-}
+})
 </script>
