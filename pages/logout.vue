@@ -21,33 +21,53 @@
     </Container>
 </template>
 <script lang="ts">
-import 'vue-awesome/icons/brands/linkedin'
-import 'vue-awesome/icons/brands/github'
-import Icon from 'vue-awesome/components/Icon'
-import { defineComponent } from 'vue'
+import Vue from 'vue'
 
-export default defineComponent({
-    name: 'Login',
-    components: {
-        'v-icon': Icon,
-    },
+export default Vue.extend({
+    name: 'Logout',
     data() {
         return {
             seconds: 10,
+            counter: 0,
+            aSecondLess: Function,
+            counterFunc: Function,
         }
     },
+    computed: {
+        aSecondLess(): void {
+            this.seconds--
+        },
+
+        counterFunc(): number {
+            return window.setInterval(() => {
+                if (this.seconds > 0) {
+                    this.aSecondLess()
+                } else {
+                    clearInterval(this.counter)
+                    this.$router.replace('/')
+                }
+            }, 1000)
+        },
+    },
+
     created() {
+        this.counter =
+            this.counterFunc() as unknown as number
+    },
+    beforeDestroy() {
+        clearInterval(this.counter)
+    },
+})
+/*created() {
         this.counter = setInterval(() => {
             if (this.seconds > 0) {
                 this.aSecondLess()
             } else {
-                console.log('finished')
                 clearInterval(this.counter)
                 this.$router.replace('/')
             }
         }, 1000)
     },
-
     methods: {
         aSecondLess() {
             this.seconds--
@@ -55,6 +75,5 @@ export default defineComponent({
     },
     beforeUnmount() {
         clearInterval(this.counter)
-    },
-})
+    },*/
 </script>

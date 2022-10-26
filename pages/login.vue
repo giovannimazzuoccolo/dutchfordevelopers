@@ -60,6 +60,8 @@ export default defineComponent({
     data() {
         return {
             unauth: false,
+            isUnauth: Function,
+            closeUnauth: Function,
         }
     },
     methods: {
@@ -72,7 +74,7 @@ export default defineComponent({
     },
     created() {
         const { query } = this.$route.params
-        if (query.hasOwnProperty('reason')) {
+        if (query && query.hasOwnProperty('reason')) {
             this.isUnauth()
         } else {
             this.closeUnauth()
