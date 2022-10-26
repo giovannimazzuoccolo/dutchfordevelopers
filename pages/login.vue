@@ -50,9 +50,9 @@
 import 'vue-awesome/icons/brands/linkedin'
 import 'vue-awesome/icons/brands/github'
 import Icon from 'vue-awesome/components/Icon'
-import { defineComponent } from 'vue'
+import Vue from 'vue'
 
-export default defineComponent({
+export default Vue.extend({
     name: 'Login',
     components: {
         'v-icon': Icon,
@@ -60,24 +60,19 @@ export default defineComponent({
     data() {
         return {
             unauth: false,
-            isUnauth: Function,
-            closeUnauth: Function,
         }
     },
     methods: {
-        isUnauth() {
-            this.unauth = true
-        },
-        closeUnauth() {
-            this.unauth = false
+        setUnauth(value: boolean): void {
+            this.unauth = value
         },
     },
     created() {
         const { query } = this.$route.params
         if (query && query.hasOwnProperty('reason')) {
-            this.isUnauth()
+            this.setUnauth(true)
         } else {
-            this.closeUnauth()
+            this.setUnauth(false)
         }
     },
 })

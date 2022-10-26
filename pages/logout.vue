@@ -29,11 +29,9 @@ export default Vue.extend({
         return {
             seconds: 10,
             counter: 0,
-            aSecondLess: Function,
-            counterFunc: Function,
         }
     },
-    computed: {
+    methods: {
         aSecondLess(): void {
             this.seconds--
         },
@@ -51,29 +49,10 @@ export default Vue.extend({
     },
 
     created() {
-        this.counter =
-            this.counterFunc() as unknown as number
+        this.counter = this.counterFunc()
     },
     beforeDestroy() {
         clearInterval(this.counter)
     },
 })
-/*created() {
-        this.counter = setInterval(() => {
-            if (this.seconds > 0) {
-                this.aSecondLess()
-            } else {
-                clearInterval(this.counter)
-                this.$router.replace('/')
-            }
-        }, 1000)
-    },
-    methods: {
-        aSecondLess() {
-            this.seconds--
-        },
-    },
-    beforeUnmount() {
-        clearInterval(this.counter)
-    },*/
 </script>
