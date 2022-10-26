@@ -21,13 +21,10 @@ const actions: ActionTree<any, any> = {
         }, {
             scopes: ''
         })
-        debugger;
         if (!error) {
-            debugger;
             this.commit('user/UPDATE_USER', user);
         } else {
             console.warn(error);
-            debugger;
 
             this.$router.replace('/error')
         }

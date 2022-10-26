@@ -15,7 +15,9 @@ import { mapState } from 'vuex'
 
 //https://vuejs.org/guide/essentials/list.html#v-for
 
-export default {
+import Vue from 'vue'
+
+export default Vue.extend({
     mounted() {
         this.$store.dispatch('courses/getCourses')
     },
@@ -23,5 +25,5 @@ export default {
         loadStatus: (state) => state.courses.request,
         coursesList: (state) => state.courses.courses,
     }),
-}
+})
 </script>

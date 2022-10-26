@@ -46,7 +46,6 @@ const actions: ActionTree<any, any> = {
         this.commit('courses/REQUEST_STARTED');
         const { data, error } = await supabase.from("courses").select();
         if (!error) {
-            debugger;
             this.commit('courses/REQUEST_SUCCESS');
             this.commit('courses/ADD_DATA', data);
         } else {

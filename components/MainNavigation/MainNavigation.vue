@@ -34,19 +34,18 @@
             <MainNavigationItem v-if="!isLogged">
                 <NuxtLink to="/login">Join now</NuxtLink>
             </MainNavigationItem>
-            <MainNavigationItem
-                v-else
-                @click="$store.dispatch('user/signOut')"
-            >
-                Logout
+            <MainNavigationItem v-else>
+                <span @click="dispatchLogout">
+                    Logout
+                </span>
             </MainNavigationItem>
         </ul>
     </nav>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import Vue from 'vue'
 
-export default defineComponent({
+export default Vue.extend({
     name: 'MainNavigation',
     data() {
         return {
@@ -59,6 +58,9 @@ export default defineComponent({
         },
         closeMenu() {
             this.menuOpen = false
+        },
+        dispatchLogout() {
+            this.$store.dispatch('user/signOut')
         },
     },
     computed: {
