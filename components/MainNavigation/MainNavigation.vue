@@ -62,12 +62,7 @@ export default Vue.extend({
         dispatchLogout() {
             this.$store.dispatch('user/signOut')
         },
-    },
-    computed: {
         isLogged() {
-            console.log(
-                this.$store.getters['user/isLogged']
-            )
             return this.$store.getters['user/isLogged']
         },
     },
