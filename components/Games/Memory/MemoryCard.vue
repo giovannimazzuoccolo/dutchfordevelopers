@@ -1,5 +1,8 @@
 <template>
-    <div class="bg-main-orange">
+    <div
+        class="bg-main-orange flex justify-center items-center h-52 shadow hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200"
+        v-if="isCovered"
+    >
         <svg
             width="54"
             height="54"

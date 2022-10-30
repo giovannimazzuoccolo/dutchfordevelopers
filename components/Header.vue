@@ -1,6 +1,6 @@
 <template>
     <div
-        class="sticky top-0 backdrop-saturate-200 blur bg-main-header"
+        class="sticky top-0 backdrop-saturate-200 bg-main-header"
     >
         <Container>
             <header

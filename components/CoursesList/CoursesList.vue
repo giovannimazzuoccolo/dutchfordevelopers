@@ -17,6 +17,7 @@
                     <CourseListCard
                         :title="course.title"
                         :description="course.description"
+                        :route="course.route"
                     />
                 </template>
             </div>
@@ -25,8 +26,6 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-
-//https://vuejs.org/guide/essentials/list.html#v-for
 
 import Vue from 'vue'
 import CourseListCard from './CourseListCard.vue'

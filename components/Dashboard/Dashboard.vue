@@ -10,8 +10,8 @@
                     }},
                 </h2>
                 <p class="text-sm">
-                    You can start a new lession, play a
-                    game, or read the blog!
+                    You can start a new lesson, play a game,
+                    or read the blog!
                 </p>
             </div>
         </Container>

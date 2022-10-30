@@ -6,7 +6,7 @@
                 class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto"
             >
                 <p class="text-center">
-                    You logged out successfuly from Dutch
+                    You logged out successfully from Dutch
                     for Developers 👋
                 </p>
                 <p class="text-center">

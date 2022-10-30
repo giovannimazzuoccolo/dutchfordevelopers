@@ -1,3 +1,27 @@
+const plugin = require("tailwindcss/plugin");
+
+const mainColors = {
+  orange : '#EC8A27',
+  blue: '#121054'
+}
+
+const flip = plugin(function ({ addUtilities }) {
+  addUtilities({
+    ".rotate-y-180": {
+      transform: "rotateY(180deg)",
+    },
+    ".preserve-3d": {
+      transformStyle: "preserve-3d",
+    },
+    ".perspective": {
+      perspective: "1000px",
+    },
+    ".backface-hidden": {
+      backfaceVisibility: "hidden",
+    },
+  });
+});
+
 module.exports = {
     darkMode: 'media',
     theme: {
@@ -13,24 +37,22 @@ module.exports = {
             },
 
             colors: {
-                'main-orange': '#EC8A27',
-                'main-blue': '#121054',
+                'main-orange': mainColors.orange,
+                'main-blue': mainColors.blue,
                 'main-header': 'rgba(255,255,255,0.8)',
                 'github': '#171515', // from https://gist.github.com/leemunroe/9162404
                 'linkedin': '#0e76a8'
             },
+          typography:{
+            DEFAULT: {
+              css: {
+                '--tw-prose-bold': mainColors.orange,
+              }
+            }
+          }
         },
     },
+    content: ['./learn/**'],
+    plugins: [require("@tailwindcss/typography"),flip]
+    
 }
-
-/*module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}*/
