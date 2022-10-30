@@ -1,7 +1,8 @@
 <template>
     <div
-        class="bg-main-orange flex justify-center items-center h-52 shadow hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200"
+        class="bg-main-orange flex justify-center items-center h-52 shadow hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200 rounded-lg"
         v-if="isCovered"
+        @click="selectCard"
     >
         <svg
             width="54"
@@ -52,6 +53,12 @@ export default Vue.extend({
         isCovered: Boolean,
         name: String,
         image: String,
+        id: String,
+    },
+    methods: {
+        selectCard() {
+            this.$emit('selectCard', this.name, this.id)
+        },
     },
 })
 </script>
