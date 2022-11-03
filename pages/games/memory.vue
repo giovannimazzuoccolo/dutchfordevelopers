@@ -6,6 +6,7 @@
             Dutch vocabulary. Turn up your volume to hear
             the Dutch pronunciation
         </p>
+        <div class="flex my-4">Name: {{ name }}</div>
 
         <div class="grid grid-cols-4 gap-4">
             <template v-for="memoryCard in memoryCards">
@@ -35,6 +36,7 @@ export default Vue.extend({
             memoryCards: shuffler(memoryCardList),
             collected: [],
             selection: '',
+            name: '',
             voice: [] as SpeechSynthesisVoice[],
         }
     },
@@ -54,7 +56,7 @@ export default Vue.extend({
         isCovered() {},
         selectCard(name: string, id: string) {
             this.selection = id
-
+            this.name = name
             let speak = new SpeechSynthesisUtterance(name)
             speak.voice = this.voice[0]
             speak.rate = 0.7

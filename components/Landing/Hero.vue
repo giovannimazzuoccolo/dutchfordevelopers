@@ -5,14 +5,15 @@
         >
             <div class="w-4/7">
                 <h1
-                    class="uppercase font-bold xl text-main-blue text-4xl md:text-6xl"
+                    class="uppercase font-bold xl text-main-blue dark:text-main-blue-light text-4xl md:text-6xl"
                 >
                     Learn dutch as you are learning a
-                    <span class="text-main-orange"
+                    <span
+                        class="text-main-orange dark:text-main-orange-light"
                         >programming language</span
                     >
                 </h1>
-                <p class="py-4 text-xl">
+                <p class="py-4 text-xl dark:text-white">
                     A pragmatic approach for developers (and
                     not) living in The Netherlands
                 </p>

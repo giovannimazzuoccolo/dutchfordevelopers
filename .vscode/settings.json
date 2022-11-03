@@ -1,6 +1,7 @@
 {
     "nuxt.isNuxtApp": true,
     "cSpell.words": [
-        "nuxt"
+        "nuxt",
+        "tailwindcss"
     ]
 }
