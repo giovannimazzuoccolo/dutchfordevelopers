@@ -5,7 +5,7 @@
         <UITitle orange="The" blue="Approach" center />
 
         <div
-            class="mx-auto p-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-4xl lg:px-12 rounded flex gap-4 my-4 flex-col items-center md:flex-row md:shadow"
+            class="mx-auto p-4 sm:px-6 md:max-w-2xl md:px-4 lg:max-w-4xl lg:px-12 rounded flex gap-4 my-4 flex-col items-center md:flex-row md:shadow dark:bg-slate-800"
         >
             <LandingApproachItem
                 text="Discover common patterns, learn the

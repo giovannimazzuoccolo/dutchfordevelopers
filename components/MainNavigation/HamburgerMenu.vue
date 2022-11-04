@@ -1,10 +1,10 @@
 <template>
-    <div class="w-9 h-9 flex justify-center">
+    <div class="w-9 h-9 flex justify-center md:hidden">
         <svg
             viewBox="0 0 100 80"
             width="36"
             height="36"
-            class="md:hidden relative -top-1 cursor-pointer"
+            class="relative -top-1 cursor-pointer"
             @click="openMenu()"
             role="button"
             v-if="!menuOpen"
