@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-main-orange flex justify-center items-center h-52 shadow hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200 rounded-lg"
+        class="bg-main-orange flex justify-center items-center h-52 preserve-3d shadow backface-hidden hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200 rounded-lg"
         v-if="isCovered"
         @click="selectCard"
     >
@@ -46,14 +46,18 @@
     </div>
     <div
         v-else-if="!isCovered"
-        class="relative h-52 shadow hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200 rounded-lg"
+        class="relative h-52 shadow hover:shadow-2xl rotate-y-180 preserve-3d cursor-pointer perspective group duration-200 rounded-lg"
     >
         <img
             :src="prepareImage"
             :alt="name"
-            class="w-full h-full rounded-lg"
+            class="w-full h-full rounded-lg rotate-y-180"
         />
-        <p class="absolute bottom-0">{{ name }}</p>
+        <p
+            class="absolute bottom-0 text-main-blue text-center bg-white/75 p-1 w-full rotate-y-180"
+        >
+            {{ name }}
+        </p>
     </div>
 </template>
 <script lang="ts">
