@@ -4,7 +4,7 @@
         <div class="relative">
             <div
                 v-if="success"
-                class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4"
+                class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
             >
                 <h2
                     class="text-5xl text-bold text-main-orange uppercase"
@@ -12,7 +12,7 @@
                     Gefeliciteerd 🎉🎉🎉
                 </h2>
                 <p class="text-white">
-                    You have completed the game in
+                    You completed the game in
                     {{ secondsToTime }} seconds
                 </p>
                 <div class="flex gap-4">
@@ -110,7 +110,7 @@ export default Vue.extend({
 
     methods: {
         tryAgain() {
-            this.$nuxt.refresh()
+            location.reload()
         },
 
         aSecondMore(): void {
