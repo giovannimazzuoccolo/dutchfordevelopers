@@ -3,7 +3,7 @@
         <UIBlogWrapper>
             <UITitle orange="Doei" blue="Doei" center />
             <section
-                class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto"
+                class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto dark:text-white"
             >
                 <p class="text-center">
                     You logged out successfully from Dutch

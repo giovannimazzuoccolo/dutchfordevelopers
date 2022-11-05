@@ -20,7 +20,7 @@
             >
                 <div class="mb-4">
                     <label
-                        class="block text-gray-700 text-sm font-bold mb-2"
+                        class="block text-gray-700 text-sm font-bold mb-2 dark:text-slate-400"
                         for="name"
                     >
                         Name
@@ -34,7 +34,7 @@
                 </div>
                 <div class="mb-4">
                     <label
-                        class="block text-gray-700 text-sm font-bold mb-2"
+                        class="block text-gray-700 text-sm font-bold mb-2 dark:text-slate-400"
                         for="email"
                     >
                         Email
@@ -48,7 +48,7 @@
                 </div>
                 <div class="mb-4">
                     <label
-                        class="block text-gray-700 text-sm font-bold mb-2"
+                        class="block text-gray-700 text-sm font-bold mb-2 dark:text-slate-400"
                         for="text"
                     >
                         Your request

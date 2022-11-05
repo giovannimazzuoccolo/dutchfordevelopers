@@ -3,7 +3,7 @@
         <UIArticleBlock>
             <nuxt-content
                 :document="page"
-                class="prose prose-slate prose-sm sm:prose lg:prose-lg xl:prose-xl prose-strong:text-main-orange mx-auto"
+                class="prose prose-slate prose-sm sm:prose lg:prose-lg xl:prose-xl prose-strong:text-main-orange mx-auto dark:prose-invert"
             />
         </UIArticleBlock>
     </container>
