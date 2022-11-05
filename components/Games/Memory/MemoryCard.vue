@@ -44,6 +44,17 @@
             </defs>
         </svg>
     </div>
+    <div
+        v-else-if="!isCovered"
+        class="relative h-52 shadow hover:shadow-2xl hover:scale-105 cursor-pointer perspective group duration-200 rounded-lg"
+    >
+        <img
+            :src="prepareImage"
+            :alt="name"
+            class="w-full h-full rounded-lg"
+        />
+        <p class="absolute bottom-0">{{ name }}</p>
+    </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -54,6 +65,11 @@ export default Vue.extend({
         name: String,
         image: String,
         id: String,
+    },
+    computed: {
+        prepareImage(): string {
+            return `/${this.image}`
+        },
     },
     methods: {
         selectCard() {

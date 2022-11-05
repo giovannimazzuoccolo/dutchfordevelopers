@@ -1,17 +1,17 @@
 <template>
-    <div v-if="loadStatus === 'loading'">
-        <div
-            class="flex w-full flex-1 justify-center items-center"
-        >
-            <UISpinner />
+    <Container>
+        <div v-if="loadStatus === 'loading'">
+            <div
+                class="flex w-full flex-1 justify-center items-center"
+            >
+                <UISpinner />
+            </div>
         </div>
-    </div>
-    <div v-else-if="loadStatus === 'error'">
-        <em>Jammer,</em> we are sorry, we are not able to
-        retrieve the lessons
-    </div>
-    <div v-else="loadStatus === 'success'">
-        <Container>
+        <div v-else-if="loadStatus === 'error'">
+            <em>Jammer,</em> we are sorry, we are not able
+            to retrieve the lessons
+        </div>
+        <div v-else="loadStatus === 'success'">
             <div class="grid grid-cols-3 gap-4">
                 <template v-for="course in coursesList">
                     <CourseListCard
@@ -21,8 +21,8 @@
                     />
                 </template>
             </div>
-        </Container>
-    </div>
+        </div>
+    </Container>
 </template>
 <script>
 import { mapState } from 'vuex'

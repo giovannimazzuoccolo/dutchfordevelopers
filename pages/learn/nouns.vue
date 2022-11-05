@@ -3,9 +3,10 @@
         <UIArticleBlock>
             <nuxt-content
                 :document="page"
-                class="prose prose-slate prose-sm sm:prose lg:prose-lg xl:prose-xl prose-strong:text-main-orange mx-auto dark:prose-invert"
+                class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words mx-auto"
             />
         </UIArticleBlock>
+        <UIButton>Mark this lesson as read</UIButton>
     </container>
 </template>
 <script lang="ts">
@@ -22,4 +23,5 @@ export default Vue.extend({
         return { page }
     },
 })
+//class="prose dark:prose-invert prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto"
 </script>

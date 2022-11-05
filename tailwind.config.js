@@ -52,8 +52,9 @@ module.exports = {
             DEFAULT: {
               css: {
                 '--tw-prose-bold': mainColors.orange,
+                '--tw-prose-invert-body': "#fff",
               }
-            }
+            },
           }
         },
     },
