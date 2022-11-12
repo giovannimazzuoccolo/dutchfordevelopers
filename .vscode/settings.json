@@ -2,6 +2,8 @@
     "nuxt.isNuxtApp": true,
     "cSpell.words": [
         "nuxt",
-        "tailwindcss"
+        "supabase",
+        "tailwindcss",
+        "vuex"
     ]
 }

@@ -51,7 +51,7 @@
         <img
             :src="prepareImage"
             :alt="name"
-            class="w-full h-full rounded-lg rotate-y-180"
+            class="w-full h-full rounded-lg rotate-y-180 object-cover"
         />
         <p
             class="absolute bottom-0 text-main-blue text-center bg-white/75 p-1 w-full rotate-y-180"

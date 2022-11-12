@@ -3,7 +3,7 @@
         <div
             class="flex w-full gap-4 justify-between flex-col items-center my-8 md:flex-row"
         >
-            <div class="w-7/12">
+            <div class="md:w-7/12">
                 <h1
                     class="uppercase font-bold xl text-main-blue dark:text-main-blue-light text-4xl md:text-6xl"
                 >

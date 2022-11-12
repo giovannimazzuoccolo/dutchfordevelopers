@@ -21,7 +21,8 @@
             :selectedTab="tabSelection"
             :changeTab="changeTab"
         />
-        <CoursesList />
+        <CoursesList v-if="isLearn" />
+        <GamesList v-if="isGame" />
     </div>
 </template>
 <script lang="ts">
@@ -38,6 +39,14 @@ export default defineComponent({
         return {
             tabSelection: TAB_SELECTION.LEARN,
         }
+    },
+    computed: {
+        isLearn() {
+            return this.tabSelection === TAB_SELECTION.LEARN
+        },
+        isGame() {
+            return this.tabSelection === TAB_SELECTION.PLAY
+        },
     },
     methods: {
         changeTab(value: TAB_SELECTION): void {

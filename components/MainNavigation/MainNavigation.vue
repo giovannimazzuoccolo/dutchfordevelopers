@@ -10,7 +10,7 @@
             :class="
                 !menuOpen
                     ? 'hidden'
-                    : ' absolute top-14 left-0 z-10 bg-gray-100 bg-opacity-90 w-full text-center flex flex-col gap-2 py-4 blur-xl'
+                    : ' absolute top-14 left-0 z-10 bg-gray-100 bg-opacity-90 w-full text-center flex flex-col gap-2 py-4 dark:bg-gray-700 backdrop-blur-l'
             "
             @click="closeMenu"
         >
@@ -52,6 +52,11 @@ export default Vue.extend({
             menuOpen: false,
         }
     },
+    computed: {
+        isLogged() {
+            return this.$store.getters['user/isLogged']
+        },
+    },
     methods: {
         openMenu() {
             this.menuOpen = true
@@ -61,9 +66,6 @@ export default Vue.extend({
         },
         dispatchLogout() {
             this.$store.dispatch('user/signOut')
-        },
-        isLogged() {
-            return this.$store.getters['user/isLogged']
         },
     },
 })

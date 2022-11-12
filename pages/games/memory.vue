@@ -7,16 +7,20 @@
                 class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
             >
                 <h2
-                    class="text-5xl text-bold text-main-orange uppercase"
+                    class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center"
                 >
-                    Gefeliciteerd 🎉🎉🎉
+                    🎉 Gefeliciteerd 🎉
                 </h2>
                 <p class="text-white">
                     You completed the game in
                     {{ secondsToTime }} seconds
                 </p>
                 <div class="flex gap-4">
-                    <UIButton>Save</UIButton>
+                    <UIButton
+                        v-if="isLogged"
+                        @click="saveScore"
+                        >Save</UIButton
+                    >
                     <UIButton @click="tryAgain"
                         >Try again</UIButton
                     >
@@ -36,7 +40,9 @@
                 <p>Time: {{ secondsToTime }}</p>
             </div>
 
-            <div class="grid grid-cols-4 gap-4">
+            <div
+                class="grid grid-cols-2 md:grid-cols-4 gap-4"
+            >
                 <template v-for="memoryCard in memoryCards">
                     <GamesMemoryCard
                         :isCovered="
@@ -88,6 +94,9 @@ export default Vue.extend({
 
             return m + ':' + s
         },
+        isLogged() {
+            return this.$store.getters['user/isLogged']
+        },
     },
 
     created() {
@@ -109,6 +118,13 @@ export default Vue.extend({
     },
 
     methods: {
+        saveScore() {
+            this.$store.dispatch('scores/saveScore', {
+                game: 'memory',
+                score: this.time,
+            })
+        },
+
         tryAgain() {
             location.reload()
         },
@@ -174,7 +190,7 @@ export default Vue.extend({
         completed() {
             return setTimeout(() => {
                 this.success = true
-            }, 1000)
+            }, 600)
         },
     },
 })

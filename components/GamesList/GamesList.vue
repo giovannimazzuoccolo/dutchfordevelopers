@@ -9,17 +9,14 @@
         </div>
         <div v-else-if="loadStatus === 'error'">
             <em>Jammer,</em> we are sorry, we are not able
-            to retrieve the lessons
+            to retrieve the games
         </div>
         <div v-else="loadStatus === 'success'">
-            <div
-                class="grid grid-cols-2 md:grid-cols-3 gap-4"
-            >
-                <template v-for="course in coursesList">
-                    <CourseListCard
-                        :title="course.title"
-                        :description="course.description"
-                        :route="course.route"
+            <div class="grid grid-cols-3 gap-4">
+                <template v-for="games in gamesList">
+                    <GamesListGameCard
+                        :title="games.title"
+                        :description="games.description"
                     />
                 </template>
             </div>
@@ -30,16 +27,14 @@
 import { mapState } from 'vuex'
 
 import Vue from 'vue'
-import CourseListCard from './CourseListCard.vue'
 
 export default Vue.extend({
     mounted() {
-        this.$store.dispatch('courses/getCourses')
+        this.$store.dispatch('games/getGames')
     },
     computed: mapState({
-        loadStatus: (state) => state.courses.request,
-        coursesList: (state) => state.courses.courses,
+        loadStatus: (state) => state.games.request,
+        gamesList: (state) => state.games.games,
     }),
-    components: { CourseListCard },
 })
 </script>
