@@ -54,4 +54,6 @@ There is a long article on wikipedia regarding [Gender in Dutch Grammar](https:/
 | Infinitive verb used has a noun | always **het** | Het hebben (having...)                                                     |
 | Persons and gender names        | **de**         | De meisje, De vader (the girl, the father) exception: het kind (the child) |
 
+🎮 Do you want to improve your articles? Play the <a href="/games/deofhet">De or (b)Het!</a> 🎮
+
 You can find an exhaustive list on [colanguage](https://www.colanguage.com/dutch-articles) website, and a video made by [Kim](https://www.youtube.com/watch?v=3f6ppki9o54)
