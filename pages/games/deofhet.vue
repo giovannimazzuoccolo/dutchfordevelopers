@@ -1,6 +1,6 @@
 <template>
     <Container>
-        <UITitle orange="Memory" />
+        <UITitle orange="De or" blue="(B)het" />
         <div class="relative">
             <div
                 v-if="success"
@@ -34,9 +34,37 @@
                 class="flex my-4 dark:text-white justify-between"
             >
                 <p>
-                    Guilder: <strong>{{ money }}</strong>
+                    Guilder: <strong>{{ money }} G</strong>
                 </p>
                 <p>Score: {{ score }}</p>
+            </div>
+
+            <div
+                class="p-16 flex justify-center items-center gap-4"
+            >
+                <select
+                    v-model="selected"
+                    class="text-4xl rounded"
+                >
+                    <option value="de">De</option>
+                    <option value="het">Het</option>
+                </select>
+                <span class="text-4xl dark:text-white">{{
+                    words[wordIndex].word
+                }}</span>
+            </div>
+            <div
+                class="p-16 flex justify-center items-center gap-4"
+            >
+                <UIButton @click="bet(50)"
+                    >Bet 50G</UIButton
+                >
+                <UIButton @click="bet(100)"
+                    >Bet 100G</UIButton
+                >
+                <UIButton @click="bet(500)"
+                    >Bet 500G</UIButton
+                >
             </div>
 
             <UIAccordion
@@ -49,16 +77,17 @@
 <script lang="ts">
 import Vue from 'vue'
 import { speak } from '~/utils/tts'
+import { wordList } from '~/content/deofhet'
+import { shuffle } from 'lodash'
 
 export default Vue.extend({
     data() {
         return {
+            selected: 'de',
             money: 1000,
-            words: [
-                { word: 'kind', solution: 'het' },
-                { word: 'krant', solution: 'de' },
-            ],
+            words: shuffle(wordList),
             score: 0,
+            wordIndex: 0,
             voice: [] as SpeechSynthesisVoice[],
             success: false,
         }
@@ -89,11 +118,21 @@ export default Vue.extend({
             })
         },
 
+        bet(betted: number) {
+            const { solution } = this.words[this.wordIndex]
+            if (solution === this.selected) {
+                this.score++
+                this.money = this.money + betted * 2
+                this.wordIndex++
+            } else {
+                this.money = this.money - betted
+                this.wordIndex++
+            }
+        },
+
         tryAgain() {
             location.reload()
         },
-
-        bet(money: number) {},
     },
 })
 </script>
