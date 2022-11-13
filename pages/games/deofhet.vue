@@ -59,10 +59,14 @@
                 <UIButton @click="bet(50)"
                     >Bet 50G</UIButton
                 >
-                <UIButton @click="bet(100)"
+                <UIButton
+                    @click="bet(100)"
+                    :disabled="money < 100"
                     >Bet 100G</UIButton
                 >
-                <UIButton @click="bet(500)"
+                <UIButton
+                    @click="bet(500)"
+                    :disabled="money < 500"
                     >Bet 500G</UIButton
                 >
             </div>
@@ -118,6 +122,12 @@ export default Vue.extend({
             })
         },
 
+        isLost() {
+            if (this.money < 0 && this.score > 0) {
+                this.success = true
+            }
+        },
+
         bet(betted: number) {
             const { solution } = this.words[this.wordIndex]
             if (solution === this.selected) {
@@ -126,6 +136,7 @@ export default Vue.extend({
                 this.wordIndex++
             } else {
                 this.money = this.money - betted
+                this.isLost
                 this.wordIndex++
             }
         },
