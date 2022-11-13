@@ -45,12 +45,13 @@ The Dutch language has 2 types of articles, definite (_de_ or _het_) and indefin
 
 Yes, the Dutch language has two articles for the definite type. **De** and **Het**. For example, the most famous Dutch Newspaper is "De Telegraaf", meanwhile the Dutch national anthem is called "Het Wilhelmus". Technically, the masculine and the feminine nouns have **De** has definite article, and the neuter is **Het**; plural nouns have always **De**. There is a little trick, if you don't remember which article to choose, you can make your noun
 
-There is a long article on wikipedia regarding [Gender in Dutch Grammar](https://en.wikipedia.org/wiki/Gender_in_Dutch_grammar), which helps you to choose which article to put before the noun. I've made a small table which some good insights:
+There is a long article on wikipedia regarding [Gender in Dutch Grammar](https://en.wikipedia.org/wiki/Gender_in_Dutch_grammar), explaining the gender in Dutch, which helps a lot to get the correct article. Another important website is [welklidwoord.nl](https://www.welklidwoord.nl/), where you can use the search bar for discover if the searched Dutch word has De or Het as article. I've made a small table which some good insights:
 
-| Noun   | Plural      | English Translation | ‼️ exceptions                                                    |
-| ------ | ----------- | ------------------- | ---------------------------------------------------------------- |
-| Fiets  | Fiet**en**  | bike, _bikes_       |                                                                  |
-| meisje | meisje**s** | girl, _girls_       |                                                                  |
-| Muur   | Mur**en**   | wall, _walls_       | noun with a double vowel so one vowel is dropped                 |
-| Pen    | Pen**nen**  | pen, _pens_         | some nouns that ending with a consonant a new consonant is added |
-| Ei     | Ei**eren**  | egg, _eggs_         | similar to old Germanic "z-stem"                                 |
+| Nouns type                      | Article        | Example                                                                    |
+| ------------------------------- | -------------- | -------------------------------------------------------------------------- |
+| Plural                          | always **de**  | De Krant (the newspaper)                                                   |
+| Diminutive                      | always **het** | Het Krantje (the little newspaper)                                         |
+| Infinitive verb used has a noun | always **het** | Het hebben (having...)                                                     |
+| Persons and gender names        | **de**         | De meisje, De vader (the girl, the father) exception: het kind (the child) |
+
+You can find an exhaustive list on [colanguage](https://www.colanguage.com/dutch-articles) website, and a video made by [Kim](https://www.youtube.com/watch?v=3f6ppki9o54)
