@@ -40,19 +40,32 @@
             </div>
 
             <div
-                class="p-16 flex justify-center items-center gap-4"
+                class="p-16 flex justify-center items-center gap-4 flex-col"
             >
-                <select
-                    v-model="selected"
-                    class="text-4xl rounded"
+                <div>
+                    <select
+                        v-model="selected"
+                        class="text-4xl rounded"
+                    >
+                        <option value="de">De</option>
+                        <option value="het">Het</option>
+                    </select>
+                    <span
+                        class="text-4xl dark:text-white"
+                        >{{ getWord }}</span
+                    >
+                </div>
+                <div
+                    :class="
+                        isLastGuessCorrect
+                            ? 'text-green-400'
+                            : 'text-red-400'
+                    "
                 >
-                    <option value="de">De</option>
-                    <option value="het">Het</option>
-                </select>
-                <span class="text-4xl dark:text-white">{{
-                    words[wordIndex].word
-                }}</span>
+                    {{ lastWord }}
+                </div>
             </div>
+
             <div
                 class="p-16 flex justify-center items-center gap-4"
             >
@@ -94,12 +107,22 @@ export default Vue.extend({
             wordIndex: 0,
             voice: [] as SpeechSynthesisVoice[],
             success: false,
+            lastWord: '',
+            isLastGuessCorrect: false,
         }
     },
 
     computed: {
         isLogged() {
             return this.$store.getters['user/isLogged']
+        },
+
+        getWord() {
+            return this.words[this.wordIndex].word
+        },
+
+        getSolution() {
+            return this.words[this.wordIndex].solution
         },
     },
 
@@ -123,8 +146,16 @@ export default Vue.extend({
         },
 
         isLost() {
-            if (this.money < 0 && this.score > 0) {
+            if (this.money < 0) {
                 this.success = true
+            }
+        },
+
+        increaseWordIndexOrSuccess() {
+            if (this.wordIndex + 1 === this.words.length) {
+                this.success = true
+            } else {
+                this.wordIndex++
             }
         },
 
@@ -133,11 +164,17 @@ export default Vue.extend({
             if (solution === this.selected) {
                 this.score++
                 this.money = this.money + betted * 2
-                this.wordIndex++
+                this.isLastGuessCorrect = true
+                this.lastWord = `👍 ${this.getSolution} ${this.getWord} is correct!`
+                this.increaseWordIndexOrSuccess()
             } else {
                 this.money = this.money - betted
                 this.isLost
-                this.wordIndex++
+                this.isLastGuessCorrect = false
+                this.lastWord = `👎 ${
+                    this.getSolution === 'de' ? 'het' : 'de'
+                } ${this.getWord} is wrong!`
+                this.increaseWordIndexOrSuccess()
             }
         },
 

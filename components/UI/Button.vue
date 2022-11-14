@@ -2,6 +2,7 @@
     <button
         @click="callback($event)"
         class="py-2 px-4 bg-main-orange text-white rounded font-bold border-2 border-main-orange hover:bg-white hover:text-main-orange transition ease-in-out"
+        :class="disabled ? 'bg-gray-300' : 'bg-main-orange'"
     >
         {{ text }}
         <slot />
@@ -13,6 +14,10 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     props: {
         text: String,
+        disabled: {
+            required: false,
+            type: Boolean,
+        },
     },
     methods: {
         callback: function (e: MouseEvent) {
