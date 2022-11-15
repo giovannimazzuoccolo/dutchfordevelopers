@@ -15,8 +15,9 @@
             <div class="grid grid-cols-3 gap-4">
                 <template v-for="games in gamesList">
                     <GamesListGameCard
-                        :title="games.title"
+                        :name="games.name"
                         :description="games.description"
+                        :route="games.route"
                     />
                 </template>
             </div>
@@ -27,6 +28,8 @@
 import { mapState } from 'vuex'
 
 import Vue from 'vue'
+
+//TODO: implement route
 
 export default Vue.extend({
     mounted() {

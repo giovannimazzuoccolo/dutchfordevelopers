@@ -28,7 +28,7 @@
             <p class="my-4 dark:text-white">
                 Play "De or (b)het", guess if the word is a
                 de or an het word, do your bet and don't
-                lose your guilder!
+                lose your fake guilder!
             </p>
             <div
                 class="flex my-4 dark:text-white justify-between"
