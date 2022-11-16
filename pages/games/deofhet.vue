@@ -107,6 +107,7 @@ export default Vue.extend({
             wordIndex: 0,
             voice: [] as SpeechSynthesisVoice[],
             success: false,
+            fail: false,
             lastWord: '',
             isLastGuessCorrect: false,
         }

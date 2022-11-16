@@ -14,11 +14,13 @@
         <div v-else="loadStatus === 'success'">
             <div class="grid grid-cols-3 gap-4">
                 <template v-for="games in gamesList">
-                    <GamesListGameCard
-                        :name="games.name"
-                        :description="games.description"
-                        :route="games.route"
-                    />
+                    <NuxtLink :to="games.route">
+                        <GamesListGameCard
+                            :name="games.name"
+                            :description="games.description"
+                            :route="games.route"
+                        />
+                    </NuxtLink>
                 </template>
             </div>
         </div>
