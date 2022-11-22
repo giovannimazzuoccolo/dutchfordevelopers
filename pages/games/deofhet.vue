@@ -2,15 +2,7 @@
     <Container>
         <UITitle orange="De or" blue="(B)het" />
         <div class="relative">
-            <div
-                v-if="success"
-                class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
-            >
-                <h2
-                    class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center"
-                >
-                    🎉 Gefeliciteerd 🎉
-                </h2>
+            <GamesSuccess v-if="success">
                 <p class="text-white">
                     You guessed {{ score }} words!
                 </p>
@@ -24,7 +16,7 @@
                         >Try again</UIButton
                     >
                 </div>
-            </div>
+            </GamesSuccess>
             <p class="my-4 dark:text-white">
                 Play "De or (b)het", guess if the word is a
                 de or an het word, do your bet and don't
@@ -69,7 +61,9 @@
             <div
                 class="p-16 flex justify-center items-center gap-4"
             >
-                <UIButton @click="bet(50)"
+                <UIButton
+                    @click="bet(50)"
+                    :disabled="money < 50"
                     >Bet 50G</UIButton
                 >
                 <UIButton
@@ -96,6 +90,7 @@ import Vue from 'vue'
 import { speak } from '~/utils/tts'
 import { wordList } from '~/content/deofhet'
 import { shuffle } from 'lodash'
+import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 
 export default Vue.extend({
     data() {
@@ -112,32 +107,26 @@ export default Vue.extend({
             isLastGuessCorrect: false,
         }
     },
-
     computed: {
         isLogged() {
             return this.$store.getters['user/isLogged']
         },
-
         getWord() {
             return this.words[this.wordIndex].word
         },
-
         getSolution() {
             return this.words[this.wordIndex].solution
         },
     },
-
     mounted() {
         window.speechSynthesis.onvoiceschanged = () => {
             const voices =
                 window.speechSynthesis.getVoices()
-
             this.voice = voices.filter(
                 (d) => d.lang === 'nl-NL'
             )
         }
     },
-
     methods: {
         saveScore() {
             this.$store.dispatch('scores/saveScore', {
@@ -145,13 +134,11 @@ export default Vue.extend({
                 score: this.score,
             })
         },
-
         isLost() {
             if (this.money < 0) {
                 this.success = true
             }
         },
-
         increaseWordIndexOrSuccess() {
             if (this.wordIndex + 1 === this.words.length) {
                 this.success = true
@@ -159,7 +146,6 @@ export default Vue.extend({
                 this.wordIndex++
             }
         },
-
         bet(betted: number) {
             const { solution } = this.words[this.wordIndex]
             if (solution === this.selected) {
@@ -178,10 +164,10 @@ export default Vue.extend({
                 this.increaseWordIndexOrSuccess()
             }
         },
-
         tryAgain() {
             location.reload()
         },
     },
+    components: { GamesSuccess },
 })
 </script>

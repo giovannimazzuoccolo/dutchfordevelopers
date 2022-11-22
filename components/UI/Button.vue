@@ -2,7 +2,11 @@
     <button
         @click="callback($event)"
         class="py-2 px-4 bg-main-orange text-white rounded font-bold border-2 border-main-orange hover:bg-white hover:text-main-orange transition ease-in-out"
-        :class="disabled ? 'bg-gray-300' : 'bg-main-orange'"
+        :class="
+            disabled
+                ? 'bg-gray-300 border-gray-500 text-black dark:bg-gray-700  dark:border-black'
+                : 'bg-main-orange'
+        "
     >
         {{ text }}
         <slot />
