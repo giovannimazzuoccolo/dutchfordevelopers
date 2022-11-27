@@ -17,6 +17,18 @@
                     >
                 </div>
             </GamesSuccess>
+
+            <GamesOver v-if="fail">
+                <p class="text-white">
+                    You lost all the guilder
+                </p>
+                <div class="flex gap-4">
+                    <UIButton @click="tryAgain"
+                        >Try again</UIButton
+                    >
+                </div>
+            </GamesOver>
+
             <p class="my-4 dark:text-white">
                 Play "De or (b)het", guess if the word is a
                 de or an het word, do your bet and don't
@@ -87,10 +99,10 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { speak } from '~/utils/tts'
 import { wordList } from '~/content/deofhet'
 import { shuffle } from 'lodash'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
+import GamesOver from '~/components/Games/Status/GamesOver.vue'
 
 export default Vue.extend({
     data() {
@@ -134,11 +146,6 @@ export default Vue.extend({
                 score: this.score,
             })
         },
-        isLost() {
-            if (this.money < 0) {
-                this.success = true
-            }
-        },
         increaseWordIndexOrSuccess() {
             if (this.wordIndex + 1 === this.words.length) {
                 this.success = true
@@ -156,12 +163,17 @@ export default Vue.extend({
                 this.increaseWordIndexOrSuccess()
             } else {
                 this.money = this.money - betted
-                this.isLost
-                this.isLastGuessCorrect = false
-                this.lastWord = `👎 ${
-                    this.getSolution === 'de' ? 'het' : 'de'
-                } ${this.getWord} is wrong!`
-                this.increaseWordIndexOrSuccess()
+                if (this.money <= 0) {
+                    this.fail = true
+                } else {
+                    this.isLastGuessCorrect = false
+                    this.lastWord = `👎 ${
+                        this.getSolution === 'de'
+                            ? 'het'
+                            : 'de'
+                    } ${this.getWord} is wrong!`
+                    this.increaseWordIndexOrSuccess()
+                }
             }
         },
         tryAgain() {
