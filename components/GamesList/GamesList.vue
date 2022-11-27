@@ -35,7 +35,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
     mounted() {
-        this.$store.dispatch('games/getGames')
+        this.$store.dispatch('games/getGamesWithScore')
     },
     computed: mapState({
         loadStatus: (state) => state.games.request,

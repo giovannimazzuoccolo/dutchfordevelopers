@@ -18,6 +18,10 @@ export default Vue.extend({
         name: String,
         description: String,
         route: String,
+        score: {
+            type: String,
+            required: false,
+        },
     },
     methods: {
         navigate() {

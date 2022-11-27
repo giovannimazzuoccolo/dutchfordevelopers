@@ -120,7 +120,7 @@ export default Vue.extend({
     methods: {
         saveScore() {
             this.$store.dispatch('scores/saveScore', {
-                game: 'memory',
+                game: 'games/memory',
                 score: this.time,
             })
         },

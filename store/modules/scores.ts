@@ -53,8 +53,33 @@ const actions: ActionTree<any, any> = {
         }
     },
     async getScoreByUserId() {
+        this.commit('scores/REQUEST_STARTED');
         const userInfo = supabase.auth.user()
-        const { data, error} = await supabase.from("scores").select()
+        if(userInfo){
+        const { data, error} = await supabase.from("scores").select('*').eq('user_id', userInfo.id)
+            if(error) {
+                this.commit('courses/REQUEST_ERROR')
+                return error;
+            } else {
+                this.commit('courses/ADD_DATA', data)
+                return data;
+            }
+        }
+    },
+    
+    async getScoreByGameAndCurrentUser(gameRoute) {
+        this.commit('scores/REQUEST_STARTED');
+        const userInfo = supabase.auth.user()
+        if(userInfo){
+        const { data, error} = await supabase.from("scores").select('*').eq('user_id', userInfo.id).eq('game',gameRoute)
+            if(error) {
+                this.commit('courses/REQUEST_ERROR')
+                return error;
+            } else {
+                this.commit('courses/ADD_DATA', data)
+                return data;
+            }
+        }
     },
 
     async saveScore({ commit }, data) {

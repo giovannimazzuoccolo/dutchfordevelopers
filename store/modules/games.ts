@@ -51,6 +51,17 @@ const actions: ActionTree<any, any> = {
         } else {
             this.commit('games/REQUEST_ERROR');
         }
+    },
+
+    async getGamesWithScore() { //TODO: add request joined with score
+        this.commit('games/REQUEST_STARTED');
+        const { data, error } = await supabase.from("games").select();
+        if (!error) {
+            this.commit('games/REQUEST_SUCCESS');
+            this.commit('games/ADD_DATA', data);
+        } else {
+            this.commit('games/REQUEST_ERROR');
+        }
     }
 }
 

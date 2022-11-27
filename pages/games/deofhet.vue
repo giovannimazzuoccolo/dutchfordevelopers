@@ -142,7 +142,7 @@ export default Vue.extend({
     methods: {
         saveScore() {
             this.$store.dispatch('scores/saveScore', {
-                game: 'deofhet',
+                game: 'games/deofhet',
                 score: this.score,
             })
         },
@@ -180,6 +180,5 @@ export default Vue.extend({
             location.reload()
         },
     },
-    components: { GamesSuccess },
 })
 </script>
