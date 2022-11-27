@@ -25,7 +25,7 @@ export default defineComponent({
     },
     methods: {
         callback: function (e: MouseEvent) {
-            this.$emit('click', e)
+            !this.disabled && this.$emit('click', e)
         },
     },
 })
