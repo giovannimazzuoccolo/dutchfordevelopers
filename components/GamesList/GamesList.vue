@@ -19,6 +19,7 @@
                             :name="games.name"
                             :description="games.description"
                             :route="games.route"
+                            :score="games.score"
                         />
                     </NuxtLink>
                 </template>
@@ -30,8 +31,6 @@
 import { mapState } from 'vuex'
 
 import Vue from 'vue'
-
-//TODO: implement route
 
 export default Vue.extend({
     mounted() {

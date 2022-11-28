@@ -46,10 +46,10 @@ const actions: ActionTree<any, any> = {
         this.commit('scores/REQUEST_STARTED');
         const { data, error } = await supabase.from("scores").select();
         if (!error) {
-            this.commit('courses/REQUEST_SUCCESS');
-            this.commit('courses/ADD_DATA', data);
+            this.commit('scores/REQUEST_SUCCESS');
+            this.commit('scores/ADD_DATA', data);
         } else {
-            this.commit('courses/REQUEST_ERROR');
+            this.commit('scores/REQUEST_ERROR');
         }
     },
     async getScoreByUserId() {
@@ -58,25 +58,25 @@ const actions: ActionTree<any, any> = {
         if(userInfo){
         const { data, error} = await supabase.from("scores").select('*').eq('user_id', userInfo.id)
             if(error) {
-                this.commit('courses/REQUEST_ERROR')
+                this.commit('scores/REQUEST_ERROR')
                 return error;
             } else {
-                this.commit('courses/ADD_DATA', data)
+                this.commit('scores/ADD_DATA', data)
                 return data;
             }
         }
-    },
+    },   
     
-    async getScoreByGameAndCurrentUser(gameRoute) {
+    async getScoreByGameAndCurrentUser({commit}, gameRoute) {
         this.commit('scores/REQUEST_STARTED');
         const userInfo = supabase.auth.user()
         if(userInfo){
-        const { data, error} = await supabase.from("scores").select('*').eq('user_id', userInfo.id).eq('game',gameRoute)
+        const { data, error} = await supabase.from("scores").select('score').eq('user_id', userInfo.id).eq('game',gameRoute)
             if(error) {
-                this.commit('courses/REQUEST_ERROR')
+                this.commit('scores/REQUEST_ERROR')
                 return error;
             } else {
-                this.commit('courses/ADD_DATA', data)
+                this.commit('scores/ADD_DATA', data)
                 return data;
             }
         }
@@ -89,9 +89,9 @@ const actions: ActionTree<any, any> = {
         if(userInfo) {
             const { error } = await supabase.from("scores").insert( { game, score, user_id: userInfo.id  } );
             if (!error) {
-                this.commit('courses/REQUEST_SUCCESS');
+                this.commit('scores/REQUEST_SUCCESS');
             } else {
-                this.commit('courses/REQUEST_ERROR');
+                this.commit('scores/REQUEST_ERROR');
             }
 
         } else {

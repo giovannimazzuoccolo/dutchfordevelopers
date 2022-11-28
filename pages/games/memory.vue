@@ -188,6 +188,10 @@ export default Vue.extend({
         },
 
         completed() {
+            this.$store.dispatch(
+                'scores/getScoreByGameAndCurrentUser',
+                'games/memory'
+            )
             return setTimeout(() => {
                 this.success = true
             }, 600)

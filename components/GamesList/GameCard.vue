@@ -8,6 +8,12 @@
             {{ name }}
         </h3>
         <p class="dark:text-white">{{ description }}</p>
+        <p class="text-right dark:text-white" v-if="score">
+            Best score
+            <span class="text-main-orange">{{
+                score
+            }}</span>
+        </p>
     </div>
 </template>
 <script lang="ts">
