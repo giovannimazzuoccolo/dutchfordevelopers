@@ -13,11 +13,12 @@
                 </h2>
                 <p class="text-white">
                     You completed the game in
-                    {{ secondsToTime }} seconds
+                    {{ secondsToTime }} seconds, previous
+                    best score was {{ pastScore }} seconds
                 </p>
                 <div class="flex gap-4">
                     <UIButton
-                        v-if="isLogged"
+                        v-if="isLogged && time < pastScore"
                         @click="saveScore"
                         >Save</UIButton
                     >
@@ -79,6 +80,7 @@ export default Vue.extend({
             time: 0,
             interval: 0,
             success: false,
+            pastScore: 0,
         }
     },
 
@@ -187,11 +189,15 @@ export default Vue.extend({
             )
         },
 
-        completed() {
-            this.$store.dispatch(
+        async completed() {
+            const score = await this.$store.dispatch(
                 'scores/getScoreByGameAndCurrentUser',
                 'games/memory'
             )
+            console.log('s', score)
+            this.pastScore = score[0].score
+                ? score[0].score
+                : 0
             return setTimeout(() => {
                 this.success = true
             }, 600)

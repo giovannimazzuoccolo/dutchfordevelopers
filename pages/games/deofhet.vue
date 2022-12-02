@@ -4,11 +4,12 @@
         <div class="relative">
             <GamesSuccess v-if="success">
                 <p class="text-white">
-                    You guessed {{ score }} words!
+                    You guessed {{ score }} words! Your best
+                    score is {{ pastScore }} words
                 </p>
                 <div class="flex gap-4">
                     <UIButton
-                        v-if="isLogged"
+                        v-if="isLogged && score > pastScore"
                         @click="saveScore"
                         >Save</UIButton
                     >
@@ -117,6 +118,7 @@ export default Vue.extend({
             fail: false,
             lastWord: '',
             isLastGuessCorrect: false,
+            pastScore: 0,
         }
     },
     computed: {
@@ -146,8 +148,16 @@ export default Vue.extend({
                 score: this.score,
             })
         },
-        increaseWordIndexOrSuccess() {
+        async increaseWordIndexOrSuccess() {
             if (this.wordIndex + 1 === this.words.length) {
+                const score = await this.$store.dispatch(
+                    'scores/getScoreByGameAndCurrentUser',
+                    'games/deofhet'
+                )
+                this.pastScore = score[0].score
+                    ? score[0].score
+                    : 0
+
                 this.success = true
             } else {
                 this.wordIndex++
