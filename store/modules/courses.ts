@@ -51,6 +51,29 @@ const actions: ActionTree<any, any> = {
         } else {
             this.commit('courses/REQUEST_ERROR');
         }
+    },
+
+    async getCoursesForUser() {
+            //TODO: something with join? or action in action?
+    },
+
+    async markCourseAsRead({commit}, data) {
+        this.commit('courses/REQUEST_STARTED');
+        const { courseId } = data;
+        const userInfo = supabase.auth.user()
+        if(userInfo) {
+            const { error } = await supabase.from("courses_users").insert( { course_id: courseId, user_id: userInfo.id  } );
+            if (!error) {
+                this.commit('courses/REQUEST_SUCCESS');
+            } else {
+                this.commit('courses/REQUEST_ERROR');
+            }
+
+        } else {
+            console.error('No user defined');
+        }
+
+    
     }
 }
 

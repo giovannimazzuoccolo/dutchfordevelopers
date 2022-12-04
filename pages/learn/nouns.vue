@@ -11,7 +11,7 @@
         </article>
         <Container>
             <div class="my-4">
-                <UIButton
+                <UIButton @click="markCourse"
                     >Mark this lesson as read</UIButton
                 >
             </div>
@@ -30,6 +30,14 @@ export default Vue.extend({
     async asyncData({ $content }) {
         const page = await $content('nouns').fetch()
         return { page }
+    },
+    methods: {
+        markCourse() {
+            this.$store.dispatch(
+                'courses/markCourseAsRead',
+                { courseId: 1 }
+            )
+        },
     },
 })
 </script>
