@@ -48,13 +48,33 @@ const actions: ActionTree<any, any> = {
         if (!error) {
             this.commit('courses/REQUEST_SUCCESS');
             this.commit('courses/ADD_DATA', data);
+            return data;
         } else {
             this.commit('courses/REQUEST_ERROR');
+            return error;
         }
     },
 
     async getCoursesForUser() {
             //TODO: something with join? or action in action?
+        this.commit('courses/REQUEST_STARTED');
+        const userInfo = supabase.auth.user();
+        if(userInfo){
+            const { data, error } = await supabase.from('courses_users').select('course_id').eq('user_id', userInfo.id);
+            if(!error) {
+                const coursesList = await this.dispatch('courses/getCourses');
+                coursesList.map((c:Course) => {
+                    return {
+                        ...c,
+                        isRead: data.findIndex(d => d.course_id === c.id) !== -1
+                    }
+                })
+            } else {
+                this.commit('courses/REQUEST_ERROR');
+            }
+        } else {
+            this.dispatch('courses/getCourses');
+        }
     },
 
     async markCourseAsRead({commit}, data) {
@@ -64,9 +84,9 @@ const actions: ActionTree<any, any> = {
         if(userInfo) {
             const { error } = await supabase.from("courses_users").insert( { course_id: courseId, user_id: userInfo.id  } );
             if (!error) {
-                this.commit('courses/REQUEST_SUCCESS');
+                commit('courses/REQUEST_SUCCESS');
             } else {
-                this.commit('courses/REQUEST_ERROR');
+                commit('courses/REQUEST_ERROR');
             }
 
         } else {
