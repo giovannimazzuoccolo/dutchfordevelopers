@@ -7,6 +7,7 @@ export type Course = {
     title: String,
     description: String,
     image: String
+    isRead?: boolean
 }
 
 export type Courses = Course[];
@@ -56,11 +57,38 @@ const actions: ActionTree<any, any> = {
     },
 
     async getCoursesForUser() {
-            //TODO: something with join? or action in action?
         this.commit('courses/REQUEST_STARTED');
         const userInfo = supabase.auth.user();
         if(userInfo){
             const { data, error } = await supabase.from('courses_users').select('course_id').eq('user_id', userInfo.id);
+            if(!error) {
+                const coursesList = await this.dispatch('courses/getCourses');
+                
+                const courseListWithRead = coursesList.map((c:Course) => {
+                    const res = {
+                        ...c,
+                        isRead: data.findIndex(d => d.course_id === c.id) !== -1
+                    }
+                    console.log(res);
+                    return {
+                        ...c,
+                        isRead: data.findIndex(d => d.course_id === c.id) !== -1
+                    }
+                })
+                this.commit('courses/ADD_DATA', courseListWithRead);           
+            } else {
+                this.commit('courses/REQUEST_ERROR');
+            }
+        } else {
+            this.dispatch('courses/getCourses');
+        }
+    },
+
+    async getCoursesJoined() {
+        this.commit('courses/REQUEST_STARTED');
+        const userInfo = supabase.auth.user();
+        if(userInfo){
+            const { data, error } = await supabase.from('courses_users').select('courses (id, title, description, image)').eq('user_id', userInfo.id);
             if(!error) {
                 const coursesList = await this.dispatch('courses/getCourses');
                 coursesList.map((c:Course) => {
@@ -75,6 +103,7 @@ const actions: ActionTree<any, any> = {
         } else {
             this.dispatch('courses/getCourses');
         }
+
     },
 
     async markCourseAsRead({commit}, data) {
@@ -93,7 +122,6 @@ const actions: ActionTree<any, any> = {
             console.error('No user defined');
         }
 
-    
     }
 }
 
