@@ -194,7 +194,6 @@ export default Vue.extend({
                 'scores/getScoreByGameAndCurrentUser',
                 'games/memory'
             )
-            console.log('s', score)
             this.pastScore = score[0].score
                 ? score[0].score
                 : 0

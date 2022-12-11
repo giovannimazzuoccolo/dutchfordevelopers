@@ -1,3 +1,4 @@
+import { capitalize } from 'lodash';
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { REQUEST_STATUS } from '~/enums';
 import { supabase } from '~/supabase/init'
@@ -69,7 +70,6 @@ const actions: ActionTree<any, any> = {
                         ...c,
                         isRead: data.findIndex(d => d.course_id === c.id) !== -1
                     }
-                    console.log(res);
                     return {
                         ...c,
                         isRead: data.findIndex(d => d.course_id === c.id) !== -1
@@ -106,16 +106,33 @@ const actions: ActionTree<any, any> = {
 
     },
 
-    async markCourseAsRead({commit}, data) {
+    async getCourse(_, data) {
+        this.commit('courses/REQUEST_STARTED');
+        const { courseName } = data;
+        const userInfo = supabase.auth.user();
+        if(userInfo){
+        const { data:courseData, error } = await supabase.from('courses').select('id, courses_users (course_id, user_id)').eq('title', capitalize(courseName)).eq('courses_users.user_id', userInfo.id);
+
+        if(error) {
+            this.commit('courses/REQUEST_ERROR');
+        } else {
+            const composeData = courseData.map(c=> ({ ...c, isRead: c.courses_users.length > 0 }))
+            this.commit('courses/ADD_DATA', composeData);                   
+            this.commit('courses/REQUEST_SUCCESS');
+        }
+    }
+    },
+
+    async markCourseAsRead(_, data) {
         this.commit('courses/REQUEST_STARTED');
         const { courseId } = data;
         const userInfo = supabase.auth.user()
         if(userInfo) {
             const { error } = await supabase.from("courses_users").insert( { course_id: courseId, user_id: userInfo.id  } );
             if (!error) {
-                commit('courses/REQUEST_SUCCESS');
+                this.commit('courses/REQUEST_SUCCESS');
             } else {
-                commit('courses/REQUEST_ERROR');
+                this.commit('courses/REQUEST_ERROR');
             }
 
         } else {
