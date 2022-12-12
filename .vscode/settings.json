@@ -4,6 +4,8 @@
         "nuxt",
         "supabase",
         "tailwindcss",
+        "Telegraaf",
+        "Volkskrant",
         "vuex"
     ]
 }

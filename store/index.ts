@@ -5,6 +5,7 @@ import login, { LoginState } from './modules/login'
 import courses, { CoursesState } from './modules/courses';
 import scores, { ScoreState } from './modules/scores';
 import games, { GamesState } from './modules/games';
+import articles, { ArticlesState } from './modules/articles';
 import Vue from 'vue'
 
 
@@ -15,7 +16,8 @@ export interface GlobalStore {
     user: UserState,
     courses: CoursesState,
     scores: ScoreState,
-    games: GamesState
+    games: GamesState,
+    articles: ArticlesState
 }
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -29,7 +31,8 @@ export default () =>
             login,
             courses,
             scores,
-            games
+            games,
+            articles
         },
         strict: debug,
         plugins: debug ? [createLogger()] : [],

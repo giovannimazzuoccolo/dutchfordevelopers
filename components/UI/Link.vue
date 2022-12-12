@@ -3,7 +3,7 @@
         :href="href"
         :target="target"
         class="hover:underline"
-        :class="dark ? `text-blue-100` : `text-blue-800`"
+        :class="dark ? `main-orange` : `text-blue-800`"
         ><slot
     /></a>
 </template>

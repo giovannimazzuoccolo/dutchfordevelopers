@@ -23,6 +23,7 @@
         />
         <CoursesList v-if="isLearn" />
         <GamesList v-if="isGame" />
+        <ReadList v-if="isRead" />
     </div>
 </template>
 <script lang="ts">
@@ -32,6 +33,7 @@ export enum TAB_SELECTION {
     LEARN = 'learn',
     PLAY = 'play',
     READ = 'read',
+    LISTEN = 'listen',
 }
 
 export default defineComponent({
@@ -46,6 +48,9 @@ export default defineComponent({
         },
         isGame() {
             return this.tabSelection === TAB_SELECTION.PLAY
+        },
+        isRead() {
+            return this.tabSelection === TAB_SELECTION.READ
         },
     },
     methods: {
