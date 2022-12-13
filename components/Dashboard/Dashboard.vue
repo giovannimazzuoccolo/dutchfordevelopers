@@ -2,19 +2,21 @@
     <div>
         <Container>
             <div class="my-2">
-                <h2
-                    class="font-bold text-sm dark:text-white"
-                >
-                    Hallo
-                    {{
-                        $store.state.user.userInfo
-                            .user_metadata.full_name
-                    }},
-                </h2>
-                <p class="text-sm dark:text-white">
-                    You can start a new lesson, play a game,
-                    or read the blog!
-                </p>
+                <template v-if="logged">
+                    <h2
+                        class="font-bold text-sm dark:text-white"
+                    >
+                        Hallo
+                        {{
+                            $store.state.user.userInfo
+                                .user_metadata.full_name
+                        }},
+                    </h2>
+                    <p class="text-sm dark:text-white">
+                        You can start a new lesson, play a
+                        game, or read the blog!
+                    </p>
+                </template>
             </div>
         </Container>
         <DashboardTabs
@@ -37,6 +39,12 @@ export enum TAB_SELECTION {
 }
 
 export default defineComponent({
+    props: {
+        logged: {
+            required: false,
+            type: Boolean,
+        },
+    },
     data() {
         return {
             tabSelection: TAB_SELECTION.LEARN,
