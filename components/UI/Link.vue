@@ -2,8 +2,7 @@
     <a
         :href="href"
         :target="target"
-        class="hover:underline"
-        :class="dark ? `main-orange` : `text-blue-800`"
+        class="text-main-orange cursor-pointer hover:underline"
         ><slot
     /></a>
 </template>
@@ -14,7 +13,6 @@ export default defineComponent({
     props: {
         href: String,
         target: String,
-        dark: Boolean,
     },
 })
 </script>

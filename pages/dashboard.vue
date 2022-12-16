@@ -1,5 +1,5 @@
 <template>
-    <Dashboard />
+    <Dashboard :logged="true" />
 </template>
 <script>
 export default {

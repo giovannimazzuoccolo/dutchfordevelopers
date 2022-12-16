@@ -1,4 +1,4 @@
-<template>
+<template v-if="isLogged()">
     <div v-if="loadStatus === REQUEST_STATUS.SUCCESS">
         <article
             class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
@@ -24,6 +24,17 @@
         <UISpinner />
     </div>
 </template>
+<template v-else>
+    <article
+        class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
+    >
+        <nuxt-content
+            :document="page"
+            class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words"
+        />
+        <UILessonInfo />
+    </article>
+</template>
 <script lang="ts">
 import Vue from 'vue'
 import { mapState } from 'vuex'
@@ -42,14 +53,19 @@ export default Vue.extend({
     }),
     async asyncData({ $content, params, store }) {
         const { lesson } = params
-        store.dispatch('courses/getCourse', {
-            courseName: lesson,
-        })
+        if (store.getters['user/isLogged']) {
+            store.dispatch('courses/getCourse', {
+                courseName: lesson,
+            })
+        }
 
         const page = await $content(lesson).fetch()
         return { page }
     },
     methods: {
+        isLogged() {
+            return this.$store.getters['user/isLogged']
+        },
         markCourse() {
             this.$store.dispatch(
                 'courses/markCourseAsRead',

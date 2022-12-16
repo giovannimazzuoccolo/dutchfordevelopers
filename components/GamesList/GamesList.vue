@@ -34,7 +34,11 @@ import Vue from 'vue'
 
 export default Vue.extend({
     mounted() {
-        this.$store.dispatch('games/getGamesWithScore')
+        if (this.$store.getters['user/isLogged']) {
+            this.$store.dispatch('games/getGamesWithScore')
+        } else {
+            this.$store.dispatch('games/getGames')
+        }
     },
     computed: mapState({
         loadStatus: (state) => state.games.request,
