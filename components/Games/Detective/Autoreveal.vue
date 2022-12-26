@@ -12,13 +12,24 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
+    props: {
+        delay: Number,
+    },
     data() {
         return {
             isVisible: false,
+            interval: 0,
         }
     },
-    mounted() {
-        this.isVisible = true
+    created() {
+        this.interval = this.counterFunc()
+    },
+    methods: {
+        counterFunc(): number {
+            return window.setInterval(() => {
+                this.isVisible = true
+            }, this.delay * 1000)
+        },
     },
 })
 </script>

@@ -44,10 +44,27 @@
                     >Disable English translations</UILink
                 >
             </div>
-            <div class="flex justify-center">
-                <Autoreveal>
-                    🕵️ Je bent een detective
-                    <small>You are a detective</small>
+            <div
+                class="flex justify-center flex-col gap-3 items-center"
+            >
+                <Autoreveal delay="1">
+                    🕵️ Je bent een detective<br />
+                    <small
+                        ><em
+                            >🕵️ You are a detective</em
+                        ></small
+                    >
+                </Autoreveal>
+                <Autoreveal :delay="stepper + 2">
+                    {{ returnPhrase().nl }} <br />
+                    <small>{{ returnPhrase().en }}</small>
+                </Autoreveal>
+                <Autoreveal :delay="stepper + 3">
+                    {{ returnPhrase().questions[0].nl }}
+                    <br />
+                    <small>{{
+                        returnPhrase().questions[0].en
+                    }}</small>
                 </Autoreveal>
             </div>
             <UIAccordion
@@ -60,12 +77,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import Autoreveal from '~/components/Games/Detective/Autoreveal.vue'
+import { route1 } from '~/content/detective'
 export default Vue.extend({
     data() {
         return {
             cases: 0,
             success: false,
             pastScore: 0,
+            stepper: 0,
         }
     },
     computed: {
@@ -88,6 +107,12 @@ export default Vue.extend({
                 game: 'games/detective',
                 score: this.cases,
             })
+        },
+        nextStep() {
+            this.stepper++
+        },
+        returnPhrase() {
+            return route1[this.stepper]
         },
         tryAgain() {
             location.reload()
