@@ -2,7 +2,7 @@ type Phrase = {
     nl: string,
     en: string,
     reset: boolean,
-    questions?: {
+    questions: {
         nl:string,
         en: string
     }[],
@@ -15,16 +15,12 @@ type Phrase = {
 
 type Phrases = Phrase[];
 
-const startingPhrase:Phrase = {
-    nl: '🕵️ Je bent een detective',
-    en: "🕵️ You are a detective",
-    reset: false
-}
+
 
 export const route1:Phrases = [
     {
-        nl: '🕵️ You ask ',
-        en: "🕵️ You ask the queen if she saw something",
+        nl: 'Je vraagt de koningin of ze iets gezien heeft',
+        en: "You are asking the queen if she saw something",
         questions: [{
             nl: "🕵️ Heb je iets gezien?",
             en: "🕵️ Have you seen something?"

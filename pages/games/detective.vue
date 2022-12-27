@@ -6,65 +6,54 @@
                 v-if="success"
                 class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
             >
-                <h2
-                    class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center"
-                >
+                <h2 class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center">
                     🎉 Gefeliciteerd 🎉
                 </h2>
                 <p class="text-white">
                     You solved
-                    {{ cases }}, the previous best score was
-                    {{ pastScore }} cases!
+                    {{ cases }}, the previous best score was {{ pastScore }} cases!
                 </p>
                 <div class="flex gap-4">
-                    <UIButton
-                        v-if="isLogged && cases < pastScore"
-                        @click="saveScore"
+                    <UIButton v-if="isLogged && cases < pastScore" @click="saveScore"
                         >Save</UIButton
                     >
-                    <UIButton @click="tryAgain"
-                        >Try again</UIButton
-                    >
+                    <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </div>
             <p class="my-4 dark:text-white">
-                Be a detective! Discover who stole the
-                Queen's crown. Be careful! Use the stressed
-                form only when you are sure about the
-                culprit.
+                Be a detective! Discover who stole the Queen's crown. Be careful! Use the stressed
+                form only when you are sure about the culprit.
             </p>
-            <div
-                class="flex my-4 dark:text-white justify-between"
-            >
+            <div class="flex my-4 dark:text-white justify-between">
                 <p>
                     Cases solved:
                     <strong>{{ cases }}</strong>
                 </p>
-                <UILink
-                    >Disable English translations</UILink
-                >
+                <UILink>Disable English translations</UILink>
             </div>
-            <div
-                class="flex justify-center flex-col gap-3 items-center"
-            >
+            <div class="flex justify-center flex-col gap-6 items-center">
                 <Autoreveal delay="1">
                     🕵️ Je bent een detective<br />
-                    <small
-                        ><em
-                            >🕵️ You are a detective</em
-                        ></small
-                    >
+                    <small><em>🕵️ You are a detective</em></small>
                 </Autoreveal>
                 <Autoreveal :delay="stepper + 2">
-                    {{ returnPhrase().nl }} <br />
-                    <small>{{ returnPhrase().en }}</small>
+                    <small
+                        >{{ returnPhrase().nl }} <br />
+                        {{ returnPhrase().en }}</small
+                    >
                 </Autoreveal>
                 <Autoreveal :delay="stepper + 3">
-                    {{ returnPhrase().questions[0].nl }}
+                    <select>
+                        <optgroup :label="returnPhrase().questions[0].en" />
+                        <option>
+                            {{ returnPhrase().questions[0].nl }}
+                        </option>
+                        <option>
+                            {{ returnPhrase().questions[1].nl }}
+                        </option>
+                    </select>
+                    <UIButton>Select</UIButton>
                     <br />
-                    <small>{{
-                        returnPhrase().questions[0].en
-                    }}</small>
                 </Autoreveal>
             </div>
             <UIAccordion
