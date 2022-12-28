@@ -35,10 +35,10 @@ export const route1:Phrases = [
         },
         reset: false
     },{
-        nl: '🕵️ Je gaat naar de bibliotheek, en je vindt een oorbel, die dezelfde is als de dochter van de koningin, de prinses ',
-        en: "🕵️ You go to the library, and you find an earring, which is the same as the Queen's daughter, the princess en je praat met haar",
+        nl: '🕵️ Je gaat naar de bibliotheek, en je vindt een oorbel, die dezelfde is als de dochter van de koningin, de prinses en je praat met haar',
+        en: "🕵️ You go to the library, and you find an earring, which is the same as the Queen's daughter, the princess and you ask her",
         questions: [{
-            nl: "🕵️ je hebt de kroon gestolen!",
+            nl: "🕵️ Je hebt de kroon gestolen!",
             en: "🕵️ You stole the crown!"
         },{ nl:
             "🕵️ Jij hebt de kroon gestolen!",

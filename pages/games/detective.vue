@@ -10,11 +10,12 @@
                     🎉 Gefeliciteerd 🎉
                 </h2>
                 <p class="text-white">
-                    You solved
-                    {{ cases }}, the previous best score was {{ pastScore }} cases!
+                    You selected
+                    {{ sentences }} corrected sentences, the previous best score was
+                    {{ pastScore }} sentences!
                 </p>
                 <div class="flex gap-4">
-                    <UIButton v-if="isLogged && cases < pastScore" @click="saveScore"
+                    <UIButton v-if="isLogged && sentences < pastScore" @click="saveScore"
                         >Save</UIButton
                     >
                     <UIButton @click="tryAgain">Try again</UIButton>
@@ -26,13 +27,13 @@
             </p>
             <div class="flex my-4 dark:text-white justify-between">
                 <p>
-                    Cases solved:
-                    <strong>{{ cases }}</strong>
+                    Correct sentences:
+                    <strong>{{ sentences }}</strong>
                 </p>
                 <UILink>Disable English translations</UILink>
             </div>
             <div class="flex justify-center flex-col gap-6 items-center">
-                <Autoreveal delay="1">
+                <Autoreveal :delay="1">
                     🕵️ Je bent een detective<br />
                     <small><em>🕵️ You are a detective</em></small>
                 </Autoreveal>
@@ -43,7 +44,7 @@
                     >
                 </Autoreveal>
                 <Autoreveal :delay="stepper + 3">
-                    <select>
+                    <select class="dark:text-black p-3 rounded" v-model="selection">
                         <optgroup :label="returnPhrase().questions[0].en" />
                         <option>
                             {{ returnPhrase().questions[0].nl }}
@@ -52,9 +53,19 @@
                             {{ returnPhrase().questions[1].nl }}
                         </option>
                     </select>
-                    <UIButton>Select</UIButton>
+                    <UIButton @click="checkSelection()">Select</UIButton>
                     <br />
                 </Autoreveal>
+                <div v-if="lastAnswer === 1" class="text-green-400">Correct!</div>
+                <div v-if="lastAnswer === 0" class="text-red-400">Not correct!</div>
+                <div v-if="lastAnswer !== -1">
+                    <Autoreveal :delay="1">
+                        {{ returnPhrase().answer?.nl }}<br />
+                        <small
+                            ><em>{{ returnPhrase().answer?.en }}</em></small
+                        >
+                    </Autoreveal>
+                </div>
             </div>
             <UIAccordion
                 title="Instructions"
@@ -70,10 +81,12 @@ import { route1 } from '~/content/detective'
 export default Vue.extend({
     data() {
         return {
-            cases: 0,
+            sentences: 0,
             success: false,
             pastScore: 0,
             stepper: 0,
+            selection: '',
+            lastAnswer: -1,
         }
     },
     computed: {
@@ -94,7 +107,7 @@ export default Vue.extend({
         saveScore() {
             this.$store.dispatch('scores/saveScore', {
                 game: 'games/detective',
-                score: this.cases,
+                score: this.sentences,
             })
         },
         nextStep() {
@@ -105,6 +118,14 @@ export default Vue.extend({
         },
         tryAgain() {
             location.reload()
+        },
+        checkSelection() {
+            console.log(this.selection)
+            if (this.returnPhrase().solution === this.selection) {
+                this.lastAnswer = 1
+            } else {
+                this.lastAnswer = 0
+            }
         },
     },
     components: { Autoreveal },
