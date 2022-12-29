@@ -1,6 +1,8 @@
 type Phrase = {
-    nl: string,
-    en: string,
+    intro: {
+        nl: string,
+        en: string,
+    },
     reset: boolean,
     questions: {
         nl:string,
@@ -19,8 +21,10 @@ type Phrases = Phrase[];
 
 export const route1:Phrases = [
     {
+        intro: {
         nl: 'Je vraagt de koningin of ze iets gezien heeft',
         en: "You are asking the queen if she saw something",
+        },
         questions: [{
             nl: "🕵️ Heb je iets gezien?",
             en: "🕵️ Have you seen something?"
@@ -35,9 +39,10 @@ export const route1:Phrases = [
         },
         reset: false
     },{
+        intro: {
         nl: '🕵️ Je gaat naar de bibliotheek, en je vindt een oorbel, die dezelfde is als de dochter van de koningin, de prinses en je praat met haar',
         en: "🕵️ You go to the library, and you find an earring, which is the same as the Queen's daughter, the princess and you ask her",
-        questions: [{
+         }, questions: [{
             nl: "🕵️ Je hebt de kroon gestolen!",
             en: "🕵️ You stole the crown!"
         },{ nl:

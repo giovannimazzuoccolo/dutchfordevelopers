@@ -32,61 +32,46 @@
                 </p>
                 <UILink>Disable English translations</UILink>
             </div>
-            <div class="flex justify-center flex-col gap-6 items-center">
+            <QuestionBlock
+                :round="stepper"
+                :selection="selection"
+                :phrases="text[stepper].intro"
+                :questions="text[stepper].questions"
+                :answer="text[stepper].answer"
+                :onSelection="checkSelection"
+            />
+            <div v-if="firstAnswer === 1" class="text-green-400">Correct!</div>
+            <div v-if="firstAnswer === 0" class="text-red-400">Not correct!</div>
+            <div v-if="firstAnswer !== -1">
                 <Autoreveal :delay="1">
-                    🕵️ Je bent een detective<br />
-                    <small><em>🕵️ You are a detective</em></small>
-                </Autoreveal>
-                <Autoreveal :delay="stepper + 2">
+                    {{ returnPhrase().answer?.nl }}<br />
                     <small
-                        >{{ returnPhrase().nl }} <br />
-                        {{ returnPhrase().en }}</small
+                        ><em>{{ returnPhrase().answer?.en }}</em></small
                     >
                 </Autoreveal>
-                <Autoreveal :delay="stepper + 3">
-                    <select class="dark:text-black p-3 rounded" v-model="selection">
-                        <optgroup :label="returnPhrase().questions[0].en" />
-                        <option>
-                            {{ returnPhrase().questions[0].nl }}
-                        </option>
-                        <option>
-                            {{ returnPhrase().questions[1].nl }}
-                        </option>
-                    </select>
-                    <UIButton @click="checkSelection()">Select</UIButton>
-                    <br />
-                </Autoreveal>
-                <div v-if="lastAnswer === 1" class="text-green-400">Correct!</div>
-                <div v-if="lastAnswer === 0" class="text-red-400">Not correct!</div>
-                <div v-if="lastAnswer !== -1">
-                    <Autoreveal :delay="1">
-                        {{ returnPhrase().answer?.nl }}<br />
-                        <small
-                            ><em>{{ returnPhrase().answer?.en }}</em></small
-                        >
-                    </Autoreveal>
-                </div>
             </div>
-            <UIAccordion
-                title="Instructions"
-                text="Select which question you want to ask. Be formal with the Queen!"
-            />
         </div>
+        <UIAccordion
+            title="Instructions"
+            text="Select which question you want to ask. Be formal with the Queen!"
+        />
     </Container>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Autoreveal from '~/components/Games/Detective/Autoreveal.vue'
+import QuestionBlock from '~/components/Games/Detective/QuestionBlock.vue'
 import { route1 } from '~/content/detective'
 export default Vue.extend({
     data() {
         return {
+            text: route1,
             sentences: 0,
             success: false,
             pastScore: 0,
             stepper: 0,
             selection: '',
-            lastAnswer: -1,
+            firstAnswer: -1,
         }
     },
     computed: {
@@ -114,7 +99,7 @@ export default Vue.extend({
             this.stepper++
         },
         returnPhrase() {
-            return route1[this.stepper]
+            return route1[this.stepper] //FIXME: it should return the array "before"
         },
         tryAgain() {
             location.reload()
@@ -122,12 +107,12 @@ export default Vue.extend({
         checkSelection() {
             console.log(this.selection)
             if (this.returnPhrase().solution === this.selection) {
-                this.lastAnswer = 1
+                this.firstAnswer = 1
             } else {
-                this.lastAnswer = 0
+                this.firstAnswer = 0
             }
         },
     },
-    components: { Autoreveal },
+    components: { Autoreveal, QuestionBlock },
 })
 </script>
