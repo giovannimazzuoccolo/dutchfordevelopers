@@ -34,13 +34,14 @@
             </div>
             <QuestionBlock
                 :round="stepper"
-                :selection="selection"
+                @selection="selection"
                 :phrases="text[stepper].intro"
                 :questions="text[stepper].questions"
                 :answer="text[stepper].answer"
                 :onSelection="checkSelection"
             />
-            <div v-if="firstAnswer === 1" class="text-green-400">Correct!</div>
+            <AnswerFeedback :firstAnswer="firstAnswer" :answers="returnPhrase().answer" />
+            <!-- <div v-if="firstAnswer === 1" class="text-green-400">Correct!</div>
             <div v-if="firstAnswer === 0" class="text-red-400">Not correct!</div>
             <div v-if="firstAnswer !== -1">
                 <Autoreveal :delay="1">
@@ -49,7 +50,7 @@
                         ><em>{{ returnPhrase().answer?.en }}</em></small
                     >
                 </Autoreveal>
-            </div>
+            </div> -->
         </div>
         <UIAccordion
             title="Instructions"
@@ -59,6 +60,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import AnswerFeedback from '~/components/Games/Detective/AnswerFeedback.vue'
 import Autoreveal from '~/components/Games/Detective/Autoreveal.vue'
 import QuestionBlock from '~/components/Games/Detective/QuestionBlock.vue'
 import { route1 } from '~/content/detective'
@@ -113,6 +115,6 @@ export default Vue.extend({
             }
         },
     },
-    components: { Autoreveal, QuestionBlock },
+    components: { Autoreveal, QuestionBlock, AnswerFeedback },
 })
 </script>

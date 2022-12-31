@@ -11,7 +11,10 @@
             >
         </GamesDetectiveAutoreveal>
         <GamesDetectiveAutoreveal :delay="3">
-            <select class="dark:text-black p-3 rounded" v-model="selection">
+            <select
+                class="border border-solid border-black dark:text-black p-3 rounded"
+                v-model="selection"
+            >
                 <optgroup :label="questions[0].en" />
                 <option>
                     {{ questions[0].nl }}

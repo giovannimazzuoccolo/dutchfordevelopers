@@ -28,7 +28,7 @@ export default Vue.extend({
         counterFunc(): number {
             return window.setInterval(() => {
                 this.isVisible = true
-            }, this.delay * 1000)
+            }, this.delay * 700)
         },
     },
 })
