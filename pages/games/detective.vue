@@ -34,11 +34,10 @@
             </div>
             <QuestionBlock
                 :round="stepper"
-                @selection="selection"
                 :phrases="text[stepper].intro"
                 :questions="text[stepper].questions"
                 :answer="text[stepper].answer"
-                :onSelection="checkSelection"
+                @onSelection="checkSelection"
             />
             <AnswerFeedback :firstAnswer="firstAnswer" :answers="returnPhrase().answer" />
             <!-- <div v-if="firstAnswer === 1" class="text-green-400">Correct!</div>
@@ -106,9 +105,9 @@ export default Vue.extend({
         tryAgain() {
             location.reload()
         },
-        checkSelection() {
-            console.log(this.selection)
-            if (this.returnPhrase().solution === this.selection) {
+        checkSelection(selection: string) {
+            console.log(selection)
+            if (this.returnPhrase().solution === selection) {
                 this.firstAnswer = 1
             } else {
                 this.firstAnswer = 0

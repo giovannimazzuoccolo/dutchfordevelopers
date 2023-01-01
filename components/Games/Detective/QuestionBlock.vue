@@ -23,7 +23,7 @@
                     {{ questions[1].nl }}
                 </option>
             </select>
-            <UIButton @click="onSelection">Select</UIButton>
+            <UIButton @click="callback">Select</UIButton>
             <br />
         </GamesDetectiveAutoreveal>
     </div>
@@ -44,13 +44,16 @@ export default Vue.extend({
         phrases: Object as () => Phrases,
         questions: Array as () => Questions,
         onSelection: Function,
-        selection: String,
     },
     methods: {
         callback: function (e: MouseEvent) {
             //this.$emit('click', e)
-            this.onSelection()
+            console.log('selection', this.selection)
+            this.$emit('onSelection', this.selection)
         },
+    },
+    data() {
+        return { selection: '' }
     },
 })
 </script>
