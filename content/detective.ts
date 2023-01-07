@@ -49,8 +49,8 @@ export const route1:Phrases = [
     }],
         solution: "🕵️ Jij hebt de kroon gestolen!",
         answer: {
-            nl: '👸 Het spijt me, het is zo glanzend!.',
-            en: '👸 I am sorry, it is so shiny!'
+            nl: '👧 Het spijt me, het is zo glanzend!.',
+            en: '👧 I am sorry, it is so shiny!'
         },
     }, {
         intro: {
@@ -79,12 +79,12 @@ export const route1:Phrases = [
             en: "🕵️ Your gardener is the thief!"
         },{ nl:
             "🕵️ Jouw tuinman is de dief!",
-            en: "🕵️ You stole the crown!"
+            en: "🕵️ Your gardener is the thief!"
     }],
         solution: "🕵️ Uw tuinman is de dief!",
         answer: {
-            nl: '👸 Het spijt me, het is zo glanzend!.',
-            en: '👸 I am sorry, it is so shiny!'
+            nl: '👸 Het lijkt erop dat ik een nieuwe tuinman nodig heb...',
+            en: '👸 It seems that I need a new gardener...'
         },
     }
     

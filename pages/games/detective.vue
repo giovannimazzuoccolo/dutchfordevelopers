@@ -15,7 +15,7 @@
                     {{ pastScore }} sentences!
                 </p>
                 <div class="flex gap-4">
-                    <UIButton v-if="isLogged && sentences < pastScore" @click="saveScore"
+                    <UIButton v-if="isLogged && sentences > pastScore" @click="saveScore"
                         >Save</UIButton
                     >
                     <UIButton @click="tryAgain">Try again</UIButton>
@@ -23,14 +23,17 @@
             </div>
             <p class="my-4 dark:text-white">
                 Be a detective! Discover who stole the Queen's crown. Be careful! Use the stressed
-                form only when you are sure about the culprit.
+                form only when you are sure about the culprit. (2 rounds)
             </p>
             <div class="flex my-4 dark:text-white justify-between">
                 <p>
                     Correct sentences:
                     <strong>{{ sentences }}</strong>
                 </p>
-                <UILink>Disable English translations</UILink>
+                <UILink v-if="!disableTranslations">Disable English translations</UILink>
+                <UILink v-if="disableTranslations" @click="disableTranslations"
+                    >Enable English Translations</UILink
+                >
             </div>
             <QuestionBlock
                 :round="stepper"
@@ -51,6 +54,7 @@
     </Container>
 </template>
 <script lang="ts">
+//TODO: get the previous score from the server
 import Vue from 'vue'
 import AnswerFeedback from '~/components/Games/Detective/AnswerFeedback.vue'
 import Autoreveal from '~/components/Games/Detective/Autoreveal.vue'
@@ -66,6 +70,7 @@ export default Vue.extend({
             stepper: 0,
             selection: '',
             firstAnswer: -1,
+            disableTranslations: false,
         }
     },
     computed: {
@@ -90,7 +95,12 @@ export default Vue.extend({
             })
         },
         nextStep() {
-            this.stepper++
+            if (this.stepper === 3) {
+                this.success = true
+            } else {
+                this.stepper++
+                this.firstAnswer = -1 //resetting the answer
+            }
         },
         returnPhrase() {
             return route1[this.stepper] //FIXME: it should return the array "before"
@@ -99,7 +109,6 @@ export default Vue.extend({
             location.reload()
         },
         checkSelection(selection: string) {
-            console.log(selection)
             if (this.returnPhrase().solution === selection) {
                 this.firstAnswer = 1
                 this.sentences++
