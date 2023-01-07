@@ -1,16 +1,16 @@
 <template>
     <div class="flex justify-center flex-col gap-6 items-center">
-        <GamesDetectiveAutoreveal :delay="1">
+        <GamesDetectiveAutoreveal :delay="1 + round">
             🕵️ Je bent een detective<br />
             <small><em>🕵️ You are a detective</em></small>
         </GamesDetectiveAutoreveal>
-        <GamesDetectiveAutoreveal :delay="2">
+        <GamesDetectiveAutoreveal :delay="2 + round">
             <small
                 >{{ phrases.nl }} <br />
                 {{ phrases.en }}</small
             >
         </GamesDetectiveAutoreveal>
-        <GamesDetectiveAutoreveal :delay="3">
+        <GamesDetectiveAutoreveal :delay="3 + round">
             <select
                 class="border border-solid border-black dark:text-black p-3 rounded"
                 v-model="selection"
@@ -48,7 +48,6 @@ export default Vue.extend({
     methods: {
         callback: function (e: MouseEvent) {
             //this.$emit('click', e)
-            console.log('selection', this.selection)
             this.$emit('onSelection', this.selection)
         },
     },

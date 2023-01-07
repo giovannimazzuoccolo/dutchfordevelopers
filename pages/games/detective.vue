@@ -36,20 +36,13 @@
                 :round="stepper"
                 :phrases="text[stepper].intro"
                 :questions="text[stepper].questions"
-                :answer="text[stepper].answer"
                 @onSelection="checkSelection"
             />
-            <AnswerFeedback :firstAnswer="firstAnswer" :answers="returnPhrase().answer" />
-            <!-- <div v-if="firstAnswer === 1" class="text-green-400">Correct!</div>
-            <div v-if="firstAnswer === 0" class="text-red-400">Not correct!</div>
-            <div v-if="firstAnswer !== -1">
-                <Autoreveal :delay="1">
-                    {{ returnPhrase().answer?.nl }}<br />
-                    <small
-                        ><em>{{ returnPhrase().answer?.en }}</em></small
-                    >
-                </Autoreveal>
-            </div> -->
+            <AnswerFeedback
+                :firstAnswer="firstAnswer"
+                :answers="returnPhrase().answer"
+                @continue="nextStep"
+            />
         </div>
         <UIAccordion
             title="Instructions"
@@ -109,6 +102,7 @@ export default Vue.extend({
             console.log(selection)
             if (this.returnPhrase().solution === selection) {
                 this.firstAnswer = 1
+                this.sentences++
             } else {
                 this.firstAnswer = 0
             }
