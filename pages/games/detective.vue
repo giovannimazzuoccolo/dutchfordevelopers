@@ -30,16 +30,19 @@
                     Correct sentences:
                     <strong>{{ sentences }}</strong>
                 </p>
-                <UILink v-if="!disableTranslations">Disable English translations</UILink>
-                <UILink v-if="disableTranslations" @click="disableTranslations"
-                    >Enable English Translations</UILink
-                >
+                <p v-if="!disableTranslations" @click="triggerTranslations"></p>
+                    Disable English translations
+                </p>
+                <p v-if="disableTranslations" @click="triggerTranslations">
+                    Enable English Translations
+                </p>
             </div>
             <QuestionBlock
                 :round="stepper"
                 :phrases="text[stepper].intro"
                 :questions="text[stepper].questions"
                 @onSelection="checkSelection"
+                :disableTranslation="!disableTranslations"
             />
             <AnswerFeedback
                 :firstAnswer="firstAnswer"
@@ -78,9 +81,6 @@ export default Vue.extend({
             return this.$store.getters['user/isLogged']
         },
     },
-    created() {},
-    beforeDestroy() {},
-    mounted() {},
     methods: {
         async completed() {
             const score = await this.$store.dispatch(
@@ -103,7 +103,7 @@ export default Vue.extend({
             }
         },
         returnPhrase() {
-            return route1[this.stepper] //FIXME: it should return the array "before"
+            return route1[this.stepper]
         },
         tryAgain() {
             location.reload()
@@ -115,6 +115,11 @@ export default Vue.extend({
             } else {
                 this.firstAnswer = 0
             }
+        },
+        triggerTranslations() {
+            alert('triggerTranslations')
+            const actualTranslations = this.disableTranslations
+            this.disableTranslations = !actualTranslations
         },
     },
     components: { Autoreveal, QuestionBlock, AnswerFeedback },

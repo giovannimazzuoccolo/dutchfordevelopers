@@ -2,12 +2,14 @@
     <div class="flex justify-center flex-col gap-6 items-center">
         <GamesDetectiveAutoreveal :delay="1 + round">
             🕵️ Je bent een detective<br />
-            <small><em>🕵️ You are a detective</em></small>
+            <span v-if="disableTranslation">
+                <small> <em>🕵️ You are a detective</em></small></span
+            >
         </GamesDetectiveAutoreveal>
         <GamesDetectiveAutoreveal :delay="2 + round">
             <small
                 >{{ phrases.nl }} <br />
-                {{ phrases.en }}</small
+                <span v-if="disableTranslation"> {{ phrases.en }}</span></small
             >
         </GamesDetectiveAutoreveal>
         <GamesDetectiveAutoreveal :delay="3 + round">
@@ -44,6 +46,7 @@ export default Vue.extend({
         phrases: Object as () => Phrases,
         questions: Array as () => Questions,
         onSelection: Function,
+        disableTranslation: Boolean,
     },
     methods: {
         callback: function (e: MouseEvent) {

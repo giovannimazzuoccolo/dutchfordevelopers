@@ -10,6 +10,8 @@ Pronouns (Voornaamwoorden) are the _references_ of the Dutch language. They subs
 
 Before starting, we need to talk about what is a stressed or an unstressed pronouns. In Dutch, if you want to put emphasis on a part of the sentence, you will use a stressed pronoun. You can see the examples on the following table that shows all the personal pronouns
 
+🎮 Do you want to test your stressed and unstressed sentences? Play the <a href="/games/detective">Detective game</a>! 🎮
+
 ### 👥 Plural
 
 The plural version of names in Dutch can be in two possibilities: The most common is with the suffix **-en** but some nouns have a **-s** as a suffix. With, _unfortunately_, few exceptions. For example:
