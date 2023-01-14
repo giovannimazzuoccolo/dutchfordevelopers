@@ -30,7 +30,7 @@
                     Correct sentences:
                     <strong>{{ sentences }}</strong>
                 </p>
-                <p v-if="!disableTranslations" @click="triggerTranslations"></p>
+                <p v-if="!disableTranslations" @click="triggerTranslations">
                     Disable English translations
                 </p>
                 <p v-if="disableTranslations" @click="triggerTranslations">
