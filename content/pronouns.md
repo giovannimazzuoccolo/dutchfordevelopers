@@ -8,9 +8,9 @@ Pronouns (Voornaamwoorden) are the _references_ of the Dutch language. They subs
 
 ### 🙀 Stressed and unstressed 😌
 
-Before starting, we need to talk about what is a stressed or an unstressed pronouns. In Dutch, if you want to put emphasis on a part of the sentence, you will use a stressed pronoun. You can see the examples on the following table that shows all the personal pronouns
+Before starting, we need to talk about stressed and unstressed pronouns. In Dutch, if you want to emphasize a part of the sentence, you will use a stressed pronoun. You can see the examples in the following table that shows all the personal pronouns
 
-‼️ this list is different from the common list that you can find in Dutch grammar books. I prefer to spread all the pronouns, so you can see some "duplicates"
+‼️ this list is different from the list you can find in Dutch grammar books. I prefer to spread all the pronouns so you can see some "duplicates" in the English column.
 
 | Pronouns | English translation | ℹ️ comments        |
 | -------- | ------------------- | ------------------ |
@@ -25,8 +25,8 @@ Before starting, we need to talk about what is a stressed or an unstressed prono
 | We       | We                  | unstressed version |
 | Jullie   | You (plural)        |                    |
 | U        | You (plural)        | formal version     |
-| Zij      | They                | unstressed version |
-| Ze       | They                | stressed version   |
+| Zij      | They                | stressed version   |
+| Ze       | They                | unstressed version |
 
 ### 🗣️ Examples in conversation
 
@@ -35,5 +35,32 @@ Before starting, we need to talk about what is a stressed or an unstressed prono
 -   **U** bent uitgenodigd voor de bruiloft &nbsp; _You are invited for the wedding_ &nbsp; <small>ℹ️ you in formal version</small>
 -   **Hij** werkt voor de Nederlandse regering &nbsp; _He works for the Dutch Government_
 -   **Ze** heeft lang haar. &nbsp; _She has long hair_ &nbsp; <small>ℹ️ unstressed version</small>
+-   **Wij** komen uit het buitenland &nbsp; _We are from abroad_ &nsbsp; <small>ℹ️ stressed version</small>
+-   **We** rennen graag &nbsp; _We like to run_ &nbsp; <small>ℹ️ unstressed version</small>
+-   **Julle** lijken klaar om te festeen &nbsp; _You guys seems ready to party_
+-   **U** moet uw ticket laten zien &nbsp; _You must show your ticket_ <small>ℹ️ you (plural) in formal version</small>
+-   **Zij** zullen morgen met u spreken &nbsp; _They will speak to you tomorrow_ <small>ℹ️ stressed version</small>
+-   **Ze** zien er erg ontspannen uit &nbsp; _They look very relaxed_ <small>ℹ️ unstressed version</small>
 
 🎮 Do you want to test your stressed and unstressed sentences? Play the <a href="/games/detective">Detective game</a>! 🎮
+
+### 📦 Objective pronouns
+
+Also for the objective pronouns we have stressed and unstressed forms. Another table is shown below with the objective pronouns.
+
+| Pronouns | English translation | ℹ️ comments               |
+| -------- | ------------------- | ------------------------- |
+| Me       | me                  | unstressed version        |
+| Mij      | me                  | stressed version          |
+| Je       | you                 | unstressed version        |
+| Jou      | you                 | stressed version          |
+| U        | you                 | formal version            |
+| Hem      | Him                 |                           |
+| Haar     | Her                 |                           |
+| Het      | It                  | (for nouns that uses het) |
+| Hem      | It                  | (for nouns that uses de)  |
+| Ons      | us                  | stressed version          |
+| Jullie   | You (plural)        |                           |
+| Ze       | They                | unstressed version        |
+| Hun      | They                | stressed version          |
+| Hen      | They                | stressed version          |
