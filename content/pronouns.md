@@ -46,7 +46,7 @@ Before starting, we need to talk about stressed and unstressed pronouns. In Dutc
 
 ### 📦 Objective pronouns
 
-Also for the objective pronouns we have stressed and unstressed forms. Another table is shown below with the objective pronouns.
+Also for the objective pronouns we have stressed and unstressed forms. Another table is shown below with the objective pronouns. The 3rd person is used for referring things.
 
 | Pronouns | English translation | ℹ️ comments               |
 | -------- | ------------------- | ------------------------- |
@@ -59,8 +59,30 @@ Also for the objective pronouns we have stressed and unstressed forms. Another t
 | Haar     | Her                 |                           |
 | Het      | It                  | (for nouns that uses het) |
 | Hem      | It                  | (for nouns that uses de)  |
-| Ons      | us                  | stressed version          |
-| Jullie   | You (plural)        |                           |
-| Ze       | They                | unstressed version        |
-| Hun      | They                | stressed version          |
-| Hen      | They                | stressed version          |
+| Ons      | us                  |                           |
+| Jullie   | Your (plural)       |                           |
+| U        | Your (plural)       | formal version            |
+| Ze       | They                | ref. people and things    |
+| Hun      | They                | ref. to a person          |
+| Hen      | They                | ref. to a person          |
+
+### 🫵 Possessive pronouns
+
+Last category of pronouns are the possessive pronouns, used to indicate the possession of something.
+
+| Pronouns | English translation | ℹ️ comments          |
+| -------- | ------------------- | -------------------- |
+| Mijn     | my                  |                      |
+| Jouw     | your                | stressed version     |
+| Je       | your                | unstressed version   |
+| Uw       | your                | formal version       |
+| Zijn     | his                 |                      |
+| Haar     | her                 |                      |
+| Ons      | Our                 | het words            |
+| Onze     | us                  | de words and plurals |
+| Jullie   | Your (plural)       |                      |
+| Je       | your (plural)       | unstressed version   |
+| Uw       | Your (plural)       | formal version       |
+| Hun      | Their               |                      |
+
+🤨 You don't know the difference between het words and de words? Go to the [Nouns](/learn/nouns) page!
