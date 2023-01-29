@@ -55,7 +55,6 @@ Also for the objective pronouns we have stressed and unstressed forms. Another t
 | Je       | you                 | unstressed version        |
 | Jou      | you                 | stressed version          |
 | U        | you                 | formal version            |
-| Hem      | Him                 |                           |
 | Haar     | Her                 |                           |
 | Het      | It                  | (for nouns that uses het) |
 | Hem      | It                  | (for nouns that uses de)  |

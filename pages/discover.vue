@@ -1,4 +1,4 @@
 <template>
-    <Dashboard />
+    <Dashboard :logged="false" />
 </template>
 <script></script>

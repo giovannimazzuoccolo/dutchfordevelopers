@@ -2,37 +2,24 @@
     <div>
         <Container>
             <div class="my-2">
-                <template v-if="logged">
-                    <h2
-                        class="font-bold text-sm dark:text-white"
-                    >
+                <template v-if="isLogged">
+                    <h2 class="font-bold text-sm dark:text-white">
                         Hallo
-                        {{
-                            $store.state.user.userInfo
-                                .user_metadata.full_name
-                        }},
+                        {{ $store.state.user.userInfo.user_metadata.full_name }},
                     </h2>
                     <p class="text-sm dark:text-white">
-                        You can start a new lesson, play a
-                        game, or read the blog!
+                        You can start a new lesson, play a game, or read the blog!
                     </p>
                 </template>
                 <template v-else>
                     <UIBanner
-                        >Login to view all the sections,
-                        track your learning and your best
-                        scores with the games,
-                        <strong class="text-bold"
-                            >it is free!</strong
-                        ></UIBanner
+                        >Login to view all the sections, track your learning and your best scores
+                        with the games, <strong class="text-bold">it is free!</strong></UIBanner
                     >
                 </template>
             </div>
         </Container>
-        <DashboardTabs
-            :selectedTab="tabSelection"
-            :changeTab="changeTab"
-        />
+        <DashboardTabs :selectedTab="tabSelection" :changeTab="changeTab" />
         <CoursesList v-if="isLearn" />
         <GamesList v-if="isGame" />
         <ReadList v-if="isRead" />
@@ -49,12 +36,6 @@ export enum TAB_SELECTION {
 }
 
 export default defineComponent({
-    props: {
-        logged: {
-            required: false,
-            type: Boolean,
-        },
-    },
     data() {
         return {
             tabSelection: TAB_SELECTION.LEARN,
@@ -69,6 +50,9 @@ export default defineComponent({
         },
         isRead() {
             return this.tabSelection === TAB_SELECTION.READ
+        },
+        isLogged() {
+            return this.$store.getters['user/isLogged']
         },
     },
     methods: {

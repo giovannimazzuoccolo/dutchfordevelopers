@@ -117,6 +117,7 @@ const actions: ActionTree<any, any> = {
             this.commit('courses/REQUEST_ERROR');
         } else {
             const composeData = courseData.map(c=> ({ ...c, isRead: c.courses_users.length > 0 }))
+            debugger;
             this.commit('courses/ADD_DATA', composeData);                   
             this.commit('courses/REQUEST_SUCCESS');
         }
