@@ -1,6 +1,6 @@
 <template>
     <Container>
-        <UITitle orange="De or" blue="(B)het" />
+        <UITitle orange="Passport" blue="Control" />
         <div class="relative">
             <GamesSuccess v-if="success">
                 <p class="text-white">
@@ -32,15 +32,94 @@
                 <p>Score: {{ score }}</p>
             </div>
 
-            <div class="p-16 flex justify-center items-center gap-4 flex-col">
-                {{ getWord }}
+            <div class="flex gap-3 flex-col justify-between md:flex-row">
+                <div class="flex justify-center items-center gap-4 flex-col md:w-full">
+                    <PassportCover :verb="getWord" />
+                    <p class="dark:text-white italic">({{ getTranslation }})</p>
+                </div>
+
+                <div class="flex justify-center gap-4 flex-col md:w-full md:p-12">
+                    <h2 class="dark:text-white">Queue</h2>
+                    <div class="mb-2">
+                        <label
+                            class="block text-gray-700 text-sm font-bold mb-2 dark:text-slate-400"
+                            for="person"
+                        >
+                            Person
+                        </label>
+                        <select
+                            class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            aria-label="Person"
+                        >
+                            <option value="first_singular">First singular</option>
+                            <option value="second_singular">Second singular</option>
+                            <option value="third_singular">Third singular</option>
+                            <option value="first_plural">First plural</option>
+                            <option value="second_plural">Second plural</option>
+                            <option value="third_plural">Third plural</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label
+                            class="block text-gray-700 text-sm font-bold mb-2 dark:text-slate-400"
+                            for="form"
+                        >
+                            Form
+                        </label>
+                        <select
+                            class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            aria-label="form"
+                        >
+                            <option value="present">Present</option>
+                            <option value="past_participle">Past participle</option>
+                            <option value="past">Past</option>
+                            <option value="future">Future</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <div>
+                            <div class="form-check mb-1">
+                                <p
+                                    class="block text-gray-700 text-sm font-bold mb-2 dark:text-slate-400"
+                                >
+                                    Regular or irregular?
+                                </p>
+                                <input
+                                    class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault1"
+                                />
+                                <label
+                                    class="form-check-label inline-block text-gray-800 dark:text-gray-100"
+                                    for="flexRadioDefault1"
+                                >
+                                    Regular
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault2"
+                                    checked
+                                />
+                                <label
+                                    class="form-check-label inline-block text-gray-800 dark:text-gray-100"
+                                    for="flexRadioDefault2"
+                                >
+                                    Irregular
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <UIButton>Confirm</UIButton>
+                </div>
             </div>
-
-            <div class="p-16 flex justify-center items-center gap-4"></div>
-
             <UIAccordion
                 title="Instructions"
-                text="Select the right verb form to gain points. If you make a mistake, a new element goes to the queue. If you reach 10 verbs you lost."
+                text="Select the right verb form to gain points. If you make a mistake, a new element goes to the queue. If the line reaches 10 verbs you lost."
             />
         </div>
     </Container>
@@ -51,6 +130,7 @@ import { TENSE, PERSON, REGULAR_IRREGULAR, wordList } from '~/content/passport'
 import { shuffle } from 'lodash'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 import GamesOver from '~/components/Games/Status/GamesOver.vue'
+import PassportCover from '~/components/Games/Passport/PassportCover.vue'
 
 export default Vue.extend({
     data() {
@@ -77,6 +157,9 @@ export default Vue.extend({
         getWord() {
             return this.words[this.wordIndex].verb
         },
+        getTranslation() {
+            return this.words[this.wordIndex].translation
+        },
         getSolution() {
             return this.words[this.wordIndex].verb
         },
@@ -101,16 +184,15 @@ export default Vue.extend({
                     'games/passport'
                 )
                 this.pastScore = score[0].score ? score[0].score : 0
-
                 this.success = true
             } else {
                 this.wordIndex++
             }
         },
-
         tryAgain() {
             location.reload()
         },
     },
+    components: { PassportCover },
 })
 </script>
