@@ -50,6 +50,7 @@
                         <select
                             class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             aria-label="Person"
+                            v-model="person"
                         >
                             <option value="first_singular">First singular</option>
                             <option value="second_singular">Second singular</option>
@@ -69,6 +70,7 @@
                         <select
                             class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             aria-label="form"
+                            v-model="form"
                         >
                             <option value="present">Present</option>
                             <option value="past_participle">Past participle</option>
@@ -87,12 +89,14 @@
                                 <input
                                     class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                     type="radio"
-                                    name="flexRadioDefault"
-                                    id="flexRadioDefault1"
+                                    name="regularOrIrregular"
+                                    id="regularRadio"
+                                    value="regular"
+                                    v-model="regularOrIrregular"
                                 />
                                 <label
                                     class="form-check-label inline-block text-gray-800 dark:text-gray-100"
-                                    for="flexRadioDefault1"
+                                    for="regularRadio"
                                 >
                                     Regular
                                 </label>
@@ -101,20 +105,21 @@
                                 <input
                                     class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                     type="radio"
-                                    name="flexRadioDefault"
-                                    id="flexRadioDefault2"
-                                    checked
+                                    name="regularOrIrregular"
+                                    id="irregularRadio"
+                                    value="irregular"
+                                    v-model="regularOrIrregular"
                                 />
                                 <label
                                     class="form-check-label inline-block text-gray-800 dark:text-gray-100"
-                                    for="flexRadioDefault2"
+                                    for="irregularRadio"
                                 >
                                     Irregular
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <UIButton>Confirm</UIButton>
+                    <UIButton @click="confirmChoice">Confirm</UIButton>
                 </div>
             </div>
             <UIAccordion
@@ -137,7 +142,7 @@ export default Vue.extend({
         return {
             form: TENSE.PRESENT,
             person: PERSON.FIRST_SINGULAR,
-            regularOrIrregular: REGULAR_IRREGULAR.REGULAR,
+            regularOrIrregular: true,
             line: 1,
             words: shuffle(wordList),
             score: 0,
@@ -159,9 +164,6 @@ export default Vue.extend({
         },
         getTranslation() {
             return this.words[this.wordIndex].translation
-        },
-        getSolution() {
-            return this.words[this.wordIndex].verb
         },
     },
     mounted() {
@@ -189,8 +191,27 @@ export default Vue.extend({
                 this.wordIndex++
             }
         },
+        getSolution() {
+            return {
+                form: this.words[this.wordIndex].tense,
+                person: this.words[this.wordIndex].person,
+                regularOrIrregular: this.words[this.wordIndex].regular,
+            }
+        },
         tryAgain() {
             location.reload()
+        },
+        confirmChoice() {
+            console.log(this.form, this.person, this.regularOrIrregular)
+            const { form, person, regularOrIrregular } = this.getSolution()
+
+            if (form === this.form && person === this.person) {
+                this.wordIndex++
+                this.score++
+            } else {
+                this.wordIndex++
+                this.line++
+            }
         },
     },
     components: { PassportCover },

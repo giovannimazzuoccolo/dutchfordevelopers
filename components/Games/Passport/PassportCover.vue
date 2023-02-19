@@ -1,11 +1,11 @@
 <template>
     <div
-        class="w-52 flex flex-col gap-4 items-center justify-center bg-red-900 text-white py-12 rounded"
+        class="w-72 flex flex-col gap-8 items-center justify-center bg-red-900 text-white py-24 rounded"
     >
         <h1 class="uppercase text-sm text-red-300">Passport</h1>
         <p class="text-6xl">🦁</p>
 
-        <p class="text-3xl">{{ verb }}</p>
+        <p class="text-2xl">{{ verb }}</p>
     </div>
 </template>
 <script lang="ts">
