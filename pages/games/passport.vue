@@ -120,6 +120,9 @@
                         </div>
                     </div>
                     <UIButton @click="confirmChoice">Confirm</UIButton>
+                    <div :class="isLastGuessCorrect ? 'text-green-400' : 'text-red-400'">
+                        {{ lastWord }}
+                    </div>
                 </div>
             </div>
             <UIAccordion
@@ -201,16 +204,30 @@ export default Vue.extend({
         tryAgain() {
             location.reload()
         },
+        goNext() {
+            if (this.wordIndex + 1 === this.words.length) {
+                this.success = true
+            } else {
+                this.wordIndex++
+            }
+        },
         confirmChoice() {
             console.log(this.form, this.person, this.regularOrIrregular)
             const { form, person, regularOrIrregular } = this.getSolution()
 
             if (form === this.form && person === this.person) {
-                this.wordIndex++
                 this.score++
+                this.lastWord = ` ${this.words[this.wordIndex].verb} is correct! 👍`
+                this.isLastGuessCorrect = true
+                this.goNext()
             } else {
-                this.wordIndex++
                 this.line++
+                this.lastWord = ` ${this.words[this.wordIndex].verb} is wrong! 👎`
+                this.isLastGuessCorrect = false
+                if (this.line === 10) {
+                    this.fail = true
+                }
+                this.goNext()
             }
         },
     },
