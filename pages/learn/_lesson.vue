@@ -48,6 +48,7 @@ export default Vue.extend({
             return this.$store.getters['user/isLogged']
         },
         isRead(): Boolean {
+            console.log('course', this.course[0])
             if (this.course && !this.course[0]?.isRead) {
                 return true
             } else {
@@ -62,7 +63,7 @@ export default Vue.extend({
     async asyncData({ $content, params, store }) {
         const { lesson } = params
         if (store.getters['user/isLogged']) {
-            console.log(lesson)
+            console.log('l', lesson)
             store.dispatch('courses/getCourse', {
                 courseName: lesson,
             })
@@ -74,6 +75,7 @@ export default Vue.extend({
     methods: {
         markCourse() {
             this.$store.dispatch('courses/markCourseAsRead', { courseId: this.course[0].id })
+            this.$router.push('/dashboard')
         },
     },
 })
