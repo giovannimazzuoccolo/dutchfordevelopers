@@ -124,3 +124,21 @@ export const adijlist = [
       "english": "warm, hot",
       "emoji": "🔥"
     }];
+
+const otherEmojis = [ '👋', '🥶', '😈', '🤑', '🤥', '👮‍♀️', '👨‍🌾', '👕', '🍒', '🏂' ];
+
+export function getEmojis(): string[] {
+  const list = otherEmojis;
+  const result: string[] = [];
+
+  while (result.length < 3) {
+    const randomIndex: number = Math.floor(Math.random() * list.length);
+    const randomElement: string = list[randomIndex];
+
+    if (!result.includes(randomElement)) {
+      result.push(randomElement);
+    }
+  }
+
+  return result;
+}
