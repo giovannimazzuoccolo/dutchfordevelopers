@@ -17,24 +17,26 @@
             <p class="my-4 dark:text-white">Play bijvoemojilijk, how many emojis you can guess?</p>
             <div class="flex my-4 dark:text-white justify-between">
                 <p>Score: {{ score }}</p>
+                <p>Lives: {{ lives }}</p>
             </div>
 
             <div class="p-16 flex justify-center items-center gap-4 flex-col">
                 <div>
                     <span class="text-4xl dark:text-white">{{ getWord }}</span>
                 </div>
-                <div>
-                    <span class="dark:text-white"
-                        ><em> {{ getTranslation }}</em></span
-                    >
-                </div>
-                <div :class="isLastGuessCorrect ? 'text-green-400' : 'text-red-400'">
-                    {{ lastWord }}
-                </div>
+
                 <div class="p-16 flex justify-center items-center gap-4 text-5xl">
                     <ul class="flex gap-5">
-                        <li v-for="emoji in possibleSolutions" :key="emoji" class="cursor-pointer">
-                            {{ emoji }}
+                        <li
+                            v-for="emoji in possibleSolutions"
+                            :key="emoji.english"
+                            class="cursor-pointer"
+                        >
+                            <UITooltip :tooltip-text="emoji.english">
+                                <span @click="selectEmoji(emoji.emoji)">
+                                    {{ emoji.emoji }}
+                                </span>
+                            </UITooltip>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +51,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { adijlist, getEmojis } from '~/content/bijvoemojilijkList'
+import { adijlist, getEmojis, ResultEmojiList } from '~/content/bijvoemojilijkList'
 import { shuffle } from 'lodash'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 
@@ -62,9 +64,9 @@ export default Vue.extend({
             voice: [] as SpeechSynthesisVoice[],
             success: false,
             lastWord: '',
-            isLastGuessCorrect: false,
             pastScore: 0,
-            possibleSolutions: [''],
+            possibleSolutions: [] as ResultEmojiList[],
+            lives: 3,
         }
     },
     computed: {
@@ -77,11 +79,8 @@ export default Vue.extend({
         getTranslation() {
             return this.words[this.wordIndex].english
         },
-        getSolution() {
+        getSolution(): string {
             return this.words[this.wordIndex].emoji
-        },
-        mixSolutions() {
-            return shuffle([this.words[this.wordIndex].emoji, getEmojis()])
         },
     },
     mounted() {
@@ -89,9 +88,12 @@ export default Vue.extend({
             const voices = window.speechSynthesis.getVoices()
             this.voice = voices.filter((d) => d.lang === 'nl-NL')
         }
-        this.possibleSolutions = shuffle([this.words[this.wordIndex].emoji, ...getEmojis()])
+        this.possibleSolutions = shuffle([this.words[this.wordIndex], ...getEmojis()])
     },
     methods: {
+        mixSolutions() {
+            return shuffle([this.words[this.wordIndex].emoji, getEmojis()])
+        },
         saveScore() {
             this.$store.dispatch('scores/saveScore', {
                 game: 'games/bijvoemojilijk',
@@ -112,7 +114,15 @@ export default Vue.extend({
             }
         },
         selectEmoji(emoji: string) {
+            const solution = this.words[this.wordIndex].emoji
             // guess if the emoji is right
+            if (emoji === solution) {
+                this.wordIndex++
+                this.possibleSolutions = shuffle([this.words[this.wordIndex], ...getEmojis()])
+                this.score++
+            } else {
+                this.lives--
+            }
         },
         // bet(betted: number) {
         //     const { emoji } = this.words[this.wordIndex]

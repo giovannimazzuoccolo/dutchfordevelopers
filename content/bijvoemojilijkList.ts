@@ -125,15 +125,19 @@ export const adijlist = [
       "emoji": "🔥"
     }];
 
-const otherEmojis = [ '👋', '🥶', '😈', '🤑', '🤥', '👮‍♀️', '👨‍🌾', '👕', '🍒', '🏂' ];
+//const otherEmojis = [ '👋', '🥶', '😈', '🤑', '🤥', '👮‍♀️', '👨‍🌾', '👕', '🍒', '🏂' ];
 
-export function getEmojis(): string[] {
-  const list = otherEmojis;
-  const result: string[] = [];
+export interface ResultEmojiList { english:string, emoji: string, dutch? : string}
+
+export const otherEmojisWithNames = [  { english: 'waving hand', emoji: '👋' },  { english: 'cold face', emoji: '🥶' },  { english: 'smiling imp', emoji: '😈' },  { english: 'money', emoji: '🤑' },  { english: 'lying', emoji: '🤥' },  { english: 'officer', emoji: '👮‍♀️' },  { english: 'farmer', emoji: '👨‍🌾' },  { english: 'tshirt', emoji: '👕' },  { english: 'cherries', emoji: '🍒' },  { english: 'snowboarder', emoji: '🏂' }];
+
+export function getEmojis(): ResultEmojiList[] {
+  const list = otherEmojisWithNames;
+  const result: ResultEmojiList[] = [];
 
   while (result.length < 3) {
     const randomIndex: number = Math.floor(Math.random() * list.length);
-    const randomElement: string = list[randomIndex];
+    const randomElement = list[randomIndex];
 
     if (!result.includes(randomElement)) {
       result.push(randomElement);
