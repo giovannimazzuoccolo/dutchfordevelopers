@@ -2,9 +2,9 @@
     <Container>
         <UITitle orange="De or" blue="(B)het" />
         <div class="relative">
-            <GamesSuccess v-if="success">
+            <GamesSuccess v-if="endgame">
                 <p class="text-white">
-                    You guessed {{ score }} words! Your best score is {{ pastScore }} words
+                    You guessed {{ score }} emojis! Your best score is {{ pastScore }} emojis
                 </p>
                 <div class="flex gap-4">
                     <UIButton v-if="isLogged && score > pastScore" @click="saveScore"
@@ -13,11 +13,18 @@
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesSuccess>
+           <GamesOver v-if="fail">
+                <p class="text-white">Oh no, no emoji guessed 😔, Jammer!</p>
+                <div class="flex gap-4">
+                    <UIButton @click="tryAgain">Try again</UIButton>
+                </div>
+            </GamesOver>
+
 
             <p class="my-4 dark:text-white">Play bijvoemojilijk, how many emojis you can guess?</p>
             <div class="flex my-4 dark:text-white justify-between">
                 <p>Score: {{ score }}</p>
-                <p>Lives: {{ lives }}</p>
+                <p>Lives: <span v-for="i in lives" :key="i">❤️</span></p>
             </div>
 
             <div class="p-16 flex justify-center items-center gap-4 flex-col">
@@ -62,7 +69,8 @@ export default Vue.extend({
             score: 0,
             wordIndex: 0,
             voice: [] as SpeechSynthesisVoice[],
-            success: false,
+            endgame: false,
+          fail: false,
             lastWord: '',
             pastScore: 0,
             possibleSolutions: [] as ResultEmojiList[],
@@ -108,7 +116,7 @@ export default Vue.extend({
                 )
                 this.pastScore = score[0].score ? score[0].score : 0
 
-                this.success = true
+                this.endgame = true;
             } else {
                 this.wordIndex++
             }
@@ -117,34 +125,22 @@ export default Vue.extend({
             const solution = this.words[this.wordIndex].emoji
             // guess if the emoji is right
             if (emoji === solution) {
-                this.wordIndex++
+                this.increaseWordIndexOrSuccess()
                 this.possibleSolutions = shuffle([this.words[this.wordIndex], ...getEmojis()])
                 this.score++
             } else {
-                this.lives--
+              if(this.lives === 0) {
+                if(this.score=== 0) {
+                  this.fail = true
+                } else {
+                  this.endgame = true;
+                }
+              }  else {
+              this.lives--
+                }
+
             }
         },
-        // bet(betted: number) {
-        //     const { emoji } = this.words[this.wordIndex]
-        //     if (solution === this.selected) {
-        //         this.score++
-        //         this.money = this.money + betted * 2
-        //         this.isLastGuessCorrect = true
-        //         this.lastWord = `👍 ${this.getSolution} ${this.getWord} is correct!`
-        //         this.increaseWordIndexOrSuccess()
-        //     } else {
-        //         this.money = this.money - betted
-        //         if (this.money <= 0) {
-        //             this.fail = true
-        //         } else {
-        //             this.isLastGuessCorrect = false
-        //             this.lastWord = `👎 ${this.getSolution === 'de' ? 'het' : 'de'} ${
-        //                 this.getWord
-        //             } is wrong!`
-        //             this.increaseWordIndexOrSuccess()
-        //         }
-        //     }
-        // },
         tryAgain() {
             location.reload()
         },
