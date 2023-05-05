@@ -16,14 +16,12 @@
         </div>
         <div v-else="loadStatus === 'success'">
             <p class="text-center dark:text-white m-4">
-                A list of news in Dutch with one-click
-                translation. Actually the news source is
-                only De Telegraaf.<br />
-                If you have any other rss resource please
+                A list of news articles in Dutch, which can be translated with just one click. Please note that the news source currently used is De Telegraaf. <br />
+                If you know of any other RSS resources that you would like me to consider, please let me know by.
                 <UILink
                     href="https://github.com/giovannimazzuoccolo/dutchfordevelopers/issues"
                     target="_blank"
-                    >open an issue</UILink
+                    >opening an issue</UILink
                 >
                 or use the
                 <NuxtLink to="/contacts"

@@ -11,7 +11,7 @@
             <em>Jammer,</em> we are sorry, we are not able
             to retrieve the games
         </div>
-        <div v-else="loadStatus === 'success'">
+        <div v-else>
             <div class="grid grid-cols-3 gap-4">
                 <template v-for="games in gamesList">
                     <NuxtLink :to="games.route">
@@ -20,6 +20,7 @@
                             :description="games.description"
                             :route="games.route"
                             :score="games.score"
+                            :icon="games.fa_icon"
                         />
                     </NuxtLink>
                 </template>

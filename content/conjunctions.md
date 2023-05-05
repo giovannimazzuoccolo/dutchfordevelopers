@@ -28,3 +28,30 @@ Following a list of coordinating conjunctions:
 | want              |	because|
 | doch	             |yet/nevertheless|
 
+### Subordinating conjunctions:
+
+In case of a main clause that needs to be followed by a subordinate clause, you need to use a subordinating conjunction.
+The following examples make things very clear: 
+
+* Ik blijf thuis omdat ik ziek ben. (I am staying home because I am sick.)
+*  Ik lees een boek terwijl ik op de trein wacht. (I am reading a book while I am waiting for the train.)
+
+As you can see, the second phrase is a consequence of the first one, and it requires a subordinating conjunction. 
+
+Following a list of subordinating conjunctions
+
+| Dutch conjunction | 	English translation |
+|-------------------|----------------------|
+| omdat             | 	because             |
+| voordat           | 	before              |
+| nadat	            | after                |
+| als	              | if                   |
+| hoewel	           | although             |
+| terwijl	          | while                |
+| zodat	            | so that              |
+| alsof	            | as if                |
+| tenzij	           | unless               |
+| sindsdien         | 	since               |
+| totdat            | 	until               |
+| mits	             | provided that        |
+| wanneer           | 	when                |

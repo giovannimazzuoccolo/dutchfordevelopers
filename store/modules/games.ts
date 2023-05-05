@@ -6,7 +6,7 @@ export type Game = {
     id: String,
     name: String,
     description: String,
-    image: String
+    fa_icon: String
 }
 
 export type Games = Game[];
@@ -34,7 +34,7 @@ const mutations: MutationTree<GamesState> = {
         return state.request = REQUEST_STATUS.ERROR
     },
     REQUEST_SUCCESS: (state) => {
-        return state.request = REQUEST_STATUS.SUCCESS 
+        return state.request = REQUEST_STATUS.SUCCESS
     },
     ADD_DATA: (state, games) => {
         return state.games = games
@@ -53,7 +53,7 @@ const actions: ActionTree<any, any> = {
         }
     },
 
-    async getGamesWithScore() { 
+    async getGamesWithScore() {
         this.commit('scores/REQUEST_STARTED');
         const userInfo = supabase.auth.user()
         if(userInfo){
