@@ -36,7 +36,7 @@ A difference between the English numbering to the Dutch one appear for numbers f
 by stating the number of tens (e.g. "twintig" for 20) and then adding the ones digit (e.g. "twee" for 2) after "en" (
 meaning "and"). For example, "twenty-two" is "tweeëntwintig" in Dutch, which translates to "two and twenty" in English.
 
-### from 100 and more
+### from 100 and more...
 
 If you want to count from 100 and more, you can use the following table:
 
