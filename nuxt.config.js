@@ -78,6 +78,10 @@ export default {
     },
   },
 
+  generate: {
+    fallback: true
+  },
+
   router: {
     linkActiveClass: 'text-main-orange',
     middleware: ['autoAuth']
