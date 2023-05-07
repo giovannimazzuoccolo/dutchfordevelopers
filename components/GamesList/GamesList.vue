@@ -12,7 +12,7 @@
             to retrieve the games
         </div>
         <div v-else>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <template v-for="games in gamesList">
                     <NuxtLink :to="games.route">
                         <GamesListGameCard
@@ -32,8 +32,10 @@
 import { mapState } from 'vuex'
 
 import Vue from 'vue'
+import Container from "~/components/Container.vue";
 
 export default Vue.extend({
+  components: {Container},
     mounted() {
         if (this.$store.getters['user/isLogged']) {
             this.$store.dispatch('games/getGamesWithScore')
