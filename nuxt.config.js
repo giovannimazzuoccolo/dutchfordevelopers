@@ -62,13 +62,27 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     // https://content.nuxtjs.org/v1/getting-started/installation
-    "@nuxt/content"
+    "@nuxt/content",
+    // https://sentry.nuxtjs.org/getting-started/setup
+    "@nuxtjs/sentry"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+  },
+
+  sentry: {
+    dsn: 'https://6043b489803f4ddc9e266a21e9184be2@o4505149463134208.ingest.sentry.io/4505149466017792',
+    clientIntegrations: {
+      Replay: {},
+    },
+    // Performance Monitoring
+    tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!
+    // Session Replay
+    replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+    replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
