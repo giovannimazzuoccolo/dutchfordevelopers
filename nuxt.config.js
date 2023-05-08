@@ -64,7 +64,7 @@ export default {
     // https://content.nuxtjs.org/v1/getting-started/installation
     "@nuxt/content",
     // https://sentry.nuxtjs.org/getting-started/setup
-    "@nuxt/sentry"
+    "@nuxtjs/sentry"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
