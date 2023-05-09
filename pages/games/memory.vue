@@ -6,49 +6,33 @@
                 v-if="success"
                 class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
             >
-                <h2
-                    class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center"
-                >
+                <h2 class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center">
                     🎉 Gefeliciteerd 🎉
                 </h2>
                 <p class="text-white">
                     You completed the game in
-                    {{ secondsToTime }} seconds, previous
-                    best score was {{ pastScore }} seconds
+                    {{ secondsToTime }} seconds, previous best score was {{ pastScore }} seconds
                 </p>
                 <div class="flex gap-4">
-                    <UIButton
-                        v-if="isLogged && time < pastScore"
-                        @click="saveScore"
-                        >Save</UIButton
-                    >
-                    <UIButton @click="tryAgain"
-                        >Try again</UIButton
-                    >
+                    <UIButton v-if="isLogged && time < pastScore" @click="saveScore">Save</UIButton>
+                    <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </div>
             <p class="my-4 dark:text-white">
-                Play memory, the game that helps you with
-                your Dutch vocabulary. Turn up your volume
+                Play memory, the game that helps you with your Dutch vocabulary. Turn up your volume
                 to hear the Dutch pronunciation
             </p>
-            <div
-                class="flex my-4 dark:text-white justify-between"
-            >
+            <div class="flex my-4 dark:text-white justify-between">
                 <p>
                     Name: <strong>{{ name }}</strong>
                 </p>
                 <p>Time: {{ secondsToTime }}</p>
             </div>
 
-            <div
-                class="grid grid-cols-2 md:grid-cols-4 gap-4"
-            >
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <template v-for="memoryCard in memoryCards">
                     <GamesMemoryCard
-                        :isCovered="
-                            isCovered(memoryCard.id)
-                        "
+                        :isCovered="isCovered(memoryCard.id)"
                         :name="memoryCard.name"
                         :image="memoryCard.image"
                         :id="memoryCard.id"
@@ -110,12 +94,9 @@ export default Vue.extend({
 
     mounted() {
         window.speechSynthesis.onvoiceschanged = () => {
-            const voices =
-                window.speechSynthesis.getVoices()
+            const voices = window.speechSynthesis.getVoices()
 
-            this.voice = voices.filter(
-                (d) => d.lang === 'nl-NL'
-            )
+            this.voice = voices.filter((d) => d.lang === 'nl-NL')
         }
     },
 
@@ -155,12 +136,7 @@ export default Vue.extend({
 
             if (evenOrOdd(this.collected.length)) {
                 //do the check
-                if (
-                    this.collected.findIndex(
-                        (c) =>
-                            c.name === name && c.id !== id
-                    ) === -1
-                ) {
+                if (this.collected.findIndex((c) => c.name === name && c.id !== id) === -1) {
                     this.flipCardBack()
                 }
             }
@@ -168,10 +144,7 @@ export default Vue.extend({
 
         flipCardBack() {
             return setTimeout(() => {
-                this.collected.splice(
-                    this.collected.length - 2,
-                    2
-                )
+                this.collected.splice(this.collected.length - 2, 2)
             }, 800)
         },
 
@@ -182,11 +155,7 @@ export default Vue.extend({
         },
 
         isCovered(id: string) {
-            return (
-                this.collected.findIndex(
-                    (c) => c.id === id
-                ) === -1
-            )
+            return this.collected.findIndex((c) => c.id === id) === -1
         },
 
         async completed() {
@@ -194,9 +163,7 @@ export default Vue.extend({
                 'scores/getScoreByGameAndCurrentUser',
                 'games/memory'
             )
-            this.pastScore = score[0].score
-                ? score[0].score
-                : 0
+            this.pastScore = score[0].score ? score[0].score : 0
             return setTimeout(() => {
                 this.success = true
             }, 600)

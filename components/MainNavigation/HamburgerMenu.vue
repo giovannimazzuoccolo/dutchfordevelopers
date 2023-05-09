@@ -10,23 +10,9 @@
             v-if="!menuOpen"
         >
             <title>Open</title>
-            <rect
-                width="100"
-                height="15"
-                fill="#EC8A27"
-            ></rect>
-            <rect
-                y="30"
-                width="100"
-                height="15"
-                fill="#EC8A27"
-            ></rect>
-            <rect
-                y="60"
-                width="100"
-                height="15"
-                fill="#EC8A27"
-            ></rect>
+            <rect width="100" height="15" fill="#EC8A27"></rect>
+            <rect y="30" width="100" height="15" fill="#EC8A27"></rect>
+            <rect y="60" width="100" height="15" fill="#EC8A27"></rect>
         </svg>
         <svg
             class="fill-current w-7 h-7 text-main-orange md:hidden"

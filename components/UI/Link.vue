@@ -1,8 +1,5 @@
 <template>
-    <a
-        :href="href"
-        :target="target"
-        class="text-main-orange cursor-pointer hover:underline"
+    <a :href="href" :target="target" class="text-main-orange cursor-pointer hover:underline"
         ><slot
     /></a>
 </template>

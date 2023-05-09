@@ -11,40 +11,42 @@ export const state: UserState = {
 
 const getters: GetterTree<any, any> = {
     userInfo: (state) => state.userInfo,
-    isLogged: (state) => state.userInfo ? true : false
+    isLogged: (state) => (state.userInfo ? true : false),
 }
 
 const actions: ActionTree<any, any> = {
     async githubAuth() {
-        const { user, error } = await supabase.auth.signIn({
-            provider: 'github',
-        }, {
-            scopes: ''
-        })
+        const { user, error } = await supabase.auth.signIn(
+            {
+                provider: 'github',
+            },
+            {
+                scopes: '',
+            }
+        )
         if (!error) {
-            this.commit('user/UPDATE_USER', user);
+            this.commit('user/UPDATE_USER', user)
         } else {
-            console.warn(error);
+            console.warn(error)
 
             this.$router.replace('/error')
         }
     },
 
     async linkedinAuth() {
-        const { user, error } =
-            await supabase.auth.signIn(
-                {
-                    provider: 'linkedin',
-                },
-                {
-                    scopes: '',
-                }
-            )
+        const { user, error } = await supabase.auth.signIn(
+            {
+                provider: 'linkedin',
+            },
+            {
+                scopes: '',
+            }
+        )
         if (!error) {
-            this.commit('user/UPDATE_USER', user);
-            this.$router.replace('/dashboard');
+            this.commit('user/UPDATE_USER', user)
+            this.$router.replace('/dashboard')
         } else {
-            console.warn(error);
+            console.warn(error)
             this.$router.replace('/error')
         }
     },
@@ -67,16 +69,16 @@ const actions: ActionTree<any, any> = {
 
         if (userInfo) {
             this.commit('user/UPDATE_USER', userInfo)
-            return true;
+            return true
         } else {
-            return false;
+            return false
         }
     },
 }
 
 const mutations: MutationTree<UserState> = {
     UPDATE_USER: (state, user) => {
-        return state.userInfo = user;
+        return (state.userInfo = user)
     },
 }
 

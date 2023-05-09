@@ -3,10 +3,7 @@
         class="rounded-md bg-white shadow-sm ring-1 ring-black ring-opacity-5 focus:outline-none p-4 cursor-pointer hover:bg-gray-100 dark:bg-slate-800 hover:dark:bg-slate-600 flex flex-col"
         role="link"
     >
-        <h3
-            class="text-xl text-main-orange my-2"
-            @click="navigate"
-        >
+        <h3 class="text-xl text-main-orange my-2" @click="navigate">
             {{ title }}
         </h3>
         <div class="gap-2 w-100">

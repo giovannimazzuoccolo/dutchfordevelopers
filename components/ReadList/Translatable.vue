@@ -10,8 +10,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-const TRANSLATE_URL =
-    'https://www.linguee.com/english-dutch/search?source=dutch&query='
+const TRANSLATE_URL = 'https://www.linguee.com/english-dutch/search?source=dutch&query='
 
 export default Vue.extend({
     props: {

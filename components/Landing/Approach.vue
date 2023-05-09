@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="flex justify-center my-8 md:my-20 flex-col w-full"
-    >
+    <div class="flex justify-center my-8 md:my-20 flex-col w-full">
         <UITitle orange="The" blue="Approach" center />
 
         <div

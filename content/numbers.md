@@ -41,10 +41,10 @@ meaning "and"). For example, "twenty-two" is "tweeëntwintig" in Dutch, which tr
 If you want to count from 100 and more, you can use the following table:
 
 | Number    | Dutch          | English Translation  |
-|-----------|----------------|----------------------|
+| --------- | -------------- | -------------------- |
 | 100       | honderd        | hundred              |
-| 200       | tweehonderd    | two hundred          | 
-| 1000      | duizend        | thousand             | 
+| 200       | tweehonderd    | two hundred          |
+| 1000      | duizend        | thousand             |
 | 10,000    | tienduizend    | ten thousand         |
 | 100,000   | honderdduizend | one hundred thousand |
 | 1,000,000 | een miljoen    | one million          |

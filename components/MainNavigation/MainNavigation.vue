@@ -14,20 +14,13 @@
             "
             @click="closeMenu"
         >
-            <MainNavigationItem
-                v-if="!isLogged"
-                class="hover:underline"
-            >
+            <MainNavigationItem v-if="!isLogged" class="hover:underline">
                 <NuxtLink to="/discover">Discover</NuxtLink>
             </MainNavigationItem>
             <MainNavigationItem v-else>
                 <NuxtLink to="/dashboard">Learn</NuxtLink>
             </MainNavigationItem>
-            <MainNavigationItem
-                ><NuxtLink to="/about"
-                    >About</NuxtLink
-                ></MainNavigationItem
-            >
+            <MainNavigationItem><NuxtLink to="/about">About</NuxtLink></MainNavigationItem>
             <MainNavigationItem>
                 <NuxtLink to="/contacts">Contacts</NuxtLink>
             </MainNavigationItem>
@@ -35,9 +28,7 @@
                 <NuxtLink to="/login">Join now</NuxtLink>
             </MainNavigationItem>
             <MainNavigationItem v-else>
-                <span @click="dispatchLogout">
-                    Logout
-                </span>
+                <span @click="dispatchLogout"> Logout </span>
             </MainNavigationItem>
         </ul>
     </nav>
