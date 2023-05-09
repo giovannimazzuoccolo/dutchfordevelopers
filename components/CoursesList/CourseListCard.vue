@@ -4,19 +4,11 @@
         role="link"
         @click="navigate"
     >
-        <div
-            class="flex justify-between items-center w-full"
-        >
-            <h3
-                class="uppercase text-xl text-main-orange my-2"
-            >
+        <div class="flex justify-between items-center w-full">
+            <h3 class="uppercase text-xl text-main-orange my-2">
                 {{ title }}
             </h3>
-            <v-icon
-                v-if="isRead"
-                name="check-circle"
-                class="fill-current fill-main-orange"
-            />
+            <v-icon v-if="isRead" name="check-circle" class="fill-current fill-main-orange" />
         </div>
         <p class="dark:text-white">{{ description }}</p>
     </div>

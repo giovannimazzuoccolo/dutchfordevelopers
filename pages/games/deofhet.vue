@@ -4,91 +4,51 @@
         <div class="relative">
             <GamesSuccess v-if="success">
                 <p class="text-white">
-                    You guessed {{ score }} words! Your best
-                    score is {{ pastScore }} words
+                    You guessed {{ score }} words! Your best score is {{ pastScore }} words
                 </p>
                 <div class="flex gap-4">
-                    <UIButton
-                        v-if="isLogged && score > pastScore"
-                        @click="saveScore"
+                    <UIButton v-if="isLogged && score > pastScore" @click="saveScore"
                         >Save</UIButton
                     >
-                    <UIButton @click="tryAgain"
-                        >Try again</UIButton
-                    >
+                    <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesSuccess>
 
             <GamesOver v-if="fail">
-                <p class="text-white">
-                    You lost all the guilder
-                </p>
+                <p class="text-white">You lost all the guilder</p>
                 <div class="flex gap-4">
-                    <UIButton @click="tryAgain"
-                        >Try again</UIButton
-                    >
+                    <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesOver>
 
             <p class="my-4 dark:text-white">
-                Play "De or (b)het", guess if the word is a
-                de or an het word, do your bet and don't
+                Play "De or (b)het", guess if the word is a de or an het word, do your bet and don't
                 lose your fake guilder!
             </p>
-            <div
-                class="flex my-4 dark:text-white justify-between"
-            >
+            <div class="flex my-4 dark:text-white justify-between">
                 <p>
                     Guilder: <strong>{{ money }} G</strong>
                 </p>
                 <p>Score: {{ score }}</p>
             </div>
 
-            <div
-                class="p-16 flex justify-center items-center gap-4 flex-col"
-            >
+            <div class="p-16 flex justify-center items-center gap-4 flex-col">
                 <div>
-                    <select
-                        v-model="selected"
-                        class="text-4xl rounded"
-                    >
+                    <select v-model="selected" class="text-4xl rounded">
                         <option value="de">De</option>
                         <option value="het">Het</option>
                     </select>
-                    <span
-                        class="text-4xl dark:text-white"
-                        >{{ getWord }}</span
-                    >
+                    <span class="text-4xl dark:text-white">{{ getWord }}</span>
                 </div>
-                <div
-                    :class="
-                        isLastGuessCorrect
-                            ? 'text-green-400'
-                            : 'text-red-400'
-                    "
-                >
+                <div :class="isLastGuessCorrect ? 'text-green-400' : 'text-red-400'">
                     {{ lastWord }}
                 </div>
             </div>
 
-            <div
-                class="p-16 flex justify-center items-center gap-4"
-            >
-                <UIButton
-                    @click="bet(50)"
-                    :disabled="money < 50"
-                    >Bet 50G</UIButton
-                >
-                <UIButton
-                    @click="bet(100)"
-                    :disabled="money < 100"
-                    >Bet 100G</UIButton
-                >
-                <UIButton
-                    @click="bet(500)"
-                    :disabled="money < 500"
-                    >Bet 500G</UIButton
-                >
+            <div class="p-16 flex justify-center items-center gap-4">
+                <UIButton @click="bet(50)" :disabled="money < 50">Bet 50G</UIButton>
+                <UIButton @click="bet(100)" :disabled="money < 100">Bet 100G</UIButton>
+                <UIButton @click="bet(500)" :disabled="money < 500">Bet 500G</UIButton>
             </div>
 
             <UIAccordion
@@ -134,11 +94,8 @@ export default Vue.extend({
     },
     mounted() {
         window.speechSynthesis.onvoiceschanged = () => {
-            const voices =
-                window.speechSynthesis.getVoices()
-            this.voice = voices.filter(
-                (d) => d.lang === 'nl-NL'
-            )
+            const voices = window.speechSynthesis.getVoices()
+            this.voice = voices.filter((d) => d.lang === 'nl-NL')
         }
     },
     methods: {
@@ -154,9 +111,7 @@ export default Vue.extend({
                     'scores/getScoreByGameAndCurrentUser',
                     'games/deofhet'
                 )
-                this.pastScore = score[0].score
-                    ? score[0].score
-                    : 0
+                this.pastScore = score[0].score ? score[0].score : 0
 
                 this.success = true
             } else {
@@ -177,11 +132,9 @@ export default Vue.extend({
                     this.fail = true
                 } else {
                     this.isLastGuessCorrect = false
-                    this.lastWord = `👎 ${
-                        this.getSolution === 'de'
-                            ? 'het'
-                            : 'de'
-                    } ${this.getWord} is wrong!`
+                    this.lastWord = `👎 ${this.getSolution === 'de' ? 'het' : 'de'} ${
+                        this.getWord
+                    } is wrong!`
                     this.increaseWordIndexOrSuccess()
                 }
             }

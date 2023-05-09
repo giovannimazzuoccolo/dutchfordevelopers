@@ -5,9 +5,8 @@ export function isAlreadyInPath(obtThis: any, params: any) {
     if (from === to) {
         // handle any error due the redundant navigation here
         // or handle any other param modification and route afterwards
-        return true;
+        return true
     } else {
-        return false;
+        return false
     }
-
 }

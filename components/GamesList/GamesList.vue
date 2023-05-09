@@ -1,15 +1,12 @@
 <template>
     <Container>
         <div v-if="loadStatus === 'loading'">
-            <div
-                class="flex w-full flex-1 justify-center items-center"
-            >
+            <div class="flex w-full flex-1 justify-center items-center">
                 <UISpinner />
             </div>
         </div>
         <div v-else-if="loadStatus === 'error'">
-            <em>Jammer,</em> we are sorry, we are not able
-            to retrieve the games
+            <em>Jammer,</em> we are sorry, we are not able to retrieve the games
         </div>
         <div v-else>
             <div class="grid grid-cols-2 gap-4">
@@ -32,10 +29,10 @@
 import { mapState } from 'vuex'
 
 import Vue from 'vue'
-import Container from "~/components/Container.vue";
+import Container from '~/components/Container.vue'
 
 export default Vue.extend({
-  components: {Container},
+    components: { Container },
     mounted() {
         if (this.$store.getters['user/isLogged']) {
             this.$store.dispatch('games/getGamesWithScore')

@@ -22,8 +22,7 @@ const actions: ActionTree<any, any> = {
 }
 
 const mutations: MutationTree<LoginState> = {
-    LOGIN_DIALOG_CHANGE_STATE: (state) =>
-        (state.isDialogOpen = !state.isDialogOpen),
+    LOGIN_DIALOG_CHANGE_STATE: (state) => (state.isDialogOpen = !state.isDialogOpen),
 }
 
 export default {

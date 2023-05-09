@@ -9,8 +9,7 @@
                 rounded
             />
             <UIArticleBlock>
-                Use the following form to contact Dutch for
-                Developers. All fields are required.
+                Use the following form to contact Dutch for Developers. All fields are required.
             </UIArticleBlock>
             <form
                 name="dfd_contacts"
@@ -59,11 +58,7 @@
                         placeholder="Your email"
                     />
                 </div>
-                <input
-                    type="hidden"
-                    name="form-name"
-                    value="dfd_contacts"
-                />
+                <input type="hidden" name="form-name" value="dfd_contacts" />
                 <UIButton> Send </UIButton>
             </form>
         </UIBlogWrapper>

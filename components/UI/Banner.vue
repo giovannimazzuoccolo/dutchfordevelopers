@@ -4,10 +4,7 @@
             class="py-2 px-4 items-center border-red-400 text-red-700 bg-red-100 border leading-none lg:rounded-full flex lg:inline-flex dark:border-red-700 dark:bg-red-900 dark:text-red-300"
             role="alert"
         >
-            <span
-                class="font-semibold mr-2 text-left flex-auto"
-                ><slot
-            /></span>
+            <span class="font-semibold mr-2 text-left flex-auto"><slot /></span>
             <svg
                 class="fill-current h-6 w-6 text-red-500"
                 role="button"

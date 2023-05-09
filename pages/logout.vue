@@ -5,15 +5,10 @@
             <section
                 class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto dark:text-white"
             >
-                <p class="text-center">
-                    You logged out successfully from Dutch
-                    for Developers 👋
-                </p>
+                <p class="text-center">You logged out successfully from Dutch for Developers 👋</p>
                 <p class="text-center">
                     <small
-                        >You are being redirected to the
-                        home page in
-                        {{ seconds }} seconds</small
+                        >You are being redirected to the home page in {{ seconds }} seconds</small
                     >
                 </p>
             </section>

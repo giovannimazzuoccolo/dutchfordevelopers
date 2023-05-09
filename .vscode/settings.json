@@ -1,11 +1,4 @@
 {
     "nuxt.isNuxtApp": true,
-    "cSpell.words": [
-        "nuxt",
-        "supabase",
-        "tailwindcss",
-        "Telegraaf",
-        "Volkskrant",
-        "vuex"
-    ]
+    "cSpell.words": ["nuxt", "supabase", "tailwindcss", "Telegraaf", "Volkskrant", "vuex"]
 }

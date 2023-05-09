@@ -5,9 +5,7 @@
         <summary class="text-lg mb-1 p-4 dark:text-white">
             {{ title }}
         </summary>
-        <p
-            class="p-4 bg-white dark:text-white dark:bg-slate-800"
-        >
+        <p class="p-4 bg-white dark:text-white dark:bg-slate-800">
             {{ text }}
         </p>
     </details>

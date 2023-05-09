@@ -13,13 +13,12 @@
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesSuccess>
-           <GamesOver v-if="fail">
+            <GamesOver v-if="fail">
                 <p class="text-white">Oh no, no emoji guessed 😔, Jammer!</p>
                 <div class="flex gap-4">
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesOver>
-
 
             <p class="my-4 dark:text-white">Play bijvoemojilijk, how many emojis you can guess?</p>
             <div class="flex my-4 dark:text-white justify-between">
@@ -70,7 +69,7 @@ export default Vue.extend({
             wordIndex: 0,
             voice: [] as SpeechSynthesisVoice[],
             endgame: false,
-          fail: false,
+            fail: false,
             lastWord: '',
             pastScore: 0,
             possibleSolutions: [] as ResultEmojiList[],
@@ -116,7 +115,7 @@ export default Vue.extend({
                 )
                 this.pastScore = score[0].score ? score[0].score : 0
 
-                this.endgame = true;
+                this.endgame = true
             } else {
                 this.wordIndex++
             }
@@ -129,16 +128,15 @@ export default Vue.extend({
                 this.possibleSolutions = shuffle([this.words[this.wordIndex], ...getEmojis()])
                 this.score++
             } else {
-              if(this.lives === 0) {
-                if(this.score=== 0) {
-                  this.fail = true
+                if (this.lives === 0) {
+                    if (this.score === 0) {
+                        this.fail = true
+                    } else {
+                        this.endgame = true
+                    }
                 } else {
-                  this.endgame = true;
+                    this.lives--
                 }
-              }  else {
-              this.lives--
-                }
-
             }
         },
         tryAgain() {
