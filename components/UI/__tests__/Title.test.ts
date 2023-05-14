@@ -1,15 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
-import Title from "../Title.vue";
+import Title from '~/components/UI/Title.vue'
 
 describe('Title component', () => {
-  test('renders a title in orange and blue', () => {
-    const wrapper = shallowMount(Title, {
-      propsData: {
-        orange: 'My',
-        blue:'text'
-      }
-    })
+    test('renders a title in orange and blue', () => {
+        const wrapper = shallowMount(Title, {
+            propsData: {
+                orange: 'My',
+                blue: 'text',
+            },
+        })
 
-    expect(wrapper.text()).toContain('My text')
-  })
+        expect(wrapper.text()).toContain('My text')
+    })
 })
