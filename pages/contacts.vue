@@ -13,9 +13,10 @@
             </UIArticleBlock>
             <form
                 name="dfd_contacts"
-                method="post"
+                method="POST"
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
+                @submit.prevent="handleSubmit"
             >
                 <div class="mb-4">
                     <label
@@ -55,12 +56,41 @@
                     <Textarea
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="textarea"
-                        placeholder="Your email"
+                        placeholder="Your request"
                     />
+                    <input type="hidden" name="form-name" value="myForm" />
                 </div>
                 <input type="hidden" name="form-name" value="dfd_contacts" />
-                <UIButton> Send </UIButton>
+                <UIButton type="submit"> Send </UIButton>
             </form>
         </UIBlogWrapper>
     </Container>
 </template>
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+    name: 'ContactPage',
+    methods: {
+        route() {
+            this.$router.replace('thank-you')
+        },
+        handleSubmit(event: Event) {
+            event.preventDefault()
+
+            const myForm = event.currentTarget as HTMLFormElement
+            if (myForm) {
+                const formData = new FormData(myForm)
+
+                fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData as any).toString(), //ugly, but necessary for now
+                })
+                    .then(() => this.route())
+                    .catch((error) => alert(error))
+            }
+        },
+    },
+})
+</script>
