@@ -80,9 +80,7 @@ export default Vue.extend({
 
             return m + ':' + s
         },
-        isLogged() {
-            return this.$store.getters['user/isLogged']
-        },
+
     },
 
     created() {
@@ -114,6 +112,10 @@ export default Vue.extend({
 
         aSecondMore(): void {
             this.time++
+        },
+
+       isLogged() {
+            return this.$store.getters['user/isLogged']
         },
 
         counterFunc(): number {
@@ -159,11 +161,13 @@ export default Vue.extend({
         },
 
         async completed() {
-            const score = await this.$store.dispatch(
+            if(this.isLogged()) {
+              const score = await this.$store.dispatch(
                 'scores/getScoreByGameAndCurrentUser',
                 'games/memory'
-            )
-            this.pastScore = score[0].score ? score[0].score : 0
+              )
+              this.pastScore = score[0].score ? score[0].score : 0
+            }
             return setTimeout(() => {
                 this.success = true
             }, 600)
