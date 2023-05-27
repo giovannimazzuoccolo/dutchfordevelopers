@@ -25,7 +25,7 @@
                 Be a detective! Discover who stole the Queen's crown. Be careful! Use the stressed
                 form only when you are sure about the culprit. (2 rounds)
             </p>
-            <div class="flex my-4 dark:text-white justify-between">
+            <div class="flex my-4 dark:text-white justify-between cursor-pointer hover:underline">
                 <p>
                     Correct sentences:
                     <strong>{{ sentences }}</strong>
@@ -117,7 +117,6 @@ export default Vue.extend({
             }
         },
         triggerTranslations() {
-            alert('triggerTranslations')
             const actualTranslations = this.disableTranslations
             this.disableTranslations = !actualTranslations
         },
