@@ -7,7 +7,7 @@
                     You guessed {{ score }} words! Your best score is {{ pastScore }} words
                 </p>
                 <div class="flex gap-4">
-                    <UIButton v-if="isLogged && score > pastScore" @click="saveScore"
+                    <UIButton v-if="isLogged() && score > pastScore" @click="saveScore"
                         >Save</UIButton
                     >
                     <UIButton @click="tryAgain">Try again</UIButton>
@@ -82,9 +82,6 @@ export default Vue.extend({
         }
     },
     computed: {
-        isLogged() {
-            return this.$store.getters['user/isLogged']
-        },
         getWord() {
             return this.words[this.wordIndex].word
         },
@@ -105,14 +102,19 @@ export default Vue.extend({
                 score: this.score,
             })
         },
+        isLogged() {
+            return this.$store.getters['user/isLogged']
+        },
         async increaseWordIndexOrSuccess() {
+            console.log(this.wordIndex + 1 === this.words.length, this.wordIndex, this.words.length)
             if (this.wordIndex + 1 === this.words.length) {
-                const score = await this.$store.dispatch(
-                    'scores/getScoreByGameAndCurrentUser',
-                    'games/deofhet'
-                )
-                this.pastScore = score[0].score ? score[0].score : 0
-
+                if (this.isLogged()) {
+                    const score = await this.$store.dispatch(
+                        'scores/getScoreByGameAndCurrentUser',
+                        'games/deofhet'
+                    )
+                    this.pastScore = score[0].score ? score[0].score : 0
+                }
                 this.success = true
             } else {
                 this.wordIndex++
