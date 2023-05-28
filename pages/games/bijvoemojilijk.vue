@@ -98,23 +98,25 @@ export default Vue.extend({
         this.possibleSolutions = shuffle([this.words[this.wordIndex], ...getEmojis()])
     },
     methods: {
-        mixSolutions() {
-            return shuffle([this.words[this.wordIndex].emoji, getEmojis()])
-        },
         saveScore() {
             this.$store.dispatch('scores/saveScore', {
                 game: 'games/bijvoemojilijk',
                 score: this.score,
             })
         },
+        isLogged() {
+            return this.$store.getters['user/isLogged']
+        },
         async increaseWordIndexOrSuccess() {
             if (this.wordIndex + 1 === this.words.length) {
-                const score = await this.$store.dispatch(
-                    'scores/getScoreByGameAndCurrentUser',
-                    'games/bijvoemojilijk'
-                )
-                this.pastScore = score[0].score ? score[0].score : 0
+                if (this.isLogged()) {
+                    const score = await this.$store.dispatch(
+                        'scores/getScoreByGameAndCurrentUser',
+                        'games/bijvoemojilijk'
+                    )
 
+                    this.pastScore = score[0].score ? score[0].score : 0
+                }
                 this.endgame = true
             } else {
                 this.wordIndex++
