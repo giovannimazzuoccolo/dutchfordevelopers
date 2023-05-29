@@ -9,7 +9,7 @@
             <em>Jammer,</em> we are sorry, we are not able to retrieve the games
         </div>
         <div v-else>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <template v-for="games in gamesList">
                     <NuxtLink :to="games.route">
                         <GamesListGameCard
