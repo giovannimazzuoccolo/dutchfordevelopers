@@ -13,7 +13,7 @@
                 <p class="py-4 text-xl dark:text-white">
                     A pragmatic approach for developers (and not) living in The Netherlands
                 </p>
-                <NuxtLink to="/dashboard">
+                <NuxtLink to="/discover">
                     <UIButton text="Start now for free" @click="doNothing"
                 /></NuxtLink>
             </div>
