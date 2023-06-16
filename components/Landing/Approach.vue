@@ -24,8 +24,5 @@
                 <LandingIconsReader />
             </LandingApproachItem>
         </div>
-        <div class="flex my-2 justify-center">
-            <UIButton text="Start now for free" />
-        </div>
     </div>
 </template>
