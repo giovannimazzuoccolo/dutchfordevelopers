@@ -6,7 +6,7 @@
     >
         <div class="flex items-center w-full">
             <div class="p-6">
-                <v-icon :name="icon" class="fill-slate-500 scale-150" />
+                <font-awesome-icon :name=`fa-${icon}` class="fill-slate-500 scale-150" />
             </div>
             <div class="w-full">
                 <h3 class="uppercase text-xl text-main-orange my-2">
@@ -24,19 +24,13 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 //TODO: see if it is possible to import those icons dynamically
-import 'vue-awesome/icons/user-secret'
-import 'vue-awesome/icons/passport'
-import 'vue-awesome/icons/icons'
-import 'vue-awesome/icons/reply'
-import 'vue-awesome/icons/redo'
-import 'vue-awesome/icons/coins'
-import Icon from 'vue-awesome/components/Icon'
+
 
 export default Vue.extend({
-    components: {
-        'v-icon': Icon,
-    },
+  components: {FontAwesomeIcon},
+
     methods: {
         navigate() {
             this.$router.push(this.route)

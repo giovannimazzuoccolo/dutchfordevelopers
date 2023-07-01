@@ -8,19 +8,18 @@
             <h3 class="uppercase text-xl text-main-orange my-2">
                 {{ title }}
             </h3>
-            <v-icon v-if="isRead" name="check-circle" class="fill-current fill-main-orange" />
+            <font-awesome-icon icon="fa-check-circle" class="fill-current fill-main-orange" />
         </div>
         <p class="dark:text-white">{{ description }}</p>
     </div>
 </template>
 <script lang="ts">
-import 'vue-awesome/icons/check-circle'
 import Vue from 'vue'
-import Icon from 'vue-awesome/components/Icon'
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default Vue.extend({
     components: {
-        'v-icon': Icon,
+      FontAwesomeIcon,
     },
     props: {
         title: String,

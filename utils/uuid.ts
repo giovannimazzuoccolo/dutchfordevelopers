@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
-
+import {randomUUID} from "crypto";
 export function addUuidToObject(object: object) {
-    return { ...object, id: uuidv4() }
+    return { ...object, id: randomUUID() }
 }
