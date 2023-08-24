@@ -1,17 +1,20 @@
 <template>
     <div>
         <Container>
-            <LandingHero />
-            <LandingApproach />
-            <LandingLessionList />
+          <p>this is a test</p>
+        <LandingHero/>
+<!--            <LandingHero />-->
+<!--            <LandingApproach />-->
+<!--            <LandingLessionList />-->
         </Container>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Container from "~/components/shared/Container.vue";
 
-export default Vue.extend({
-    name: 'IndexPage',
-})
+export default {
+  name: 'IndexPage',
+  components: {Container},
+}
 </script>
