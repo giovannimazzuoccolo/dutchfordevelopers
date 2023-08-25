@@ -14,7 +14,7 @@
           A pragmatic approach for developers (and not) living in The Netherlands
         </p>
         <NuxtLink to="/discover">
-          <UIButton text="Start now for free"
+          <Button text="Start now for free"
           /></NuxtLink>
       </div>
       <div class="w-5/12 hidden md:flex">
@@ -26,3 +26,6 @@
     </div>
   </SharedContainer>
 </template>
+<script setup lang="ts">
+import Button from "~/components/UI/Button.vue";
+</script>

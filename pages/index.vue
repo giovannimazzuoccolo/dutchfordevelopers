@@ -1,7 +1,6 @@
 <template>
     <div>
         <Container>
-          <p>this is a test</p>
         <LandingHero/>
 <!--            <LandingHero />-->
 <!--            <LandingApproach />-->
