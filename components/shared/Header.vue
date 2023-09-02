@@ -2,11 +2,11 @@
     <div
         class="sticky px-4 top-0 backdrop-saturate-200 dark:backdrop-saturate-800 bg-main-header dark:bg-slate-900 z-30"
     >
-        <Container>
+        <SharedContainer>
             <header class="flex justify-between w-full items-center">
-                <Logo />
+                <SharedLogo />
                 <MainNavigation />
             </header>
-        </Container>
+        </SharedContainer>
     </div>
 </template>

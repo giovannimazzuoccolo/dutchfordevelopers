@@ -1,6 +1,6 @@
 import {REQUEST_STATUS} from '~/enums/serverRequests'
 import {defineStore} from "pinia";
-import {useSupabaseClient} from "#imports";
+import {supabase} from "~/services/supabase";
 
 export type Game = {
     id: String
@@ -19,7 +19,7 @@ export interface GamesState {
     error: string
 }
 
-const client = useSupabaseClient()
+const client = supabase;
 
 export const useGamesStore = defineStore('games',  {
 

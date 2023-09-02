@@ -1,7 +1,7 @@
 import {REQUEST_STATUS} from '~/enums/serverRequests'
 import {defineStore} from "pinia";
-import {useSupabaseClient} from "#imports";
 import {ERROR_ROUTE} from "~/utils/navigation";
+import {supabase} from "~/services/supabase";
 
 export interface UsersState {
     userInfo: object | null //TODO: define object
@@ -9,8 +9,7 @@ export interface UsersState {
 }
 
 
-const client = useSupabaseClient();
-
+const client = supabase;
 export const useUsers = defineStore('users', {
     state : ():UsersState => ({
         userInfo: null,
@@ -41,6 +40,10 @@ export const useUsers = defineStore('users', {
             } else {
                 return false;
             }
+        },
+
+        async logout() {
+            const val = await client.auth.signOut();
         }
     }
 

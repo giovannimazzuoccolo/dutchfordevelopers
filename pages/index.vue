@@ -2,9 +2,8 @@
     <div>
         <Container>
         <LandingHero/>
-<!--            <LandingHero />-->
-<!--            <LandingApproach />-->
-<!--            <LandingLessionList />-->
+          <LandingApproach />
+        <LandingLessionList />
         </Container>
     </div>
 </template>

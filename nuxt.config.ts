@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-      '@nuxtjs/supabase',
       '@nuxtjs/tailwindcss',
       '@nuxt/content',
       '@pinia/nuxt'

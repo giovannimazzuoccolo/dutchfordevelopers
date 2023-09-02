@@ -1,7 +1,7 @@
 import {capitalize} from 'lodash'
 import {REQUEST_STATUS} from '~/enums/serverRequests'
 import {defineStore} from "pinia";
-import {useSupabaseClient} from "#imports";
+import {supabase} from "~/services/supabase";
 
 export type Course = {
     id: String
@@ -29,7 +29,7 @@ export const state: CoursesState = {
     error: ''
 }
 
-const client = useSupabaseClient()
+const client = supabase;
 
 export const useCoursesStore = defineStore('courses',
         {
@@ -85,7 +85,7 @@ export const useCoursesStore = defineStore('courses',
                             this.request = REQUEST_STATUS.ERROR;
                             this.error = error.message;
                         } else {
-                            const composeData = courseData.map((c:CoursesJoinedWithReading) => ({
+                            const composeData = courseData.map((c) => ({
                                 id: c.id,
                                 description: c.description,
                                 title: c.title,
@@ -111,7 +111,7 @@ export const useCoursesStore = defineStore('courses',
                             this.courses = this.courses.map((c) => {
                                 return {
                                     ...c,
-                                    isRead: data.findIndex((d) => d.courses === c.id) !== -1,
+                                    isRead: data.findIndex((d) => d.courses[0].id === c.id) !== -1, //FIXME: ???
                                 }
                             })
                             this.request = REQUEST_STATUS.SUCCESS;

@@ -1,6 +1,6 @@
 <template>
     <footer class="w-full bg-main-blue py-4">
-        <Container>
+        <SharedContainer>
             <div class="flex flex-col md:flex-row md:justify-between">
                 <p class="text-white max-w-md mb-2 md:mb-0 md:mr-2">
                     <strong>Dutch for developers</strong> is a side project of <br />
@@ -17,7 +17,7 @@
                     >.
                 </p>
             </div>
-        </Container>
+        </SharedContainer>
     </footer>
 </template>
 <script setup lang="ts"></script>
