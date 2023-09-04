@@ -33,16 +33,16 @@
         </ul>
     </nav>
 </template>
-<script lang="ts">
-import Vue from 'vue'
+<script setup lang="ts">
+import Vue, {ref} from 'vue'
 
-export default Vue.extend({
-    name: 'MainNavigation',
-    data() {
-        return {
-            menuOpen: false,
-        }
-    },
+const menuOpen = ref<boolean>(false)
+
+function openMenu() {
+  menuOpen.value = true;
+}
+
+
     computed: {
         isLogged() {
             return this.$store.getters['user/isLogged']

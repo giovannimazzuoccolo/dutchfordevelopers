@@ -1,60 +1,84 @@
 <template>
-    <nav>
-        <HamburgerMenu
-            :openMenu="openMenu"
-            :closeMenu="closeMenu"
-            :menuOpen="menuOpen"
-        />
-        <ul
-            class="md:flex uppercase gap-4"
-            :class="
+  <nav>
+    <MainNavigationHamburgerMenu
+        :openMenu="openMenu"
+        :closeMenu="closeMenu"
+        :menuOpen="menuOpen"
+    />
+    <ul
+        class="md:flex uppercase gap-4"
+        :class="
                 !menuOpen
                     ? 'hidden'
                     : ' absolute top-14 left-0 z-10 bg-gray-100 bg-opacity-90 w-full text-center flex flex-col gap-2 py-4 dark:bg-gray-700 backdrop-blur-l'
             "
-            @click="closeMenu"
-        >
-            <MainNavigationItem v-if="!isLogged" class="hover:underline">
-                <NuxtLink to="/discover">Discover</NuxtLink>
-            </MainNavigationItem>
-            <MainNavigationItem v-else>
-                <NuxtLink to="/dashboard">Learn</NuxtLink>
-            </MainNavigationItem>
-            <MainNavigationItem><NuxtLink to="/about">About</NuxtLink></MainNavigationItem>
-            <MainNavigationItem>
-                <NuxtLink to="/contacts">Contacts</NuxtLink>
-            </MainNavigationItem>
-            <MainNavigationItem v-if="!isLogged">
-                <NuxtLink to="/login">Join now</NuxtLink>
-            </MainNavigationItem>
-            <MainNavigationItem v-else>
-                <span @click="logout"> Logout </span>
-            </MainNavigationItem>
-        </ul>
-    </nav>
+        @click="closeMenu"
+    >
+      <MainNavigationItem v-if="!isLogged" class="hover:underline">
+        <NuxtLink to="/discover">Discover</NuxtLink>
+      </MainNavigationItem>
+      <MainNavigationItem v-else>
+        <NuxtLink to="/dashboard">Learn</NuxtLink>
+      </MainNavigationItem>
+      <MainNavigationItem>
+        <NuxtLink to="/about">About</NuxtLink>
+      </MainNavigationItem>
+      <MainNavigationItem>
+        <NuxtLink to="/contacts">Contacts</NuxtLink>
+      </MainNavigationItem>
+      <MainNavigationItem v-if="!isLogged">
+        <NuxtLink to="/login">Join now</NuxtLink>
+      </MainNavigationItem>
+      <MainNavigationItem v-else>
+        <span @click="startLogout"> Logout </span>
+      </MainNavigationItem>
+    </ul>
+  </nav>
 </template>
 <script setup lang="ts">
-import HamburgerMenu from "~/components/MainNavigation/HamburgerMenu.vue";
-import { ref, computed } from 'vue';
+import {computed, ref} from 'vue'
 import {useUsers} from "~/store/users";
 
+const user = useUsers()
 
-      const userStore = useUsers()
-      const menuOpen = ref(false);
+const menuOpen = ref<boolean>(false)
 
-      const openMenu = () => {
-        menuOpen.value = true;
-      }
+// function isLogged() {
+//     console.log(user.$state.userInfo)
+//     return user.$state.userInfo
+// }
 
-    const closeMenu = () => {
-      menuOpen.value = false;
-    }
+const isLogged = computed(() => {
+  console.log(user.$state.userInfo)
+  return user.$state.userInfo
+})
 
-    const isLogged = computed(() => true)
+function openMenu() {
+  menuOpen.value = true
+}
 
-    const logout = () => {
-         userStore.logout();
-     }
+function closeMenu() {
+  menuOpen.value = false
+}
 
+function startLogout() {
+  user.logout()
+}
 
+// computed: {
+//     isLogged() {
+//         return this.$store.getters['user/isLogged']
+//     },
+// },
+// methods: {
+//     openMenu() {
+//         this.menuOpen = true
+//     },
+//     closeMenu() {
+//         this.menuOpen = false
+//     },
+//     dispatchLogout() {
+//         this.$store.dispatch('user/signOut')
+//     },
+// },
 </script>

@@ -66,6 +66,11 @@
         </div>
         <input type="hidden" name="form-name" value="dfd_contacts"/>
         <UIButton type="submit"> Send</UIButton>
+        <div v-if="error" class="border mt-2 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+          <p>Something wrong happened. Please <a
+              href="https://github.com/giovannimazzuoccolo/dutchfordevelopers/issues" target="_blank"
+              class="underline">file an issue on Github</a></p>
+        </div>
       </form>
     </UIBlogWrapper>
   </SharedContainer>
@@ -86,6 +91,8 @@ const formData = ref<FormData>({
   request: ''
 });
 
+const error = ref<boolean>(false);
+
 function handleSubmit(event: SubmitEvent) {
   console.log('form data: ', formData.value)
   event.preventDefault();
@@ -94,7 +101,9 @@ function handleSubmit(event: SubmitEvent) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: new URLSearchParams(formData.value).toString()
   }).then(async () => await navigateTo('/thank-you'))
-      .catch((error) => alert(error)) //TODO: refactor with error message
+      .catch(() =>
+          error.value = true
+      ) //TODO: refactor with error message
 
 }
 
