@@ -17,4 +17,4 @@ Er can be used for describe a location, the most similar word in English in this
 or in conjunction with another word:
 * Waar is het boek? Het is ergens hier (Where is the book? It is somewhere here)
 
-
+(the rest of the article soon...)
