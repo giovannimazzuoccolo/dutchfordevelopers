@@ -2,6 +2,7 @@ import {REQUEST_STATUS} from '~/enums/serverRequests'
 import {defineStore} from "pinia";
 import {ERROR_ROUTE} from "~/utils/navigation";
 import {supabase} from "~/services/supabase";
+import {Provider} from "@supabase/supabase-js";
 
 export interface UsersState {
     userInfo: object | null //TODO: define object
@@ -17,10 +18,10 @@ export const useUsers = defineStore('users', {
     }),
 
     actions: {
-        async authSSO(domain: string) {
-            const {data, error} = await client.auth.signInWithSSO(
+        async authSSO(provider: Provider) {
+            const {data, error} = await client.auth.signInWithOAuth(
                 {
-                    domain: domain
+                    provider: provider
                 },
             )
             if (!error) {
