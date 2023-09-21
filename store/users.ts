@@ -11,14 +11,14 @@ export interface UsersState {
 
 const client = supabase;
 export const useUsers = defineStore('users', {
-    state : ():UsersState => ({
+    state: (): UsersState => ({
         userInfo: null,
         request: REQUEST_STATUS.IDLE
     }),
 
-    actions : {
-        async authSSO(domain:string) {
-            const { data, error } = await client.auth.signInWithSSO(
+    actions: {
+        async authSSO(domain: string) {
+            const {data, error} = await client.auth.signInWithSSO(
                 {
                     domain: domain
                 },
@@ -28,13 +28,13 @@ export const useUsers = defineStore('users', {
             } else {
                 console.warn(error)
                 navigateTo(ERROR_ROUTE)
-                }
+            }
         },
 
         async autoAuth() {
             const userInfo = await client.auth.getUser();
 
-            if(userInfo) {
+            if (userInfo) {
                 this.userInfo = userInfo;
                 return true;
             } else {
@@ -44,6 +44,7 @@ export const useUsers = defineStore('users', {
 
         async logout() {
             const val = await client.auth.signOut();
+            //TODO: manage error
         }
     }
 
