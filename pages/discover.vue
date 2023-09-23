@@ -1,4 +1,4 @@
 <template>
-    <Dashboard :logged="false" />
+  <DashboardContainer :logged="false"/>
 </template>
 <script></script>
