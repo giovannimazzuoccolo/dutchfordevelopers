@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Container>
+    <SharedContainer>
       <div class="my-2">
         <template v-if="isUserAuthenticated">
           <h2 class="font-bold text-sm dark:text-white">
@@ -17,7 +17,7 @@
           >
         </template>
       </div>
-    </Container>
+    </SharedContainer>
     <DashboardTabs :selectedTab="tabSelection" :changeTab="changeTab"/>
     <CoursesList v-if="tabSelection === TAB_SELECTION.LEARN"/>
     <GamesList v-if="tabSelection === TAB_SELECTION.PLAY"/>

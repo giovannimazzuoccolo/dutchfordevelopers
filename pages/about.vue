@@ -1,5 +1,5 @@
 <template>
-    <Container>
+    <SharedContainer>
         <UIBlogWrapper>
             <UITitle blue="this project" orange="About" />
             <UIImage
@@ -48,5 +48,5 @@
                 </UIArticleBlock>
             </div>
         </UIBlogWrapper>
-    </Container>
+    </SharedContainer>
 </template>

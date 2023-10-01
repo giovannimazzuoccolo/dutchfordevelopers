@@ -8,6 +8,7 @@ export type Course = {
     title: String
     description: String
     image: String
+    route: String,
     isRead?: boolean
 }
 
@@ -30,7 +31,6 @@ export const state: CoursesState = {
 }
 
 const client = supabase;
-
 export const useCoursesStore = defineStore('courses',
         {
             state: ():CoursesState => ({
@@ -77,7 +77,7 @@ export const useCoursesStore = defineStore('courses',
                     if (userInfo) {
                         const { data: courseData, error } = await client
                             .from('courses')
-                            .select('id, title, description, image, courses_users (course_id, user_id)')
+                            .select('id, title, description, image, route, courses_users (course_id, user_id)')
                             .eq('title', capitalize(courseName))
                             .eq('courses_users.user_id', userInfo.data.user?.id)
 
@@ -90,6 +90,7 @@ export const useCoursesStore = defineStore('courses',
                                 description: c.description,
                                 title: c.title,
                                 image: c.image,
+                                route: c.route,
                                 isRead: c.courses_users.length > 0,
                             }))
                             this.courses = composeData;

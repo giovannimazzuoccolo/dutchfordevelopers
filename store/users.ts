@@ -9,7 +9,6 @@ export interface UsersState {
     request: REQUEST_STATUS
 }
 
-
 const client = supabase;
 export const useUsers = defineStore('users', {
     state: (): UsersState => ({
