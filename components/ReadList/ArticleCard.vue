@@ -30,7 +30,6 @@ const props = defineProps({
 });
 
 const getWords = () => {
-  debugger;
   return props.description.split(' ')
 }
 
