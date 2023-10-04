@@ -26,7 +26,6 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <template v-for="article in articles">
           <ArticleCard
-              :contentSnippet="article.contentSnippet"
               :description="article.description"
               :link="article.link"
               :title="article.title"
@@ -40,9 +39,12 @@
 import {REQUEST_STATUS} from "~/enums/serverRequests";
 import {useArticlesStore} from "~/store/articles";
 import ArticleCard from "~/components/ReadList/ArticleCard.vue";
+import {storeToRefs} from 'pinia'
 
-const {articles, getArticles, request} = useArticlesStore()
+const articlesStore = useArticlesStore()
 
-onMounted(() => getArticles())
+const {articles, request} = storeToRefs(articlesStore)
+
+onMounted(() => articlesStore.getArticles())
 
 </script>
