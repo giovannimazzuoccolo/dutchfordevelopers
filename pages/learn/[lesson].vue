@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLogged">
-    <div v-if="loadStatus === REQUEST_STATUS.SUCCESS">
+    <div v-if="request === REQUEST_STATUS.SUCCESS">
       <article
           class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
       >
@@ -9,11 +9,11 @@
         />
         <UILessonInfo/>
       </article>
-      <Container>
-        <div class="my-4" v-if="isRead">
+      <SharedContainer>
+        <div class="my-4">
           <UIButton @click="markCourse">Mark this lesson as read</UIButton>
         </div>
-      </Container>
+      </SharedContainer>
     </div>
     <div v-else class="flex justify-center items-center w-screen h-80">
       <UISpinner/>
@@ -34,25 +34,39 @@ import Vue from 'vue'
 import {REQUEST_STATUS} from "~/enums/serverRequests";
 import {useCoursesStore} from "~/store/courses";
 import {useUsers} from "~/store/users";
+import {storeToRefs} from "pinia";
 
 const route = useRoute()
 
-const loadStatus = ref(REQUEST_STATUS.LOADING)
-const {markCourseAsRead} = useCoursesStore();
+const useCourses = useCoursesStore();
+
+const {courses, request} = storeToRefs(useCourses);
+const {markCourseAsRead, getCourse} = useCourses;
+
 const {userInfo} = useUsers()
 
 const isLogged = ref(false);
 const isRead = ref(false);
 
 async function markCourse() {
-  markCourseAsRead('1');
+  await markCourseAsRead(route.params.lesson as string);
 }
 
+const props = defineProps();
 
 // const {  } = useAsyncData({ })
 const {data} = await useAsyncData('get-document', () => queryContent(
-    route.path
+    `learn/${route.params.lesson}`
 ).findOne())
+console.log('d', data
+);
+
+onMounted(async () => {
+  if (userInfo) {
+    const c = await getCourse(route.params.lesson as string)
+    console.log('c', c);
+  }
+});
 // export default Vue.extend({
 //   data() {
 //     return {
