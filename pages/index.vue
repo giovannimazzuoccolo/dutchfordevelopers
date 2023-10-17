@@ -1,18 +1,15 @@
 <template>
     <div>
-        <Container>
+        <SharedContainer>
         <LandingHero/>
           <LandingApproach />
         <LandingLessionList />
-        </Container>
+        </SharedContainer>
     </div>
 </template>
 
-<script lang="ts">
-import Container from "~/components/shared/Container.vue";
-
-export default {
-  name: 'IndexPage',
-  components: {Container},
-}
+<script setup lang="ts">
+  useHead({
+    title: "Learn Dutch with Dutch for Developers"
+  })
 </script>
