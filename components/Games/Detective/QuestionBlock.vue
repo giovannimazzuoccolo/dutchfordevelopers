@@ -25,13 +25,12 @@
           {{ questions[1].nl }}
         </option>
       </select>
-      <UIButton @click="$emit('onSelection', selection.value)">Select</UIButton>
+      <UIButton @click="$emit('onSelection', selection)">Select</UIButton>
       <br/>
     </GamesDetectiveAutoreveal>
   </div>
 </template>
 <script setup lang="ts">
-import Vue from 'vue'
 
 interface Phrases {
   en: string

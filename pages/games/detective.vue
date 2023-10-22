@@ -1,24 +1,24 @@
 <template>
   <SharedContainer>
-    <UITitle orange="De" blue="Detective" />
+    <UITitle orange="De" blue="Detective"/>
     <div class="relative">
       <div
-        v-if="success"
-        class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
+          v-if="success"
+          class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
       >
         <h2
-          class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center"
+            class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center"
         >
           🎉 Gefeliciteerd 🎉
         </h2>
         <p class="text-white">
           You selected
-          {{ sentences }} corrected sentences, the previous best score was
+          {{ correctSentences }} corrected sentences, the previous best score was
           {{ pastScore }} sentences!
         </p>
         <div class="flex gap-4">
-          <UIButton v-if="isLogged && sentences > pastScore" @click="saveScore"
-            >Save
+          <UIButton v-if="isLogged && correctSentences > pastScore" @click="saveScore"
+          >Save
           </UIButton>
           <UIButton @click="tryAgain">Try again</UIButton>
         </div>
@@ -28,11 +28,11 @@
         the stressed form only when you are sure about the culprit. (2 rounds)
       </p>
       <div
-        class="flex my-4 dark:text-white justify-between cursor-pointer hover:underline"
+          class="flex my-4 dark:text-white justify-between cursor-pointer hover:underline"
       >
         <p>
           Correct sentences:
-          <strong>{{ sentences }}</strong>
+          <strong>{{ correctSentences }}</strong>
         </p>
         <p v-if="!disableTranslations" @click="triggerTranslations">
           Disable English translations
@@ -42,40 +42,38 @@
         </p>
       </div>
       <QuestionBlock
-        :round="stepper"
-        :phrases="text[stepper].intro"
-        :questions="text[stepper].questions"
-        @onSelection="checkSelection"
-        :disableTranslation="!disableTranslations"
+          :round="stepper"
+          :phrases="text[stepper].intro"
+          :questions="text[stepper].questions"
+          @onSelection="checkSelection"
+          :disableTranslation="!disableTranslations"
       />
       <AnswerFeedback
-        :firstAnswer="firstAnswer"
-        :answers="returnPhrase().answer"
-        @continue="nextStep"
+          :firstAnswer="firstAnswer"
+          :answers="returnPhrase().answer"
+          @continue="nextStep"
       />
     </div>
     <UIAccordion
-      title="Instructions"
-      text="Select which question you want to ask. Be formal with the Queen!"
+        title="Instructions"
+        text="Select which question you want to ask. Be formal with the Queen!"
     />
   </SharedContainer>
 </template>
 <script setup lang="ts">
 import AnswerFeedback from "~/components/Games/Detective/AnswerFeedback.vue";
-import Autoreveal from "~/components/Games/Detective/Autoreveal.vue";
 import QuestionBlock from "~/components/Games/Detective/QuestionBlock.vue";
-import { Phrases, route1 } from "~/content/detective";
+import {Phrases, route1} from "~/content/detective";
 
 useHead({
   title: "Play the detective game, learn Dutch while solving cases!",
 });
 
 const text = ref<Phrases>(route1);
-const sentences = ref<number>(0);
+const correctSentences = ref<number>(0);
 const success = ref<boolean>(false);
 const pastScore = ref<number>(0);
 const stepper = ref<number>(0);
-const selection = ref<string>("");
 const firstAnswer = ref<number>(-1);
 const disableTranslations = ref<boolean>(false);
 
@@ -96,10 +94,11 @@ function tryAgain() {
   window.location.reload(); // find a better way to reset the state
 }
 
-function checkSelection() {
-  if (returnPhrase().solution === selection.value) {
+function checkSelection(answer: string) {
+  console.log('checking answers...')
+  if (returnPhrase().solution === answer) {
     firstAnswer.value = 1;
-    sentences.value++;
+    correctSentences.value++;
   } else {
     firstAnswer.value = 0;
   }
