@@ -48,25 +48,33 @@
         </p>
     </div>
 </template>
-<script lang="ts">
-import Vue from 'vue'
+<script setup lang="ts">
+import { computed, toRefs } from 'vue';
 
-export default Vue.extend({
-    props: {
-        isCovered: Boolean,
-        name: String,
-        image: String,
-        id: String,
-    },
-    computed: {
-        prepareImage(): string {
-            return `/${this.image}`
-        },
-    },
-    methods: {
-        selectCard() {
-            this.$emit('selectCard', this.name, this.id)
-        },
-    },
-})
+const props = defineProps({
+  isCovered: Boolean,
+  name: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  id: {
+    type: String,
+    required: true
+  },
+});
+
+const emit = defineEmits(['selectCard']);
+
+
+// Create a computed property
+const prepareImage = computed(() => `/${props.id}`);
+
+// Declare a method
+const selectCard = () => {
+  emit('selectCard', props.name, props.id);
+};
 </script>

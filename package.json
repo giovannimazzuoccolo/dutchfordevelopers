@@ -33,6 +33,7 @@
     "@supabase/supabase-js": "^2.38.0",
     "lodash": "^4.17.21",
     "pinia": "^2.1.6",
-    "pulse-feed-parser": "^0.1.0"
+    "pulse-feed-parser": "^0.1.0",
+    "uuid": "^9.0.1"
   }
 }
