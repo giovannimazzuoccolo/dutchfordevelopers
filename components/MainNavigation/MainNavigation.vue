@@ -49,8 +49,7 @@ const menuOpen = ref<boolean>(false)
 // }
 
 const isLogged = computed(() => {
-  console.log(userInfo)
-  return userInfo
+  return !!userInfo
 })
 
 function openMenu() {
