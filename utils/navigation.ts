@@ -1,4 +1,5 @@
 export const ERROR_ROUTE = '/error'
+export const REDIRECT_AFTER_LOGIN = '/dashboard'
 
 export function isAlreadyInPath(obtThis: any, params: any) {
     let from = obtThis.$router.fullPath

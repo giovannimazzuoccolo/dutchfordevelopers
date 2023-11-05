@@ -1,6 +1,6 @@
 import {REQUEST_STATUS} from '~/enums/serverRequests'
 import {defineStore} from "pinia";
-import {ERROR_ROUTE} from "~/utils/navigation";
+import {ERROR_ROUTE, REDIRECT_AFTER_LOGIN} from "~/utils/navigation";
 import {supabase} from "~/services/supabase";
 import {Provider} from "@supabase/supabase-js";
 
@@ -24,7 +24,9 @@ export const useUsers = defineStore('users', {
                 },
             )
             if (!error) {
+                console.log(data, this.userInfo)
                 this.userInfo = data;
+                navigateTo(REDIRECT_AFTER_LOGIN)
             } else {
                 console.warn(error)
                 navigateTo(ERROR_ROUTE)
@@ -36,7 +38,7 @@ export const useUsers = defineStore('users', {
 
             if (userInfo) {
                 this.userInfo = userInfo;
-                return true;
+                navigateTo(REDIRECT_AFTER_LOGIN)
             } else {
                 return false;
             }
@@ -45,6 +47,10 @@ export const useUsers = defineStore('users', {
         async logout() {
             const val = await client.auth.signOut();
             //TODO: manage error
+        },
+
+        isLogged() {
+            return !!this.userInfo;
         }
     }
 

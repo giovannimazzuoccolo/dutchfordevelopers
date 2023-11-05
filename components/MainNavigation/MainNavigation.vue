@@ -39,18 +39,10 @@
 import {computed, ref} from 'vue'
 import {useUsers} from "~/store/users";
 
-const {userInfo, logout} = useUsers()
+const {logout, isLogged} = useUsers()
 
 const menuOpen = ref<boolean>(false)
 
-// function isLogged() {
-//     console.log(user.$state.userInfo)
-//     return user.$state.userInfo
-// }
-
-const isLogged = computed(() => {
-  return !!userInfo
-})
 
 function openMenu() {
   menuOpen.value = true
@@ -63,21 +55,4 @@ function closeMenu() {
 function startLogout() {
   logout()
 }
-
-// computed: {
-//     isLogged() {
-//         return this.$store.getters['user/isLogged']
-//     },
-// },
-// methods: {
-//     openMenu() {
-//         this.menuOpen = true
-//     },
-//     closeMenu() {
-//         this.menuOpen = false
-//     },
-//     dispatchLogout() {
-//         this.$store.dispatch('user/signOut')
-//     },
-// },
 </script>
