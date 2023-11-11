@@ -39,7 +39,18 @@ export const useCoursesStore = defineStore('courses',
                 error: ''
             }),
             actions: {
+		/**
+		 * Fetch the courses
+		 */
                 async getCourses() {
+			/**
+			 * if the courses are already in the store, avoid to refecth them and present the result. the data will be invalidated every day.*/
+			if(this.courses) {
+			
+				//TODO: add a date check, for avoiding stale results
+				this.request = REQUEST_STATUS.SUCCESS;
+
+			} else {
                    this.request = REQUEST_STATUS.LOADING
                     // convert supabase request
                     const { data, error } = await client.from('courses').select()
@@ -50,6 +61,7 @@ export const useCoursesStore = defineStore('courses',
                         this.request = REQUEST_STATUS.ERROR
                         this.error = error.message;
                     }
+			}
                 },
 
                 async markCourseAsRead(courseId: string) {

@@ -64,27 +64,4 @@ const auth = (auth: Provider) => {
   return user.authSSO(auth);
 };
 
-//
-// export default Vue.extend({
-//   name: 'Login',
-//
-//   data() {
-//     return {
-//       unauth: false,
-//     }
-//   },
-//   methods: {
-//     setUnauth(value: boolean): void {
-//       this.unauth = value
-//     },
-//   },
-//   created() {
-//     const {query} = this.$route.params
-//     if (query && query.hasOwnProperty('reason')) {
-//       this.setUnauth(true)
-//     } else {
-//       this.setUnauth(false)
-//     }
-//   },
-// })
 </script>

@@ -11,10 +11,12 @@
           </p>
         </template>
         <template v-else>
+		<NuxtLink to="/login">
           <UIBanner
           >Login to view all the sections, track your learning and your best scores
             with the games, <strong class="text-bold">it is free!</strong></UIBanner
           >
+		</NuxtLink>
         </template>
       </div>
     </SharedContainer>
