@@ -26,7 +26,7 @@
       <MainNavigationItem>
         <NuxtLink to="/contacts">Contacts</NuxtLink>
       </MainNavigationItem>
-      <MainNavigationItem v-if="!isLogged">
+      <MainNavigationItem v-if="!isLogged()">
         <NuxtLink to="/login">Join now</NuxtLink>
       </MainNavigationItem>
       <MainNavigationItem v-else>

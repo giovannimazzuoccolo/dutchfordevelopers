@@ -8,7 +8,7 @@ export type Game = {
     description: String
     route: String
     fa_icon: String
-    score? : string | number;
+    score?: string | number;
 }
 
 export type Games = Game[]
@@ -21,33 +21,36 @@ export interface GamesState {
 
 const client = supabase;
 
-export const useGamesStore = defineStore('games',  {
+export const useGamesStore = defineStore('games', {
 
-    state: ():GamesState => ({
+    state: (): GamesState => ({
         games: [],
         request: REQUEST_STATUS.IDLE,
         error: ''
     }),
     actions: {
-        async getGames()
-        {
-            this.request = REQUEST_STATUS.LOADING;
-            const {data, error} = await client.from('games').select()
-            if (!error) {
+        async getGames() {
+            if (this.games.length > 0) {
                 this.request = REQUEST_STATUS.SUCCESS;
-                this.games = data as Game[];
             } else {
-                this.request = REQUEST_STATUS.ERROR;
-                this.error = error.message;
+                this.request = REQUEST_STATUS.LOADING;
+                const {data, error} = await client.from('games').select()
+                if (!error) {
+                    this.request = REQUEST_STATUS.SUCCESS;
+                    this.games = data as Game[];
+                } else {
+                    this.request = REQUEST_STATUS.ERROR;
+                    this.error = error.message;
+                }
             }
         },
         async getGamesWithScore() {
             this.request = REQUEST_STATUS.LOADING;
             const userInfo = await client.auth.getUser();
             if (userInfo) {
-                const { data, error } = await client.from('games').select('*')
+                const {data, error} = await client.from('games').select('*')
                 if (!error) {
-                    const { data: scores, error: scoresErr } = await client
+                    const {data: scores, error: scoresErr} = await client
                         .from('scores')
                         .select('game,score')
                         .eq('user_id', userInfo.data.user?.id)

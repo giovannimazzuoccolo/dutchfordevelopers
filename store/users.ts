@@ -26,7 +26,7 @@ export const useUsers = defineStore('users', {
             if (!error) {
                 console.log(data, this.userInfo)
                 this.userInfo = data;
-                navigateTo(REDIRECT_AFTER_LOGIN)
+                // connection successful, it will be redirect to the main page: TODO: move the redirect to dashboard.
             } else {
                 console.warn(error)
                 navigateTo(ERROR_ROUTE)
