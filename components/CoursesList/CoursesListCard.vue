@@ -10,8 +10,9 @@
       </h3>
       <font-awesome-icon
         v-if="isRead"
-        icon="check-circle"
-        class="fill-current fill-main-orange"
+        :icon="['fas', 'circle-check']"
+        class="text-main-orange w-6"
+        size="sm"
       />
     </div>
     <p class="dark:text-white">{{ description }}</p>

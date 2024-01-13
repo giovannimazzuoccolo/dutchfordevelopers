@@ -62,13 +62,13 @@
 <script setup lang="ts">
 import Vue from 'vue'
 import {wordList} from '~/content/deofhet'
-import {shuffle} from 'lodash'
+import _ from 'lodash'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 import GamesOver from '~/components/Games/Status/GamesOver.vue'
 
 const selected = ref('de')
 const money = ref(1000)
-const words = ref(shuffle(wordList))
+const words = ref(_.shuffle(wordList))
 const score = ref(0)
 const wordIndex = ref(0)
 const voice = ref([] as SpeechSynthesisVoice[])

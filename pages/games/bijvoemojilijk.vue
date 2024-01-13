@@ -58,10 +58,10 @@
 </template>
 <script setup lang="ts">
 import {adijlist, getEmojis, ResultEmojiList} from '~/content/bijvoemojilijkList'
-import {shuffle} from 'lodash'
+import _ from 'lodash'
 
 
-const words = ref(shuffle(adijlist))
+const words = ref(_.shuffle(adijlist))
 const score = ref(0)
 const wordIndex = ref(0)
 const voice = ref([] as SpeechSynthesisVoice[])

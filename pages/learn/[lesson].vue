@@ -67,47 +67,5 @@ onMounted(async () => {
     console.log('c', c);
   }
 });
-// export default Vue.extend({
-//   data() {
-//     return {
-//       page: null,
-//       REQUEST_STATUS,
-//     }
-//   },
-//   computed: {
-//     isLogged() {
-//       return this.$store.getters['user/isLogged']
-//     },
-//     isRead(): Boolean {
-//       console.log('course', this.course[0])
-//       if (this.course && !this.course[0]?.isRead) {
-//         return true
-//       } else {
-//         return false
-//       }
-//     },
-//     ...mapState({
-//       loadStatus: (state: any) => state.courses.request,
-//       course: (state: any) => state.courses.courses,
-//     }),
-//   },
-//   async asyncData({ $content, params, store }) {
-//     const { lesson } = params
-//     if (store.getters['user/isLogged']) {
-//       console.log('l', lesson)
-//       store.dispatch('courses/getCourse', {
-//         courseName: lesson,
-//       })
-//     }
-//
-//     const page = await $content(lesson).fetch()
-//     return { page }
-//   },
-//   methods: {
-//     markCourse() {
-//       this.$store.dispatch('courses/markCourseAsRead', { courseId: this.course[0].id })
-//       this.$router.push('/dashboard')
-//     },
-//   },
-// })
+
 </script>

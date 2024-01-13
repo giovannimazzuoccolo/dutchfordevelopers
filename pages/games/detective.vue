@@ -95,7 +95,6 @@ function tryAgain() {
 }
 
 function checkSelection(answer: string) {
-  console.log('checking answers...')
   if (returnPhrase().solution === answer) {
     firstAnswer.value = 1;
     correctSentences.value++;

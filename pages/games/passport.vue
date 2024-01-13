@@ -135,7 +135,7 @@
 </template>
 <script setup lang="ts">
 import {TENSE, PERSON, REGULAR_IRREGULAR, wordList} from '~/content/passport'
-import {shuffle} from 'lodash'
+import _ from 'lodash'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 import GamesOver from '~/components/Games/Status/GamesOver.vue'
 import PassportCover from '~/components/Games/Passport/PassportCover.vue'
@@ -145,7 +145,7 @@ const form = ref(TENSE.PRESENT);
 const person = ref(PERSON.FIRST_SINGULAR);
 const regularOrIrregular = ref(true);
 const line = ref(1);
-const words = ref(shuffle(wordList));
+const words = ref(_.shuffle(wordList));
 const score = ref(0);
 const wordIndex = ref(0);
 const voice = ref([] as SpeechSynthesisVoice[]);
