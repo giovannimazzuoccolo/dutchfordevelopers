@@ -43,13 +43,20 @@ export const useUsers = defineStore("users", {
 
     async logout() {
       const val = await client.auth.signOut();
+      this.userInfo = null;
+      return val;
       //TODO: manage error
     },
 
     async isLogged() {
       const { data } = await supabase.auth.getSession();
-      this.userInfo = data;
-      return !!this.userInfo;
+      if (data.session === null) {
+        this.userInfo = null;
+        return false;
+      } else {
+        this.userInfo = data;
+        return true;
+      }
     },
   },
 });

@@ -14,11 +14,13 @@
             "
         @click="closeMenu"
     >
-      <MainNavigationItem v-if="!isLogged" class="hover:underline">
-        <NuxtLink to="/discover">Discover</NuxtLink>
+      <MainNavigationItem v-if="isUserLogged" class="hover:underline">
+        <NuxtLink to="/dashboard">Learn</NuxtLink>
+
       </MainNavigationItem>
       <MainNavigationItem v-else>
-        <NuxtLink to="/dashboard">Learn</NuxtLink>
+        <NuxtLink to="/discover">Discover</NuxtLink>
+
       </MainNavigationItem>
       <MainNavigationItem>
         <NuxtLink to="/about">About</NuxtLink>
@@ -26,23 +28,29 @@
       <MainNavigationItem>
         <NuxtLink to="/contacts">Contacts</NuxtLink>
       </MainNavigationItem>
-      <MainNavigationItem v-if="!isLogged()">
-        <NuxtLink to="/login">Join now</NuxtLink>
+      <MainNavigationItem v-if="isUserLogged">
+        <span @click="startLogout"> Logout </span>
+
       </MainNavigationItem>
       <MainNavigationItem v-else>
-        <span @click="startLogout"> Logout </span>
+        <NuxtLink to="/login">Join now</NuxtLink>
+
       </MainNavigationItem>
     </ul>
   </nav>
 </template>
 <script setup lang="ts">
-import {computed, ref} from 'vue'
+import {ref} from 'vue'
 import {useUsers} from "~/store/users";
 
 const {logout, isLogged} = useUsers()
 
+const isUserLogged = ref<boolean>(false)
 const menuOpen = ref<boolean>(false)
 
+onMounted(async () => {
+  isUserLogged.value = await isLogged()
+})
 
 function openMenu() {
   menuOpen.value = true
