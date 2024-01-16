@@ -1,15 +1,18 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
 import { ERROR_ROUTE, REDIRECT_AFTER_LOGIN } from "~/utils/navigation";
-import { supabase } from "~/services/supabase";
-import { Provider } from "@supabase/supabase-js";
+import { Provider, SupabaseClient } from "@supabase/supabase-js";
 
 export interface UsersState {
   userInfo: object | null; //TODO: define object
   request: REQUEST_STATUS;
 }
 
-const client = supabase;
+function supabaseClient() {
+  const { $supabase } = useNuxtApp();
+  return $supabase as SupabaseClient;
+}
+
 export const useUsers = defineStore("users", {
   state: (): UsersState => ({
     userInfo: null,
@@ -18,6 +21,7 @@ export const useUsers = defineStore("users", {
 
   actions: {
     async authSSO(provider: Provider) {
+      const client = supabaseClient();
       const { data, error } = await client.auth.signInWithOAuth({
         provider: provider,
       });
@@ -31,6 +35,8 @@ export const useUsers = defineStore("users", {
     },
 
     async autoAuth() {
+      const client = supabaseClient();
+
       const userInfo = await client.auth.getUser();
 
       if (userInfo) {
@@ -42,6 +48,8 @@ export const useUsers = defineStore("users", {
     },
 
     async logout() {
+      const client = supabaseClient();
+
       const val = await client.auth.signOut();
       this.userInfo = null;
       return val;
@@ -49,7 +57,9 @@ export const useUsers = defineStore("users", {
     },
 
     async isLogged() {
-      const { data } = await supabase.auth.getSession();
+      const client = supabaseClient();
+
+      const { data } = await client.auth.getSession();
       if (data.session === null) {
         this.userInfo = null;
         return false;

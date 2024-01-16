@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { supabase } from "~/services/supabase";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export type Course = {
   id: String;
@@ -30,7 +30,11 @@ export const state: CoursesState = {
   error: "",
 };
 
-const client = supabase;
+function supabaseClient() {
+  const { $supabase } = useNuxtApp();
+  return $supabase as SupabaseClient;
+}
+
 export const useCoursesStore = defineStore("courses", {
   state: (): CoursesState => ({
     courses: [],
@@ -42,6 +46,7 @@ export const useCoursesStore = defineStore("courses", {
      * Fetch the courses
      */
     async getCourses() {
+      const client = supabaseClient();
       /**
        * if the courses are already in the store, avoid to refecth them and present the result. the data will be invalidated every day.*/
       // @ts-ignore this should already know by typescript
@@ -63,6 +68,7 @@ export const useCoursesStore = defineStore("courses", {
     },
 
     async markCourseAsRead(courseId: string) {
+      const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
       const userInfo = await client.auth.getUser();
       if (userInfo) {
@@ -82,6 +88,7 @@ export const useCoursesStore = defineStore("courses", {
       }
     },
     async getCourse(courseName: string) {
+      const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
       const userInfo = await client.auth.getUser();
       if (userInfo) {
@@ -112,6 +119,7 @@ export const useCoursesStore = defineStore("courses", {
     },
 
     async getCoursesJoined() {
+      const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
       const userInfo = await client.auth.getUser();
       if (userInfo) {
