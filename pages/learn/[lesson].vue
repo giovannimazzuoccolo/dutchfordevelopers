@@ -24,7 +24,13 @@
     <article class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full">
       <ContentDoc
           class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words"
-      />
+      >
+      <template #not-found>
+        <p class="py-4 text-xl dark:text-white">
+          Jammer, cannot find the article!
+        </p>
+    </template>
+     </ContentDoc>
       <UILessonInfo/>
     </article>
   </div>

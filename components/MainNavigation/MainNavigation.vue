@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav v-if="isUserLogged !== 'LOADING'">
     <MainNavigationHamburgerMenu
         :openMenu="openMenu"
         :closeMenu="closeMenu"
@@ -45,11 +45,11 @@ import {useUsers} from "~/store/users";
 
 const {logout, isLogged} = useUsers()
 
-const isUserLogged = ref<boolean>(false)
+const isUserLogged = ref<'LOADING'|"LOGGED"|"NOT_LOGGED">("LOADING")
 const menuOpen = ref<boolean>(false)
 
 onMounted(async () => {
-  isUserLogged.value = await isLogged()
+  isUserLogged.value = await isLogged() ? "LOGGED" : "NOT_LOGGED"
 })
 
 function openMenu() {
