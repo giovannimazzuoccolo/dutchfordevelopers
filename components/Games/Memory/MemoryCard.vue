@@ -39,7 +39,7 @@
         class="relative h-52 shadow hover:shadow-2xl rotate-y-180 preserve-3d cursor-pointer perspective group duration-200 rounded-lg"
     >
         <img
-            :src="prepareImage"
+            :src="`/${props.image}`"
             :alt="name"
             class="w-full h-full rounded-lg rotate-y-180 object-cover"
         />
@@ -49,7 +49,6 @@
     </div>
 </template>
 <script setup lang="ts">
-import { computed, toRefs } from 'vue';
 
 const props = defineProps({
   isCovered: Boolean,
@@ -68,10 +67,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['selectCard']);
-
-
-// Create a computed property
-const prepareImage = computed(() => `/${props.id}`);
 
 // Declare a method
 const selectCard = () => {

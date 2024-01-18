@@ -103,7 +103,7 @@ function secondsToTime() {
 
         function isLogged() {
           return false
-        }
+        } 
 
         function counterFunc(): number {
             return window.setInterval(() => {
@@ -150,6 +150,7 @@ function secondsToTime() {
         }
 
         async function completed() {
+            //TODO: save the score
             // if (isLogged()) {
             //     const score = await this.$store.dispatch(
             //         'scores/getScoreByGameAndCurrentUser',
