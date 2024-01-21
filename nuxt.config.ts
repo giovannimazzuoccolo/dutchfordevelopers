@@ -13,6 +13,7 @@ export default defineNuxtConfig({
       title: "Dutch for Developers",
     },
   },
+  plugins: ["~/plugins/supabase.ts", "~/plugins/autoAuth.ts"],
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content", "@pinia/nuxt"],
 });

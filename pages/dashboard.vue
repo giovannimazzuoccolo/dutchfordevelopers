@@ -1,5 +1,5 @@
 <template>
-  <DashboardContainer :logged="true"/>
+  <DashboardContainer />
 </template>
 <script setup lang="ts">
   useHead({

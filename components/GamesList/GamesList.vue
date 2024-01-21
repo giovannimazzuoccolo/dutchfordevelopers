@@ -39,7 +39,6 @@ const {games, request} = storeToRefs(useGames)
 const {userInfo} = useUsers()
 
 onMounted(() => {
-      console.log('uinfo', userInfo)
       if (userInfo) {
         getGamesWithScore()
       } else {

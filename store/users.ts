@@ -1,10 +1,10 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { ERROR_ROUTE, REDIRECT_AFTER_LOGIN } from "~/utils/navigation";
-import { Provider, SupabaseClient } from "@supabase/supabase-js";
+import { ERROR_ROUTE } from "~/utils/navigation";
+import { Provider, Session, SupabaseClient } from "@supabase/supabase-js";
 
 export interface UsersState {
-  userInfo: object | null; //TODO: define object
+  userInfo: Session | null; //TODO: define object
   request: REQUEST_STATUS;
 }
 
@@ -22,13 +22,10 @@ export const useUsers = defineStore("users", {
   actions: {
     async authSSO(provider: Provider) {
       const client = supabaseClient();
-      const { data, error } = await client.auth.signInWithOAuth({
+      const { error } = await client.auth.signInWithOAuth({
         provider: provider,
       });
-      if (!error) {
-        this.userInfo = data;
-        // connection successful, it will be redirect to the main page: TODO: move the redirect to dashboard.
-      } else {
+      if (error) {
         console.warn(error);
         navigateTo(ERROR_ROUTE);
       }
@@ -36,14 +33,11 @@ export const useUsers = defineStore("users", {
 
     async autoAuth() {
       const client = supabaseClient();
-
-      const userInfo = await client.auth.getUser();
-
-      if (userInfo) {
-        this.userInfo = userInfo;
-        navigateTo(REDIRECT_AFTER_LOGIN);
+      const { data } = await client.auth.getSession();
+      if (data.session === null) {
+        this.userInfo = null;
       } else {
-        return false;
+        this.userInfo = data.session;
       }
     },
 
@@ -56,17 +50,8 @@ export const useUsers = defineStore("users", {
       //TODO: manage error
     },
 
-    async isLogged() {
-      const client = supabaseClient();
-
-      const { data } = await client.auth.getSession();
-      if (data.session === null) {
-        this.userInfo = null;
-        return false;
-      } else {
-        this.userInfo = data;
-        return true;
-      }
+    isLogged() {
+      return this.userInfo !== null;
     },
   },
 });

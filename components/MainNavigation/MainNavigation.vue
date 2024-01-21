@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="isUserLogged !== 'LOADING'">
+  <nav>
     <MainNavigationHamburgerMenu
         :openMenu="openMenu"
         :closeMenu="closeMenu"
@@ -14,7 +14,7 @@
             "
         @click="closeMenu"
     >
-      <MainNavigationItem v-if="isUserLogged" class="hover:underline">
+      <MainNavigationItem v-if="isLogged()" class="hover:underline">
         <NuxtLink to="/dashboard">Learn</NuxtLink>
 
       </MainNavigationItem>
@@ -28,7 +28,7 @@
       <MainNavigationItem>
         <NuxtLink to="/contacts">Contacts</NuxtLink>
       </MainNavigationItem>
-      <MainNavigationItem v-if="isUserLogged">
+      <MainNavigationItem v-if="isLogged()">
         <span @click="startLogout"> Logout </span>
 
       </MainNavigationItem>
@@ -45,12 +45,7 @@ import {useUsers} from "~/store/users";
 
 const {logout, isLogged} = useUsers()
 
-const isUserLogged = ref<'LOADING'|"LOGGED"|"NOT_LOGGED">("LOADING")
 const menuOpen = ref<boolean>(false)
-
-onMounted(async () => {
-  isUserLogged.value = await isLogged() ? "LOGGED" : "NOT_LOGGED"
-})
 
 function openMenu() {
   menuOpen.value = true
