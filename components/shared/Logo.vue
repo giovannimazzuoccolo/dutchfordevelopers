@@ -1,5 +1,5 @@
 <template>
-    <a href="/" class="flex gap-2">
+    <NuxtLink to="/" class="flex gap-2">
         <svg
             width="54"
             height="54"
@@ -34,5 +34,5 @@
         >
             Dutch for developers
         </h1>
-    </a>
+    </NuxtLink>
 </template>
