@@ -2,10 +2,8 @@
     <SharedContainer>
         <UITitle orange="Memory" />
         <div class="relative">
-            <div
-                v-if="success"
-                class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round"
-            >
+            <div v-if="success"
+                class="flex justify-center items-center absolute top-0 h-full z-10 w-full bg-gray-700/80 backdrop-blur-l flex-col gap-4 round">
                 <h2 class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center">
                     🎉 Gefeliciteerd 🎉
                 </h2>
@@ -31,19 +29,11 @@
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <template v-for="memoryCard in memoryCards">
-                    <GamesMemoryCard
-                        :isCovered="isCovered(memoryCard.id)"
-                        :name="memoryCard.name"
-                        :image="memoryCard.image"
-                        :id="memoryCard.id"
-                        @selectCard="selectCard"
-                    />
+                    <GamesMemoryCard :isCovered="isCovered(memoryCard.id)" :name="memoryCard.name" :image="memoryCard.image"
+                        :id="memoryCard.id" @selectCard="selectCard" />
                 </template>
             </div>
-            <UIAccordion
-                title="Instructions"
-                text="Select two cards, and match the same ones. Fight against the time!"
-            />
+            <UIAccordion title="Instructions" text="Select two cards, and match the same ones. Fight against the time!" />
         </div>
     </SharedContainer>
 </template>
@@ -53,113 +43,123 @@ import { memoryCardList } from '~/content/memory'
 import { shuffler } from '~/utils/memory'
 import { speak } from '~/utils/tts'
 import { evenOrOdd } from '~/utils/math'
+import { useUsers } from '~/store/users';
+import { useScores } from '~/store/scores';
+import { storeToRefs } from 'pinia';
 
-const memoryCards= ref(shuffler(memoryCardList));
-const collected= ref([] as { name: string; id: string }[]);
-const name= ref('');
-const voice= ref([] as SpeechSynthesisVoice[]);
-const time= ref(0);
-const interval= ref(0);
-const success= ref(false);
-const pastScore= ref(0);
+const uScores = useScores();
 
-    onMounted(() => {
-        interval.value = counterFunc()
-    })
-    onUnmounted(() => {
-        clearInterval(interval.value);
-      window.speechSynthesis.onvoiceschanged = null;
-    });
+const { getScoreByGameAndCurrentUser } = uScores;
+const { scores } = storeToRefs(uScores);
+const { isLogged } = useUsers()
 
-    onMounted( () => {
-       window.speechSynthesis.onvoiceschanged = () => {
-            const voices =  window.speechSynthesis.getVoices()
+const memoryCards = ref(shuffler(memoryCardList));
+const collected = ref([] as { name: string; id: string }[]);
+const name = ref('');
+const voice = ref([] as SpeechSynthesisVoice[]);
+const time = ref(0);
+const interval = ref(0);
+const success = ref(false);
+const pastScore = ref(0);
 
-            voice.value = voices.filter((d) => d.lang === 'nl-NL')
+onMounted(() => {
+    interval.value = counterFunc()
+})
+onUnmounted(() => {
+    clearInterval(interval.value);
+    window.speechSynthesis.onvoiceschanged = null;
+});
+
+onMounted(() => {
+    window.speechSynthesis.onvoiceschanged = () => {
+        const voices = window.speechSynthesis.getVoices()
+
+        voice.value = voices.filter((d) => d.lang === 'nl-NL')
     }
-       });
+});
 
 
 function secondsToTime() {
-  const e = time.value;
-  const m = Math.floor((e % 3600) / 60).toString().padStart(2, '0');
-  const s = Math.floor(e % 60).toString().padStart(2, '0')
+    const e = time.value;
+    const m = Math.floor((e % 3600) / 60).toString().padStart(2, '0');
+    const s = Math.floor(e % 60).toString().padStart(2, '0')
 
-  return m + ':' + s
+    return m + ':' + s
 }
 
 
-        function saveScore() {
-          return false
+function tryAgain() {
+    location.reload()
+}
+
+function aSecondMore(): void {
+    time.value++
+}
+
+function counterFunc(): number {
+    return window.setInterval(() => {
+        aSecondMore();
+    }, 1000)
+}
+
+function stopTimer() {
+    clearInterval(interval.value)
+}
+
+function flipCardBack() {
+    return setTimeout(() => {
+        collected.value.splice(collected.value.length - 2, 2)
+    }, 800)
+}
+
+function checkIsCollected(name: string, id: string) {
+    collected.value.push({ name, id })
+
+    if (collected.value.length === 8) {
+        stopTimer()
+        completed()
+    }
+
+    if (evenOrOdd(collected.value.length)) {
+        //do the check
+        if (collected.value.findIndex((c) => c.name === name && c.id !== id) === -1) {
+            flipCardBack()
         }
-
-        function tryAgain() {
-            location.reload()
-        }
-
-        function aSecondMore(): void {
-            time.value++
-        }
-
-        function isLogged() {
-          return false
-        } 
-
-        function counterFunc(): number {
-            return window.setInterval(() => {
-                aSecondMore();
-            }, 1000)
-        }
-
-        function stopTimer() {
-            clearInterval(interval.value)
-        }
-
-             function flipCardBack() {
-            return setTimeout(() => {
-                collected.value.splice(collected.value.length - 2, 2)
-            }, 800)
-        }
-
-        function checkIsCollected(name: string, id: string) {
-            collected.value.push({ name, id })
-
-            if (collected.value.length === 8) {
-                stopTimer()
-                completed()
-            }
-
-            if (evenOrOdd(collected.value.length)) {
-                //do the check
-                if (collected.value.findIndex((c) => c.name === name && c.id !== id) === -1) {
-                    flipCardBack()
-                }
-            }
-        }
+    }
+}
 
 
 
-        function selectCard(cardName: string, id: string) {
-            name.value = cardName
-            checkIsCollected(cardName, id)
-            speak(cardName, voice.value)
-        }
+function selectCard(cardName: string, id: string) {
+    name.value = cardName
+    checkIsCollected(cardName, id)
+    speak(cardName, voice.value)
+}
 
-      function  isCovered(id: string) {
-            return collected.value.findIndex((c) => c.id === id) === -1
-        }
+function isCovered(id: string) {
+    return collected.value.findIndex((c) => c.id === id) === -1
+}
 
-        async function completed() {
-            //TODO: save the score
-            // if (isLogged()) {
-            //     const score = await this.$store.dispatch(
-            //         'scores/getScoreByGameAndCurrentUser',
-            //         'games/memory'
-            //     )
-            //     this.pastScore = score[0].score ? score[0].score : 0
-            // }
-            return setTimeout(() => {
-                success.value = true
-            }, 600)}
+async function completed() {
+    //TODO: save the score
+    if (isLogged()) {
+        await getScoreByGameAndCurrentUser('games/memory');
+        // debugger;
+        // console.log(scores);
+        pastScore.value = scores.value[0].score ? Number(scores.value[0].score) : 0;
+
+    }
+
+    // if (isLogged()) {
+    //     const score = await this.$store.dispatch(
+    //         'scores/getScoreByGameAndCurrentUser',
+    //         'games/memory'
+    //     )
+    //     this.pastScore = score[0].score ? score[0].score : 0
+    // }
+    return setTimeout(() => {
+        success.value = true
+    }, 600)
+}
 
 </script>
