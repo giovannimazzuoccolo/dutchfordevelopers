@@ -27,8 +27,10 @@
       >
       <template #not-found>
         <p class="py-4 text-xl dark:text-white">
-          Jammer, cannot find the article!
+          Jammer, cannot find the lesson!<br />
+          But you can find other lessons in the <span class="text-main-orange hover:underline"><router-link to="/dashboard">dashboard</router-link></span> page
         </p>
+    
     </template>
      </ContentDoc>
       <UILessonInfo/>
