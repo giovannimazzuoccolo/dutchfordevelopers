@@ -76,18 +76,37 @@ export const useScores = defineStore("scores", {
         }
       }
     },
-    async saveScore(game: string, score: string | number) {
+    async saveScore(
+      game: string,
+      score: string | number,
+      updateOrInsert: "INSERT" | "UPDATE" = "INSERT"
+    ) {
       const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
       const userInfo = await client.auth.getUser();
       if (userInfo) {
+        //TODO: remove code duplication
         const values: any = { game, score, user_id: userInfo.data.user?.id };
-        const { error } = await client.from("scores").insert(values);
-        if (!error) {
-          this.request = REQUEST_STATUS.SUCCESS;
+        if (updateOrInsert === "UPDATE") {
+          const { error } = await client
+            .from("scores")
+            .update(values)
+            .eq("game", game)
+            .eq("user_id", userInfo.data.user?.id);
+          if (!error) {
+            this.request = REQUEST_STATUS.SUCCESS;
+          } else {
+            this.request = REQUEST_STATUS.ERROR;
+            this.error = error.message;
+          }
         } else {
-          this.request = REQUEST_STATUS.ERROR;
-          this.error = error.message;
+          const { error } = await client.from("scores").insert(values);
+          if (!error) {
+            this.request = REQUEST_STATUS.SUCCESS;
+          } else {
+            this.request = REQUEST_STATUS.ERROR;
+            this.error = error.message;
+          }
         }
       } else {
         console.error("No user defined");

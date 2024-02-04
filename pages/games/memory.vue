@@ -17,7 +17,7 @@
           {{ pastScore }} seconds
         </p>
         <div class="flex gap-4">
-            <p v-if="isSaved" class="text-white py-2 px-4">Saved!</p>
+          <p v-if="isSaved" class="text-white py-2 px-4">Saved!</p>
           <UIButton v-if="checkIfScoreIsBetter()" @click="saveScore"
             >Save</UIButton
           >
@@ -162,15 +162,17 @@ function isCovered(id: string) {
 function saveScore() {
   if (!isLogged()) return;
 
-  uScores.saveScore("games/memory", time.value);
+  const updateOrInsert = hasPastScore.value ? "UPDATE" : "INSERT";
+
+  uScores.saveScore("games/memory", time.value, updateOrInsert);
   isSaved.value = true;
 }
 
 function checkIfScoreIsBetter() {
   if (
     isLogged() &&
-    (hasPastScore.value ? time.value < pastScore.value : true) 
-    && !isSaved.value
+    (hasPastScore.value ? time.value < pastScore.value : true) &&
+    !isSaved.value
   ) {
     return true;
   }
