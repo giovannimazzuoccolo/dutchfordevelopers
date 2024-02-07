@@ -52,7 +52,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import { TAB_SELECTION } from './Dashboard.vue'
 import Container from '../Container.vue'
 
