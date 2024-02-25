@@ -79,14 +79,15 @@ export const useScores = defineStore("scores", {
     async saveScore(
       game: string,
       score: string | number,
-      idForUpdate: string | null = null
+      idForUpdate: number | boolean = false
     ) {
       const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
       const userInfo = await client.auth.getUser();
+      console.log('userInfo', userInfo.data.user?.id);
       if (userInfo) {
         //TODO: remove code duplication
-        const values: any = { game, score, user_id: userInfo.data.user?.id };
+        const values = { game, score, user_id: userInfo.data.user?.id };
         if (idForUpdate) {
           const { error } = await client
             .from("scores")
@@ -107,7 +108,6 @@ export const useScores = defineStore("scores", {
             this.error = error.message;
           }
         }
-        //TODO: add fallback for error
       }
     },
   },
