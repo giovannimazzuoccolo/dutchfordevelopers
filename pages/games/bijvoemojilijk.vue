@@ -1,25 +1,25 @@
 <template>
   <SharedContainer>
-    <UITitle orange="De or" blue="(B)het"/>
+    <UITitle orange="Bijvoemojilijk" />
     <div class="relative">
-      <GamesSuccess v-if="endgame">
+      <GamesStatusGamesSuccess v-if="endgame">
         <p class="text-white">
           You guessed {{ score }} emojis! Your best score is {{ pastScore }} emojis
         </p>
         <div class="flex gap-4">
-          <UIButton v-if="isLogged && score > pastScore" @click="saveScore"
+          <UIButton v-if="isLogged() && score > pastScore" @click="saveScore"
           >Save
           </UIButton
           >
           <UIButton @click="tryAgain">Try again</UIButton>
         </div>
-      </GamesSuccess>
-      <GamesOver v-if="fail">
+      </GamesStatusGamesSuccess>
+      <GamesStatusGamesOver v-if="fail">
         <p class="text-white">Oh no, no emoji guessed 😔, Jammer!</p>
         <div class="flex gap-4">
           <UIButton @click="tryAgain">Try again</UIButton>
         </div>
-      </GamesOver>
+      </GamesStatusGamesOver>
 
       <p class="my-4 dark:text-white">Play bijvoemojilijk, how many emojis you can guess?</p>
       <div class="flex my-4 dark:text-white justify-between">
@@ -57,11 +57,20 @@
   </SharedContainer>
 </template>
 <script setup lang="ts">
-import {adijlist, getEmojis, ResultEmojiList} from '~/content/bijvoemojilijkList'
-import _ from 'lodash'
+import {adijlist, getEmojis, type ResultEmojiList} from '~/content/bijvoemojilijkList'
+import { shuffle } from 'lodash'
+import { useScores } from '~/store/scores';
+import { storeToRefs } from 'pinia';
+import { useUsers } from '~/store/users';
+const uScores = useScores();
+
+const { getScoreByGameAndCurrentUser } = uScores;
+const { scores } = storeToRefs(uScores);
+const { isLogged } = useUsers();
 
 
-const words = ref(_.shuffle(adijlist))
+
+const words = ref(shuffle(adijlist))
 const score = ref(0)
 const wordIndex = ref(0)
 const voice = ref([] as SpeechSynthesisVoice[])
@@ -69,12 +78,11 @@ const endgame = ref(false)
 const fail = ref(false)
 const lastWord = ref('')
 const pastScore = ref(0)
+const hasPastScore = ref(false);
+const isSaved = ref(false);
 const possibleSolutions = ref([] as ResultEmojiList[])
 const lives = ref(3);
 
-function isLogged() {
-  return false;
-}
 
 const getWord = computed(() => words.value[wordIndex.value].dutch);
 
@@ -92,27 +100,26 @@ onMounted(() => {
 
 onMounted(() => possibleSolutions.value = shuffle([words.value[wordIndex.value], ...getEmojis()]));
 
+
+
 function saveScore() {
-  return false
+  if (!isLogged()) return;
+
+  const updateOrInsert = hasPastScore.value ? "UPDATE" : "INSERT";
+
+  uScores.saveScore("games/bijvoemojilijk", score.value, updateOrInsert);
+  isSaved.value = true;
 }
-
-
-// saveScore() {
-//     this.$store.dispatch('scores/saveScore', {
-//         game: 'games/bijvoemojilijk',
-//         score: this.score,
-//     })
-// },
 
 async function increaseWordIndexOrSuccess() {
   if (wordIndex.value + 1 === words.value.length) {
     if (isLogged()) {
-      // const score = await this.$store.dispatch(
-      //     'scores/getScoreByGameAndCurrentUser',
-      //     'games/bijvoemojilijk'
-      // )
-
-      //pastScore.value = score.value[0].score ? score.value[0].score : 0
+     
+       await getScoreByGameAndCurrentUser("games/bijvoemojilijk");
+      if (score) {
+        pastScore.value = Number(scores.value[0].score);
+        hasPastScore.value = true;
+      }
     }
     endgame.value = true
   } else {
