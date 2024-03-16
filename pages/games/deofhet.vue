@@ -1,5 +1,5 @@
 <template>
-    <Container>
+    <SharedContainer>
         <UITitle orange="De or" blue="(B)het" />
         <div class="relative">
             <GamesSuccess v-if="success">
@@ -53,7 +53,7 @@
             <UIAccordion title="Instructions"
                 text="Select from the dropdown 'De' or 'Het', and make your bet! If you win you receive your bet doubled!" />
         </div>
-    </Container>
+    </SharedContainer>
 </template>
 <script setup lang="ts">
 import { wordList } from '~/content/deofhet'

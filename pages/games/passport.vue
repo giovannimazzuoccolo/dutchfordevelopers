@@ -1,5 +1,5 @@
 <template>
-    <Container>
+    <SharedContainer>
         <UITitle orange="Passport" blue="Control" />
         <div class="relative">
             <GamesSuccess v-if="success">
@@ -7,7 +7,7 @@
                     You guessed {{ score }} verbs! Your best score is {{ pastScore }} verbs
                 </p>
                 <div class="flex gap-4">
-                    <UIButton v-if="isLogged && score > pastScore" @click="saveScore">Save
+                    <UIButton v-if="isLogged() && score > pastScore" @click="saveScore">Save
                     </UIButton>
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
@@ -103,7 +103,7 @@
             <UIAccordion title="Instructions"
                 text="Select the right verb form to gain points. If you make a mistake, a new element goes to the queue. If the line reaches 10 verbs you lost." />
         </div>
-    </Container>
+    </SharedContainer>
 </template>
 <script setup lang="ts">
 import { TENSE, PERSON, REGULAR_IRREGULAR, wordList } from '~/content/passport'
@@ -173,14 +173,14 @@ async function completed() {
 }
 
 
-async function increaseWordIndexOrSuccess() {
-    if (wordIndex.value + 1 === words.value.length) {
-        completed()
-        success.value = true
-    } else {
-        wordIndex.value++
-    }
-}
+// async function increaseWordIndexOrSuccess() {
+//     if (wordIndex.value + 1 === words.value.length) {
+//         completed()
+//         success.value = true
+//     } else {
+//         wordIndex.value++
+//     }
+// }
 
 
 
@@ -198,7 +198,8 @@ function tryAgain() {
 
 function goNext() {
     if (wordIndex.value + 1 === words.value.length) {
-        success.value = true
+        success.value = true;
+        completed()
     } else {
         wordIndex.value++
     }
@@ -209,12 +210,12 @@ function confirmChoice() {
 
     if (solutionForm === form.value && solutionPerson === person.value) {
         score.value++
-        lastWord.value = ` ${words.value[wordIndex.value].verb} is correct! 👍`
+        lastWord.value = `The previous answer (${words.value[wordIndex.value].verb}) is correct! 👍`
         isLastGuessCorrect.value = true
         goNext()
     } else {
         line.value++
-        lastWord.value = ` ${words.value[wordIndex.value].verb} is wrong! 👎`
+        lastWord.value = `The previous answer (${words.value[wordIndex.value].verb}) is wrong! 👎`
         isLastGuessCorrect.value = false
         if (line.value === 10) {
             fail.value = true
