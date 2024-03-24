@@ -32,12 +32,20 @@ import { TAB_SELECTION } from "~/enums/tabSelection";
 import { useUsers } from '~/store/users';
 import { storeToRefs } from 'pinia';
 
-const tabSelection = ref<TAB_SELECTION>(TAB_SELECTION.LEARN)
+const route = useRoute();
+const router = useRouter();
+
+
+const getTab = route.query.tab as TAB_SELECTION | TAB_SELECTION.LEARN;
+
+const tabSelection = ref<TAB_SELECTION>(getTab)
 const user = useUsers();
 
 const { userInfo } = storeToRefs(user)
 
 function changeTab(value: TAB_SELECTION): void {
-    tabSelection.value = value
+    tabSelection.value = value;
+    router.push({ query: { tab: value } });
+    
 }
 </script>
