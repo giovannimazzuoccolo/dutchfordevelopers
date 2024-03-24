@@ -1,8 +1,8 @@
 <template>
-    <Dashboard :logged="true" />
+  <DashboardContainer />
 </template>
-<script>
-export default {
-    middleware: 'restricted',
-}
+<script setup lang="ts">
+  useHead({
+    title: 'Your dashboard - Dutch for Developers',
+  })
 </script>

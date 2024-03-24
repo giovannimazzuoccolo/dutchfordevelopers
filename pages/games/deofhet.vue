@@ -1,5 +1,5 @@
 <template>
-    <Container>
+    <SharedContainer>
         <UITitle orange="De or" blue="(B)het" />
         <div class="relative">
             <GamesSuccess v-if="success">
@@ -7,9 +7,8 @@
                     You guessed {{ score }} words! Your best score is {{ pastScore }} words
                 </p>
                 <div class="flex gap-4">
-                    <UIButton v-if="isLogged() && score > pastScore" @click="saveScore"
-                        >Save</UIButton
-                    >
+                    <UIButton v-if="isLogged() && score > pastScore" @click="saveScore">Save
+                    </UIButton>
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesSuccess>
@@ -51,99 +50,106 @@
                 <UIButton @click="bet(500)" :disabled="money < 500">Bet 500G</UIButton>
             </div>
 
-            <UIAccordion
-                title="Instructions"
-                text="Select from the dropdown 'De' or 'Het', and make your bet! If you win you receive your bet doubled!"
-            />
+            <UIAccordion title="Instructions"
+                text="Select from the dropdown 'De' or 'Het', and make your bet! If you win you receive your bet doubled!" />
         </div>
-    </Container>
+    </SharedContainer>
 </template>
-<script lang="ts">
-import Vue from 'vue'
+<script setup lang="ts">
 import { wordList } from '~/content/deofhet'
-import { shuffle } from 'lodash'
+import _ from 'lodash'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 import GamesOver from '~/components/Games/Status/GamesOver.vue'
 
-export default Vue.extend({
-    data() {
-        return {
-            selected: 'de',
-            money: 1000,
-            words: shuffle(wordList),
-            score: 0,
-            wordIndex: 0,
-            voice: [] as SpeechSynthesisVoice[],
-            success: false,
-            fail: false,
-            lastWord: '',
-            isLastGuessCorrect: false,
-            pastScore: 0,
+const selected = ref<'de' | 'het'>('de')
+const money = ref<number>(1000)
+const words = ref(_.shuffle(wordList))
+const score = ref<number>(0)
+const wordIndex = ref<number>(0)
+const voice = ref([] as SpeechSynthesisVoice[])
+const success = ref<boolean>(false)
+const fail = ref<boolean>(false)
+const lastWord = ref<string>('')
+const isLastGuessCorrect = ref<boolean>(false)
+const pastScore = ref<number>(0)
+const hasPastScore = ref<boolean>(false);
+const isSaved = ref<boolean>(false);
+import { useScores } from "~/store/scores";
+import { useUsers } from "~/store/users";
+import { storeToRefs } from 'pinia';
+
+
+const uScores = useScores();
+const { scores } = storeToRefs(uScores);
+
+const { getScoreByGameAndCurrentUser } = uScores;
+const { isLogged } = useUsers();
+
+const getWord = computed(() => words.value[wordIndex.value].word)
+const getSolution = computed(() => words.value[wordIndex.value].solution)
+
+
+onMounted(() => {
+    window.speechSynthesis.onvoiceschanged = () => {
+        const voices = window.speechSynthesis.getVoices()
+        voice.value = voices.filter((d) => d.lang === 'nl-NL')
+    }
+});
+
+function saveScore() {
+    if (!isLogged()) return;
+
+    const updateOrInsert = hasPastScore.value ? scores.value[0].id : false;
+
+    uScores.saveScore("games/deofhet", score.value, updateOrInsert);
+    //TODO: manage error response
+    isSaved.value = true;
+}
+
+async function completed() {
+    if (isLogged()) {
+        await getScoreByGameAndCurrentUser("games/deofhet");
+        if (scores.value.length > 0) {
+            pastScore.value = Number(scores.value[0].score);
+            hasPastScore.value = true;
+        } else {
+            hasPastScore.value = false;
         }
-    },
-    computed: {
-        getWord() {
-            return this.words[this.wordIndex].word
-        },
-        getSolution() {
-            return this.words[this.wordIndex].solution
-        },
-    },
-    mounted() {
-        window.speechSynthesis.onvoiceschanged = () => {
-            const voices = window.speechSynthesis.getVoices()
-            this.voice = voices.filter((d) => d.lang === 'nl-NL')
+    }
+}
+
+async function increaseWordIndexOrSuccess() {
+    if (wordIndex.value + 1 === words.value.length) {
+        completed();
+        success.value = true;
+    } else {
+        wordIndex.value++;
+    }
+}
+
+function bet(bet: number) {
+    const { solution } = words.value[wordIndex.value];
+    if (solution === selected.value) {
+        score.value++
+        money.value = money.value + bet * 2
+        isLastGuessCorrect.value = true
+        lastWord.value = `👍 ${getSolution.value} ${getWord.value} is correct!`
+        increaseWordIndexOrSuccess()
+    } else {
+        money.value = money.value - bet
+        if (money.value <= 0) {
+            fail.value = true
+        } else {
+            isLastGuessCorrect.value = false
+            lastWord.value = `👎 ${getSolution.value === 'de' ? 'het' : 'de'} ${getWord.value
+                } is wrong!`
+            increaseWordIndexOrSuccess()
         }
-    },
-    methods: {
-        saveScore() {
-            this.$store.dispatch('scores/saveScore', {
-                game: 'games/deofhet',
-                score: this.score,
-            })
-        },
-        isLogged() {
-            return this.$store.getters['user/isLogged']
-        },
-        async increaseWordIndexOrSuccess() {
-            console.log(this.wordIndex + 1 === this.words.length, this.wordIndex, this.words.length)
-            if (this.wordIndex + 1 === this.words.length) {
-                if (this.isLogged()) {
-                    const score = await this.$store.dispatch(
-                        'scores/getScoreByGameAndCurrentUser',
-                        'games/deofhet'
-                    )
-                    this.pastScore = score[0].score ? score[0].score : 0
-                }
-                this.success = true
-            } else {
-                this.wordIndex++
-            }
-        },
-        bet(betted: number) {
-            const { solution } = this.words[this.wordIndex]
-            if (solution === this.selected) {
-                this.score++
-                this.money = this.money + betted * 2
-                this.isLastGuessCorrect = true
-                this.lastWord = `👍 ${this.getSolution} ${this.getWord} is correct!`
-                this.increaseWordIndexOrSuccess()
-            } else {
-                this.money = this.money - betted
-                if (this.money <= 0) {
-                    this.fail = true
-                } else {
-                    this.isLastGuessCorrect = false
-                    this.lastWord = `👎 ${this.getSolution === 'de' ? 'het' : 'de'} ${
-                        this.getWord
-                    } is wrong!`
-                    this.increaseWordIndexOrSuccess()
-                }
-            }
-        },
-        tryAgain() {
-            location.reload()
-        },
-    },
-})
+    }
+}
+
+function tryAgain() {
+    location.reload()
+}
+
 </script>

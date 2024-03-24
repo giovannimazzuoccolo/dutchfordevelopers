@@ -2,52 +2,48 @@
     <Container>
         <UIBlogWrapper>
             <UITitle orange="Doei" blue="Doei" center />
-            <section
-                class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto dark:text-white"
-            >
+            <section class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto dark:text-white">
                 <p class="text-center">You logged out successfully from Dutch for Developers 👋</p>
                 <p class="text-center">
-                    <small
-                        >You are being redirected to the home page in {{ seconds }} seconds</small
-                    >
+                    <small>You are being redirected to the home page in {{ seconds }} seconds</small>
                 </p>
             </section>
         </UIBlogWrapper>
     </Container>
 </template>
-<script lang="ts">
-import Vue from 'vue'
 
-export default Vue.extend({
-    name: 'Logout',
-    data() {
-        return {
-            seconds: 10,
-            counter: 0,
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
+
+
+        const seconds = ref(10)
+        let counter: NodeJS.Timer | null = null
+
+        const aSecondLess = () => {
+            seconds.value--
         }
-    },
-    methods: {
-        aSecondLess(): void {
-            this.seconds--
-        },
 
-        counterFunc(): number {
-            return window.setInterval(() => {
-                if (this.seconds > 0) {
-                    this.aSecondLess()
+        const counterFunc = () => {
+            return setInterval(() => {
+                if (seconds.value > 0) {
+                    aSecondLess()
                 } else {
-                    clearInterval(this.counter)
-                    this.$router.replace('/')
+                    clearInterval(counter!)
+                    router.replace('/')
                 }
             }, 1000)
-        },
-    },
+        }
 
-    created() {
-        this.counter = this.counterFunc()
-    },
-    beforeDestroy() {
-        clearInterval(this.counter)
-    },
-})
+        const router = useRouter()
+
+        onMounted(() => {
+            counter = counterFunc()
+        })
+
+        onBeforeUnmount(() => {
+            clearInterval(counter!)
+        })
+
+
 </script>

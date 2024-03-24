@@ -1,61 +1,61 @@
 <template>
-    <div class="flex justify-center flex-col gap-6 items-center">
-        <GamesDetectiveAutoreveal :delay="1 + round">
-            🕵️ Je bent een detective<br />
-            <span v-if="disableTranslation">
+  <div class="flex justify-center flex-col gap-6 items-center">
+    <GamesDetectiveAutoreveal :delay="1 + round">
+      🕵️ Je bent een detective<br/>
+      <span v-if="disableTranslation">
                 <small> <em>🕵️ You are a detective</em></small></span
-            >
-        </GamesDetectiveAutoreveal>
-        <GamesDetectiveAutoreveal :delay="2 + round">
-            <small
-                >{{ phrases.nl }} <br />
-                <span v-if="disableTranslation"> {{ phrases.en }}</span></small
-            >
-        </GamesDetectiveAutoreveal>
-        <GamesDetectiveAutoreveal :delay="3 + round">
-            <select
-                class="border border-solid border-black dark:text-black p-3 rounded"
-                v-model="selection"
-            >
-                <optgroup :label="questions[0].en" />
-                <option>
-                    {{ questions[0].nl }}
-                </option>
-                <option>
-                    {{ questions[1].nl }}
-                </option>
-            </select>
-            <UIButton @click="callback">Select</UIButton>
-            <br />
-        </GamesDetectiveAutoreveal>
-    </div>
+      >
+    </GamesDetectiveAutoreveal>
+    <GamesDetectiveAutoreveal :delay="2 + round">
+      <small
+      >{{ phrases.nl }} <br/>
+        <span v-if="disableTranslation"> {{ phrases.en }}</span></small
+      >
+    </GamesDetectiveAutoreveal>
+    <GamesDetectiveAutoreveal :delay="3 + round">
+      <select
+          class="border border-solid border-black dark:text-black p-3 rounded"
+          v-model="selection"
+      >
+        <optgroup :label="questions[0].en"/>
+        <option>
+          {{ questions[0].nl }}
+        </option>
+        <option>
+          {{ questions[1].nl }}
+        </option>
+      </select>
+      <UIButton @click="$emit('onSelection', selection)">Select</UIButton>
+      <br/>
+    </GamesDetectiveAutoreveal>
+  </div>
 </template>
-<script lang="ts">
-import Vue from 'vue'
+<script setup lang="ts">
 
 interface Phrases {
-    en: string
-    nl: string
+  en: string
+  nl: string
 }
 
 type Questions = Phrases[]
 
-export default Vue.extend({
-    props: {
-        round: Number,
-        phrases: Object as () => Phrases,
-        questions: Array as () => Questions,
-        onSelection: Function,
-        disableTranslation: Boolean,
-    },
-    methods: {
-        callback: function (e: MouseEvent) {
-            //this.$emit('click', e)
-            this.$emit('onSelection', this.selection)
-        },
-    },
-    data() {
-        return { selection: '' }
-    },
-})
+const selection = ref('')
+
+const props = defineProps({
+  round: Number,
+  phrases: {
+    required: true,
+    type: Object as () => Phrases
+  },
+  questions: {
+    required: true,
+    type: Object as () => Questions,
+  },
+  onSelection: Function,
+  disableTranslation: {
+    required: true,
+    type: Boolean
+  }
+});
+
 </script>

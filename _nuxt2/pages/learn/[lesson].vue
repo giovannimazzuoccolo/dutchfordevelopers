@@ -34,7 +34,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import { REQUEST_STATUS } from '~/enums'
+import {REQUEST_STATUS} from "~/enums";
 
 export default Vue.extend({
     data() {

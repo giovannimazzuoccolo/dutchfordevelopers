@@ -1,9 +1,9 @@
 <template>
-    <div class="container">
-        <h1 v-if="error.statusCode === 404">Page not found</h1>
-        <h1 v-else>An error occurred</h1>
+    <SharedContainer>
+        <UITitle v-if="error.statusCode === 404" orange="Not found" blue="Page" />    
+	<UITitle v-else blue="Faut" orange="error"/>
         <NuxtLink to="/">Home page</NuxtLink>
-    </div>
+    </SharedContainer>
 </template>
 
 <script>
