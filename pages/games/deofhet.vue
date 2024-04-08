@@ -99,7 +99,7 @@ onMounted(() => {
 function saveScore() {
     if (!isLogged()) return;
 
-    const updateOrInsert = hasPastScore.value ? scores.value[0].id : false;
+    const updateOrInsert = hasPastScore.value ? scores.value[0].id : undefined;
 
     uScores.saveScore("games/deofhet", score.value, updateOrInsert);
     //TODO: manage error response

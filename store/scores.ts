@@ -76,19 +76,18 @@ export const useScores = defineStore("scores", {
         }
       }
     },
-    async saveScore(
-      game: string,
-      score: string | number,
-      idForUpdate: number | boolean = false
-    ) {
+    async saveScore(game: string, score: string | number) {
       const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
       const userInfo = await client.auth.getUser();
-      console.log('userInfo', userInfo.data.user?.id);
-      if (userInfo) {
-        //TODO: remove code duplication
-        const values = { game, score, user_id: userInfo.data.user?.id };
-        if (idForUpdate) {
+
+      await this.getScoreByGameAndCurrentUser(game);
+
+      const idForUpdate = this.scores[0]?.id;
+      const values = { game, score, user_id: userInfo.data.user?.id };
+
+      if (userInfo && this.scores.length > 0) {
+        if (this.scores[0].id) {
           const { error } = await client
             .from("scores")
             .update({ score })
@@ -99,14 +98,15 @@ export const useScores = defineStore("scores", {
             this.request = REQUEST_STATUS.ERROR;
             this.error = error.message;
           }
+        }
+      } else {
+        const { error } = await client.from("scores").insert(values);
+
+        if (!error) {
+          this.request = REQUEST_STATUS.SUCCESS;
         } else {
-          const { error } = await client.from("scores").insert(values);
-          if (!error) {
-            this.request = REQUEST_STATUS.SUCCESS;
-          } else {
-            this.request = REQUEST_STATUS.ERROR;
-            this.error = error.message;
-          }
+          this.request = REQUEST_STATUS.ERROR;
+          this.error = error.message;
         }
       }
     },
