@@ -7,14 +7,14 @@
                     You guessed {{ score }} verbs! Your best score is {{ pastScore }} verbs
                 </p>
                 <div class="flex gap-4">
-                    <UIButton v-if="isLogged() && score > pastScore" @click="saveScore">Save
+                    <UIButton v-if="checkScore()" @click="saveScore">Save
                     </UIButton>
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
             </GamesSuccess>
 
             <GamesOver v-if="fail">
-                <p class="text-white">The queue is too long, you lose 😔</p>
+                <p class="text-white">The queue is too long, you lost the game 😔</p>
                 <div class="flex gap-4">
                     <UIButton @click="tryAgain">Try again</UIButton>
                 </div>
@@ -76,7 +76,7 @@
                                 <input
                                     class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                     type="radio" name="regularOrIrregular" id="regularRadio" value="regular"
-                                    v-model="regularOrIrregular" />
+                                    v-model="regularOrIrregularValue" />
                                 <label class="form-check-label inline-block text-gray-800 dark:text-gray-100"
                                     for="regularRadio">
                                     Regular
@@ -86,7 +86,7 @@
                                 <input
                                     class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                     type="radio" name="regularOrIrregular" id="irregularRadio" value="irregular"
-                                    v-model="regularOrIrregular" />
+                                    v-model="regularOrIrregularValue" />
                                 <label class="form-check-label inline-block text-gray-800 dark:text-gray-100"
                                     for="irregularRadio">
                                     Irregular
@@ -122,7 +122,7 @@ const { getScoreByGameAndCurrentUser } = uScores;
 const { isLogged } = useUsers();
 const form = ref(TENSE.PRESENT);
 const person = ref(PERSON.FIRST_SINGULAR);
-const regularOrIrregular = ref(true);
+const regularOrIrregularValue = ref(REGULAR_IRREGULAR.REGULAR);
 const line = ref(1);
 const words = ref(_.shuffle(wordList));
 const score = ref(0);
@@ -153,9 +153,8 @@ onMounted(() => {
 function saveScore() {
     if (!isLogged()) return;
 
-    const updateOrInsert = hasPastScore.value ? scores.value[0].id : false;
 
-    uScores.saveScore("games/passport", score.value, updateOrInsert);
+    uScores.saveScore("games/passport", score.value);
     //TODO: manage error response
     isSaved.value = true;
 }
@@ -182,7 +181,16 @@ async function completed() {
 //     }
 // }
 
-
+function checkScore(): boolean {
+    if (!hasPastScore.value) {
+        if (score.value > 0) {
+            return true;
+        }
+    } else if (pastScore.value < score.value) {
+        return true;
+    }
+    return false;
+}
 
 function getSolution() {
     return {
@@ -208,7 +216,7 @@ function goNext() {
 function confirmChoice() {
     const { form: solutionForm, person: solutionPerson, regularOrIrregular } = getSolution()
 
-    if (solutionForm === form.value && solutionPerson === person.value) {
+    if (solutionForm === form.value && solutionPerson === person.value && regularOrIrregular === regularOrIrregularValue.value) {
         score.value++
         lastWord.value = `The previous answer (${words.value[wordIndex.value].verb}) is correct! 👍`
         isLastGuessCorrect.value = true
