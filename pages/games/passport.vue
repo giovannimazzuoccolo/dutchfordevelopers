@@ -4,7 +4,7 @@
     <div class="relative">
       <GamesSuccess v-if="success">
         <p class="text-white">
-          You guessed {{ score }} verbs! Your best score is
+          You guessed {{ score }} verbs! Your best score was 
           {{ pastScore }} verbs
         </p>
         <div class="flex gap-4">
@@ -244,6 +244,7 @@ function confirmChoice() {
     line.value++;
     lastWord.value = `The previous answer (${words.value[wordIndex.value].verb}) is wrong! 👎`;
     isLastGuessCorrect.value = false;
+    console.log(line.value, "line");
     if (line.value === 10) {
       failOrSuccess();
     }
@@ -253,6 +254,7 @@ function confirmChoice() {
 
 function failOrSuccess() {
   if (score.value > 0) {
+    success.value = true;
     completed();
   } else {
     fail.value = true;
