@@ -2,7 +2,7 @@
     <SharedContainer>
         <UITitle orange="Bijvoemojilijk" />
         <div class="relative">
-            <GamesStatusGamesSuccess v-if="endgame">
+            <GamesStatusGamesSuccess v-if="endgame" score-type="emojs" :old-score="score" :new-score="score" game="bijvoemojilijk">
                 <p class="text-white">
                     You guessed {{ score }} emojis! Your best score is
                     {{ pastScore }} emojis
