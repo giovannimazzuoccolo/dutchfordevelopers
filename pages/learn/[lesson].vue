@@ -2,12 +2,12 @@
   <div v-if="isLogged">
     <div v-if="request === REQUEST_STATUS.SUCCESS">
       <article
-          class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
+        class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
       >
         <ContentDoc
-            class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words"
+          class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words"
         />
-        <UILessonInfo/>
+        <UILessonInfo />
       </article>
       <SharedContainer>
         <div class="my-4">
@@ -16,42 +16,49 @@
       </SharedContainer>
     </div>
     <div v-else class="flex justify-center items-center w-screen h-80">
-      <UISpinner/>
+      <UISpinner />
     </div>
   </div>
 
   <div v-else>
-    <article class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full">
+    <article
+      class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
+    >
       <ContentDoc
-          class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words"
+        class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl break-words"
       >
-      <template #not-found>
-        <p class="py-4 text-xl dark:text-white">
-          Jammer, cannot find the lesson!<br />
-          But you can find other lessons in the <span class="text-main-orange hover:underline"><router-link to="/dashboard?tab=learn">dashboard</router-link></span> page
-        </p>
-    
-    </template>
-     </ContentDoc>
-      <UILessonInfo/>
+        <template #not-found>
+          <p class="py-4 text-xl dark:text-white">
+            Jammer, cannot find the lesson!<br />
+            But you can find other lessons in the
+            <span class="text-main-orange hover:underline"
+              ><router-link to="/dashboard?tab=learn"
+                >dashboard</router-link
+              ></span
+            >
+            page
+          </p>
+        </template>
+      </ContentDoc>
+      <UILessonInfo />
     </article>
   </div>
 </template>
 <script setup lang="ts">
-import Vue from 'vue'
-import {REQUEST_STATUS} from "~/enums/serverRequests";
-import {useCoursesStore} from "~/store/courses";
-import {useUsers} from "~/store/users";
-import {storeToRefs} from "pinia";
+import Vue from "vue";
+import { REQUEST_STATUS } from "~/enums/serverRequests";
+import { useCoursesStore } from "~/store/courses";
+import { useUsers } from "~/store/users";
+import { storeToRefs } from "pinia";
 
-const route = useRoute()
+const route = useRoute();
 
 const useCourses = useCoursesStore();
 
-const {courses, request} = storeToRefs(useCourses);
-const {markCourseAsRead, getCourse} = useCourses;
+const { courses, request } = storeToRefs(useCourses);
+const { markCourseAsRead, getCourse } = useCourses;
 
-const {userInfo} = useUsers()
+const { userInfo } = useUsers();
 
 const isLogged = ref(false);
 const isRead = ref(false);
@@ -62,18 +69,14 @@ async function markCourse() {
 
 const props = defineProps();
 
-// const {  } = useAsyncData({ })
-const {data} = await useAsyncData('get-document', () => queryContent(
-    `learn/${route.params.lesson}`
-).findOne())
-console.log('d', data
+const { data } = await useAsyncData("get-document", () =>
+  queryContent(`learn/${route.params.lesson}`).findOne(),
 );
+console.log("d", data);
 
 onMounted(async () => {
   if (userInfo) {
-    const c = await getCourse(route.params.lesson as string)
-    console.log('c', c);
+    await getCourse(route.params.lesson as string);
   }
 });
-
 </script>

@@ -4,7 +4,7 @@
     <div class="relative">
       <GamesSuccess v-if="success">
         <p class="text-white">
-          You guessed {{ score }} verbs! Your best score was 
+          You guessed {{ score }} verbs! Your best score was
           {{ pastScore }} verbs
         </p>
         <div class="flex gap-4">
@@ -133,7 +133,7 @@
 </template>
 <script setup lang="ts">
 import { TENSE, PERSON, REGULAR_IRREGULAR, wordList } from "~/content/passport";
-import _ from "lodash";
+import shuffle from "lodash/shuffle";
 import GamesSuccess from "~/components/Games/Status/GamesSuccess.vue";
 import GamesOver from "~/components/Games/Status/GamesOver.vue";
 import PassportCover from "~/components/Games/Passport/PassportCover.vue";
@@ -150,7 +150,7 @@ const form = ref(TENSE.PRESENT);
 const person = ref(PERSON.FIRST_SINGULAR);
 const regularOrIrregularValue = ref(REGULAR_IRREGULAR.REGULAR);
 const line = ref(1);
-const words = ref(_.shuffle(wordList));
+const words = ref(shuffle(wordList));
 const score = ref(0);
 const wordIndex = ref(0);
 const voice = ref([] as SpeechSynthesisVoice[]);

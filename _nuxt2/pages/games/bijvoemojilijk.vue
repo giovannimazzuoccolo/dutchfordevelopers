@@ -58,7 +58,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { adijlist, getEmojis, ResultEmojiList } from '~/content/bijvoemojilijkList'
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 
 export default Vue.extend({

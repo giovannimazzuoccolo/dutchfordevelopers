@@ -61,7 +61,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { wordList } from '~/content/deofhet'
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 import GamesOver from '~/components/Games/Status/GamesOver.vue'
 

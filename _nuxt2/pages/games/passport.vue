@@ -135,7 +135,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { TENSE, PERSON, REGULAR_IRREGULAR, wordList } from '~/content/passport'
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import GamesSuccess from '~/components/Games/Status/GamesSuccess.vue'
 import GamesOver from '~/components/Games/Status/GamesOver.vue'
 import PassportCover from '~/components/Games/Passport/PassportCover.vue'
