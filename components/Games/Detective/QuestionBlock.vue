@@ -41,7 +41,10 @@ type Questions = Phrases[];
 const selection = ref("");
 
 const props = defineProps({
-    round: Number,
+    round: {
+      required: true,
+      type: Number,
+    },
     phrases: {
         required: true,
         type: Object as () => Phrases,

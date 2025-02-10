@@ -11,14 +11,14 @@
     </div>
     <div v-else>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-2">
-        <template v-for="course in courses">
+        <span v-for="course in courses">
           <CoursesListCard
               :title="course.title"
               :description="course.description"
               :route="course.route"
               :isRead="course.isRead"
           />
-        </template>
+        </span>
       </div>
     </div>
   </SharedContainer>

@@ -7,7 +7,7 @@
         <div class="flex justify-center gap-6 flex-col items-center">
           <p>
             {{ answers.nl }} <br/>
-            <small>{{ answers.en }}</small>
+            <small v-if="disableTranslation">{{ answers.en }}</small>
           </p>
           <UIButton @click="$emit('continue', true)">Continue</UIButton>
         </div>
@@ -23,10 +23,14 @@ interface Answers {
 }
 
 
-const props = defineProps({
+defineProps({
   firstAnswer: Number,
-  answers: Object as () => Answers,
+  answers: {
+    required: true,
+    type: Object as () => Answers
+  },
   continue: Function,
+  disableTranslation: Boolean
 });
 
 

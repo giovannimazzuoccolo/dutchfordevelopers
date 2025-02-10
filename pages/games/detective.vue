@@ -59,6 +59,7 @@
                 :firstAnswer="firstAnswer"
                 :answers="returnPhrase().answer"
                 @continue="nextStep"
+                :disableTranslation="!disableTranslations"
             />
         </div>
         <UIAccordion
@@ -140,16 +141,12 @@ function triggerTranslations() {
 }
 
 function checkIfScoreIsBetter() {
-    if (
-        isLogged() &&
+    return isLogged() &&
         (hasPastScore.value
             ? correctSentences.value > pastScore.value
             : true) &&
-        !isSaved.value
-    ) {
-        return true;
-    }
-    return false;
+        !isSaved.value;
+
 }
 
 function saveScore() {
