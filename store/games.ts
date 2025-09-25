@@ -1,13 +1,13 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { PrismaClient } from "@prisma/client";
 
 export type Game = {
-  id: String;
-  name: String;
-  description: String;
-  route: String;
-  fa_icon: String;
+  id: string;
+  name: string;
+  description: string;
+  route: string;
+  fa_icon: string;
   score?: string | number;
 };
 
@@ -19,9 +19,9 @@ export interface GamesState {
   error: string;
 }
 
-function supabaseClient() {
-  const { $supabase } = useNuxtApp();
-  return $supabase as SupabaseClient;
+function prismaClient() {
+  const { $prisma } = useNuxtApp();
+  return $prisma as PrismaClient;
 }
 
 export const useGamesStore = defineStore("games", {
@@ -32,47 +32,66 @@ export const useGamesStore = defineStore("games", {
   }),
   actions: {
     async getGames() {
-      const client = supabaseClient();
-
       if (this.games.length > 0) {
         this.request = REQUEST_STATUS.SUCCESS;
-      } else {
-        this.request = REQUEST_STATUS.LOADING;
-        const { data, error } = await client.from("games").select();
-        if (!error) {
-          this.request = REQUEST_STATUS.SUCCESS;
-          this.games = data as Game[];
+        return;
+      }
+
+      this.request = REQUEST_STATUS.LOADING;
+      try {
+        // Use server API so this works in client-side rendered pages as well
+        const res = (await $fetch("/api/games")) as any;
+        if (res && res.success && Array.isArray(res.data)) {
+          this.games = res.data as Game[];
+        } else if (Array.isArray(res)) {
+          // fallback if API returns raw array
+          this.games = res as Game[];
         } else {
-          this.request = REQUEST_STATUS.ERROR;
-          this.error = error.message;
+          this.games = [];
         }
+        this.request = REQUEST_STATUS.SUCCESS;
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message;
       }
     },
     async getGamesWithScore() {
-      const client = supabaseClient();
-
       this.request = REQUEST_STATUS.LOADING;
-      const userInfo = await client.auth.getUser();
-      if (userInfo) {
-        const { data, error } = await client.from("games").select("*");
-        if (!error) {
-          const { data: scores, error: scoresErr } = await client
-            .from("scores")
-            .select("game,score")
-            .eq("user_id", userInfo.data.user?.id);
-          if (!scoresErr) {
-            this.request = REQUEST_STATUS.SUCCESS;
-            const games = data as Game[];
-            const gamesWithScore = games.map((d) => ({
-              ...d,
-              score: scores?.find((s) => s.game === d.route)?.score,
-            }));
-            this.games = gamesWithScore;
-          }
+      // Assuming user is from auth
+      const session = (await $fetch("/api/auth/session")) as any;
+      const userId = session?.user?.id;
+      try {
+        const res = (await $fetch("/api/games")) as any;
+        const games =
+          res && res.success && Array.isArray(res.data)
+            ? res.data
+            : Array.isArray(res)
+              ? res
+              : [];
+
+        if (userId) {
+          const scoresRes = (await $fetch(
+            `/api/scores?userId=${userId}`
+          )) as any;
+          const scores =
+            scoresRes && scoresRes.success && Array.isArray(scoresRes.data)
+              ? scoresRes.data
+              : Array.isArray(scoresRes)
+                ? scoresRes
+                : [];
+
+          this.games = games.map((d: any) => ({
+            ...d,
+            score: scores.find((s: any) => s.gameId === d.id)?.score,
+          }));
         } else {
-          this.request = REQUEST_STATUS.ERROR;
-          this.error = "Error fetching scores";
+          this.games = games as Game[];
         }
+
+        this.request = REQUEST_STATUS.SUCCESS;
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message;
       }
     },
   },

@@ -1,16 +1,10 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
 import { ERROR_ROUTE } from "~/utils/navigation";
-import { Provider, Session, SupabaseClient } from "@supabase/supabase-js";
 
 export interface UsersState {
-  userInfo: Session | null; //TODO: define object
+  userInfo: Record<string, any> | null;
   request: REQUEST_STATUS;
-}
-
-function supabaseClient() {
-  const { $supabase } = useNuxtApp();
-  return $supabase as SupabaseClient;
 }
 
 export const useUsers = defineStore("users", {
@@ -20,34 +14,37 @@ export const useUsers = defineStore("users", {
   }),
 
   actions: {
-    async authSSO(provider: Provider) {
-      const client = supabaseClient();
-      const { error } = await client.auth.signInWithOAuth({
-        provider: provider,
-      });
-      if (error) {
-        console.warn(error);
+    // Trigger SSO via nuxt-auth (server-side routes configured by @sidebase/nuxt-auth)
+    async authSSO(provider: string) {
+      const auth = useAuth();
+      try {
+        // signIn redirects to provider's login page
+        await auth.signIn(provider as any);
+      } catch (e) {
+        console.warn(e);
         navigateTo(ERROR_ROUTE);
       }
     },
 
+    // Populate user info from nuxt-auth state
     async autoAuth() {
-      const client = supabaseClient();
-      const { data } = await client.auth.getSession();
-      if (data.session === null) {
-        this.userInfo = null;
+      const auth = useAuth();
+      const session = await auth.getSession?.();
+      if (session) {
+        this.userInfo = session as any;
       } else {
-        this.userInfo = data.session;
+        this.userInfo = null;
       }
     },
 
     async logout() {
-      const client = supabaseClient();
-
-      const val = await client.auth.signOut();
+      const auth = useAuth();
+      try {
+        await auth.signOut();
+      } catch (e) {
+        console.warn(e);
+      }
       this.userInfo = null;
-      return val;
-      //TODO: manage error
     },
 
     isLogged() {

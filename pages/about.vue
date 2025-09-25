@@ -45,8 +45,7 @@
           are not interested :) <br />
           The frontend is built in nuxt.js, a vue.js framework. From 2017 to
           2022, I always used React.js to build SaSS products, and I just wanted
-          to try something new. The backend is Supabase, which just keeps the
-          progress of the courses.
+          to try something new. The backend keeps the progress of the courses.
         </UIArticleBlock>
       </div>
     </UIBlogWrapper>

@@ -39,10 +39,9 @@
   </SharedContainer>
 </template>
 <script setup lang="ts">
-import Vue, { ComputedRef } from "vue";
+import { type ComputedRef } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useUsers } from "~/store/users";
-import { Provider } from "@supabase/supabase-js";
 
 const AuthProviders = {
   GITHUB: "github",
@@ -60,7 +59,7 @@ const isUserAuthenticated: ComputedRef<boolean> = computed(() => {
   return route.query.hasOwnProperty("reason");
 });
 
-const auth = (auth: Provider) => {
+const auth = (auth: string) => {
   return user.authSSO(auth);
 };
 

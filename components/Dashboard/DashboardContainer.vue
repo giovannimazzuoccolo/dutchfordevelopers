@@ -4,7 +4,7 @@
             <div class="my-2">
                 <template v-if="user.isLogged()">
                     <h2 class="font-bold dark:text-white">
-                        Hallo {{ userInfo?.user.user_metadata.name ?? 'daar (Hello there)' }}
+                        Hallo {{ userInfo?.user?.user_metadata?.name ?? 'daar (Hello there)' }}
                     </h2>
                     <p class="dark:text-white">
                         You can start a new lesson, play a game, or read the blog!

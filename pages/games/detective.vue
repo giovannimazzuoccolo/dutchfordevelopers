@@ -141,11 +141,9 @@ function triggerTranslations() {
 }
 
 function checkIfScoreIsBetter() {
-    return isLogged() &&
-        (hasPastScore.value
-            ? correctSentences.value > pastScore.value
-            : true) &&
-        !isSaved.value;
+  return isLogged() &&
+      (!hasPastScore.value || correctSentences.value > pastScore.value) &&
+      !isSaved.value;
 
 }
 

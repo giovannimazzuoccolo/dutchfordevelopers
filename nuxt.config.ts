@@ -1,13 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  runtimeConfig: {
-    supabaseUrl: "",
-    supabaseKey: "",
-    public: {
-      supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
-      supabaseKey: import.meta.env.VITE_SUPABASE_KEY,
-    },
-  },
+  runtimeConfig: {},
 
   app: {
     head: {
@@ -15,8 +8,13 @@ export default defineNuxtConfig({
     },
   },
 
-  plugins: ["~/plugins/supabase.ts", "~/plugins/autoAuth.ts"],
+  plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.ts"],
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/content", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/content",
+    "@pinia/nuxt",
+    "@sidebase/nuxt-auth",
+  ],
   compatibilityDate: "2024-08-14",
 });

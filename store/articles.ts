@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { REQUEST_STATUS } from "~/enums/serverRequests";
-import { Feed, Parser } from "pulse-feed-parser";
+import type { Feed } from "pulse-feed-parser";
+import { Parser } from "pulse-feed-parser";
 import _ from "lodash";
 
 const DE_TELEGRAAF_URL = "https://www.telegraaf.nl/rss/";

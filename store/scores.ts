@@ -1,6 +1,6 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { useToastStore } from "~/store/toasts";
 
 export type Score = {
   id: String;
@@ -16,11 +16,6 @@ export interface ScoreState {
   request: REQUEST_STATUS;
   error: string;
 }
-function supabaseClient() {
-  const { $supabase } = useNuxtApp();
-  return $supabase as SupabaseClient;
-}
-
 export const useScores = defineStore("scores", {
   state: (): ScoreState => ({
     scores: [],
@@ -29,85 +24,85 @@ export const useScores = defineStore("scores", {
   }),
   actions: {
     async getScore() {
-      const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
-      const { data, error } = await client.from("scores").select();
-      if (!error) {
+      try {
+        const res = await $fetch("/api/scores", { method: "GET" });
+        // expect { success: true, data }
+        // @ts-ignore
+        this.scores = res.data || [];
         this.request = REQUEST_STATUS.SUCCESS;
-        this.scores = data;
-      } else {
+      } catch (error: any) {
         this.request = REQUEST_STATUS.ERROR;
-        this.error = error.message;
+        this.error = error.message || "Cannot fetch scores";
       }
     },
     async getScoreByUserId() {
       this.request = REQUEST_STATUS.LOADING;
-      const client = supabaseClient();
-      const userInfo = await client.auth.getUser();
-      const { data, error } = await client
-        .from("scores")
-        .select()
-        .eq("user_id", userInfo.data.user?.id);
-      if (!error) {
+      this.request = REQUEST_STATUS.LOADING;
+      try {
+        const session = await $fetch("/api/auth/session");
+        const userId = session?.user?.id;
+        if (!userId) {
+          this.request = REQUEST_STATUS.ERROR;
+          this.error = "Unauthorized";
+          return;
+        }
+        const res = await $fetch(`/api/scores?userId=${userId}`);
+        // @ts-ignore
+        this.scores = res.data || [];
         this.request = REQUEST_STATUS.SUCCESS;
-        this.scores = data;
-      } else {
+      } catch (error: any) {
         this.request = REQUEST_STATUS.ERROR;
-        this.error = error.message;
+        this.error = error.message || "Cannot fetch user scores";
       }
     },
     async getScoreByGameAndCurrentUser(gameRoute: string) {
-      const client = supabaseClient();
       this.request = REQUEST_STATUS.LOADING;
-      const userInfo = await client.auth.getUser();
-      if (userInfo) {
-        const { data, error } = await client
-          .from("scores")
-          .select()
-          .eq("user_id", userInfo.data.user?.id)
-          .eq("game", gameRoute);
-        if (!error) {
-          this.request = REQUEST_STATUS.SUCCESS;
-          //TODO: check where this function is being called and refactor it on a single score
-          this.scores = data;
-        } else {
+      try {
+        const session = await $fetch("/api/auth/session");
+        const userId = session?.user?.id;
+        if (!userId) {
           this.request = REQUEST_STATUS.ERROR;
-          this.error = "";
+          this.error = "Unauthorized";
+          return;
         }
+        const res = await $fetch(
+          `/api/scores?userId=${userId}&gameRoute=${encodeURIComponent(gameRoute)}`
+        );
+        // @ts-ignore
+        this.scores = res.data || [];
+        this.request = REQUEST_STATUS.SUCCESS;
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message || "";
       }
     },
-    async saveScore(game: string, score: string | number) {
-      const client = supabaseClient();
+    async saveScore(game: string, score: string | number, id?: string) {
       this.request = REQUEST_STATUS.LOADING;
-      const userInfo = await client.auth.getUser();
-
-      await this.getScoreByGameAndCurrentUser(game);
-
-      const idForUpdate = this.scores[0]?.id;
-      const values = { game, score, user_id: userInfo.data.user?.id };
-
-      if (userInfo && this.scores.length > 0) {
-        if (this.scores[0].id) {
-          const { error } = await client
-            .from("scores")
-            .update({ score })
-            .eq("id", idForUpdate);
-          if (!error) {
-            this.request = REQUEST_STATUS.SUCCESS;
-          } else {
-            this.request = REQUEST_STATUS.ERROR;
-            this.error = error.message;
-          }
-        }
-      } else {
-        const { error } = await client.from("scores").insert(values);
-
-        if (!error) {
+      const toastStore = useToastStore();
+      try {
+        // if id provided, update; otherwise create
+        const payload: any = { gameRoute: game, score };
+        if (id) payload.id = id;
+        const res = await $fetch("/api/scores", {
+          method: "POST",
+          body: payload,
+        });
+        // @ts-ignore
+        if (res?.success) {
           this.request = REQUEST_STATUS.SUCCESS;
+          toastStore.showToast(
+            id ? "Score updated successfully" : "Score saved successfully"
+          );
         } else {
           this.request = REQUEST_STATUS.ERROR;
-          this.error = error.message;
+          this.error = "Error saving score";
+          toastStore.showToast("Error saving score");
         }
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message || "Error saving score";
+        toastStore.showToast("Error saving score");
       }
     },
   },
