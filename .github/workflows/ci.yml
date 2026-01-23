@@ -17,20 +17,20 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest]
-                node: [14]
+                node: [24]  # Upgraded from 14 to 24 (LTS)
 
         steps:
             - name: Checkout 🛎
-              uses: actions/checkout@master
+              uses: actions/checkout@v4  # Upgraded from @master
 
             - name: Setup node env 🏗
-              uses: actions/setup-node@v2.1.5
+              uses: actions/setup-node@v5  # Upgraded from v2.1.5
               with:
                   node-version: ${{ matrix.node }}
                   check-latest: true
 
             - name: Cache node_modules 📦
-              uses: actions/cache@v2.1.4
+              uses: actions/cache@v5  # Upgraded from v2.1.4 (deprecated)
               with:
                   path: ~/.npm
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
