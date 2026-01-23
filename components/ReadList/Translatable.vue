@@ -7,19 +7,16 @@
         {{ word }}
     </div>
 </template>
-<script lang="ts">
-import Vue from 'vue'
+<script setup lang="ts">
+
 
 const TRANSLATE_URL = 'https://www.linguee.com/english-dutch/search?source=dutch&query='
 
-export default Vue.extend({
-    props: {
+const props = defineProps({
         word: String,
-    },
-    methods: {
-        translate() {
-            window.open(TRANSLATE_URL + this.word)
-        },
-    },
-})
+    });
+
+    function translate() {
+            window.open(TRANSLATE_URL + props.word)
+    }
 </script>

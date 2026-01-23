@@ -14,50 +14,44 @@
             "
             @click="closeMenu"
         >
-            <MainNavigationItem v-if="!isLogged" class="hover:underline">
-                <NuxtLink to="/discover">Discover</NuxtLink>
+            <MainNavigationItem v-if="isLogged()" class="hover:underline">
+                <NuxtLink to="/dashboard?tab=learn">Learn</NuxtLink>
             </MainNavigationItem>
             <MainNavigationItem v-else>
-                <NuxtLink to="/dashboard">Learn</NuxtLink>
+                <NuxtLink to="/discover?tab=learn">Discover</NuxtLink>
             </MainNavigationItem>
-            <MainNavigationItem><NuxtLink to="/about">About</NuxtLink></MainNavigationItem>
+            <MainNavigationItem>
+                <NuxtLink to="/about">About</NuxtLink>
+            </MainNavigationItem>
             <MainNavigationItem>
                 <NuxtLink to="/contacts">Contacts</NuxtLink>
             </MainNavigationItem>
-            <MainNavigationItem v-if="!isLogged">
-                <NuxtLink to="/login">Join now</NuxtLink>
+            <MainNavigationItem v-if="isLogged()">
+                <span @click="startLogout"> Logout </span>
             </MainNavigationItem>
             <MainNavigationItem v-else>
-                <span @click="dispatchLogout"> Logout </span>
+                <NuxtLink to="/login">Join now</NuxtLink>
             </MainNavigationItem>
         </ul>
     </nav>
 </template>
-<script lang="ts">
-import Vue from 'vue'
+<script setup lang="ts">
+import { ref } from "vue";
+import { useUsers } from "~/store/users";
 
-export default Vue.extend({
-    name: 'MainNavigation',
-    data() {
-        return {
-            menuOpen: false,
-        }
-    },
-    computed: {
-        isLogged() {
-            return this.$store.getters['user/isLogged']
-        },
-    },
-    methods: {
-        openMenu() {
-            this.menuOpen = true
-        },
-        closeMenu() {
-            this.menuOpen = false
-        },
-        dispatchLogout() {
-            this.$store.dispatch('user/signOut')
-        },
-    },
-})
+const { logout, isLogged } = useUsers();
+
+const menuOpen = ref<boolean>(false);
+
+function openMenu() {
+    menuOpen.value = true;
+}
+
+function closeMenu() {
+    menuOpen.value = false;
+}
+
+function startLogout() {
+    logout();
+}
 </script>

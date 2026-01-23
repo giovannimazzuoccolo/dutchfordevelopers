@@ -14,7 +14,7 @@
         </GamesDetectiveAutoreveal>
         <GamesDetectiveAutoreveal :delay="3 + round">
             <select
-                class="border border-solid border-black dark:text-black p-3 rounded"
+                class="border border-solid border-black dark:text-black p-2 m-2 rounded"
                 v-model="selection"
             >
                 <optgroup :label="questions[0].en" />
@@ -25,37 +25,38 @@
                     {{ questions[1].nl }}
                 </option>
             </select>
-            <UIButton @click="callback">Select</UIButton>
+            <UIButton @click="$emit('onSelection', selection)">Select</UIButton>
             <br />
         </GamesDetectiveAutoreveal>
     </div>
 </template>
-<script lang="ts">
-import Vue from 'vue'
-
+<script setup lang="ts">
 interface Phrases {
-    en: string
-    nl: string
+    en: string;
+    nl: string;
 }
 
-type Questions = Phrases[]
+type Questions = Phrases[];
 
-export default Vue.extend({
-    props: {
-        round: Number,
-        phrases: Object as () => Phrases,
-        questions: Array as () => Questions,
-        onSelection: Function,
-        disableTranslation: Boolean,
+const selection = ref("");
+
+const props = defineProps({
+    round: {
+      required: true,
+      type: Number,
     },
-    methods: {
-        callback: function (e: MouseEvent) {
-            //this.$emit('click', e)
-            this.$emit('onSelection', this.selection)
-        },
+    phrases: {
+        required: true,
+        type: Object as () => Phrases,
     },
-    data() {
-        return { selection: '' }
+    questions: {
+        required: true,
+        type: Object as () => Questions,
     },
-})
+    onSelection: Function,
+    disableTranslation: {
+        required: true,
+        type: Boolean,
+    },
+});
 </script>

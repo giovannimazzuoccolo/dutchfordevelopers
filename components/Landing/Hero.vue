@@ -1,6 +1,8 @@
 <template>
-    <Container>
-        <div class="flex w-full gap-4 justify-between flex-col items-center my-8 md:flex-row">
+    <SharedContainer>
+        <div
+            class="flex w-full gap-4 justify-between flex-col items-center my-8 md:flex-row"
+        >
             <div class="md:w-7/12">
                 <h1
                     class="uppercase font-bold xl text-main-blue dark:text-main-blue-light text-4xl md:text-6xl"
@@ -11,29 +13,25 @@
                     >
                 </h1>
                 <p class="py-4 text-xl dark:text-white">
-                    A pragmatic approach for developers (and not) living in The Netherlands
+                    A pragmatic approach for developers (and not) living in The
+                    Netherlands
                 </p>
-                <NuxtLink to="/discover">
-                    <UIButton text="Start now for free" @click="doNothing"
+                <NuxtLink to="/discover?tab=learn">
+                    <Button text="Start now for free"
                 /></NuxtLink>
             </div>
             <div class="w-5/12 hidden md:flex">
                 <picture class="w-full">
-                    <source srcset="/dutch-pictures-dark.jpg" media="(prefers-color-scheme:dark)" />
+                    <source
+                        srcset="/dutch-pictures-dark.jpg"
+                        media="(prefers-color-scheme:dark)"
+                    />
                     <img src="/dutch-pictures.jpg" />
                 </picture>
             </div>
         </div>
-    </Container>
+    </SharedContainer>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-    methods: {
-        doNothing() {
-            return false
-        },
-    },
-})
+<script setup lang="ts">
+import Button from "~/components/UI/Button.vue";
 </script>

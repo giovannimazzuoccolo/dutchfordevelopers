@@ -14,7 +14,7 @@ type Phrase = {
     }
 }
 
-type Phrases = Phrase[]
+export type Phrases = Phrase[]
 
 export const route1: Phrases = [
     {
@@ -27,7 +27,7 @@ export const route1: Phrases = [
                 nl: '🕵️ Heb je iets gezien?',
                 en: '🕵️ Have you seen something?',
             },
-            { nl: '🕵️ Heb U iets gezien?', en: '🕵️ Have you seen something?' },
+            {nl: '🕵️ Heb U iets gezien?', en: '🕵️ Have you seen something?'},
         ],
         solution: '🕵️ Heb U iets gezien?',
         answer: {
@@ -45,7 +45,7 @@ export const route1: Phrases = [
                 nl: '🕵️ Je hebt de kroon gestolen!',
                 en: '🕵️ You stole the crown!',
             },
-            { nl: '🕵️ Jij hebt de kroon gestolen!', en: '🕵️ You stole the crown!' },
+            {nl: '🕵️ Jij hebt de kroon gestolen!', en: '🕵️ You stole the crown!'},
         ],
         solution: '🕵️ Jij hebt de kroon gestolen!',
         answer: {
@@ -63,7 +63,7 @@ export const route1: Phrases = [
                 nl: '🕵️ Heb je iets gezien?',
                 en: '🕵️ Have you seen something?',
             },
-            { nl: '🕵️ Heb U iets gezien?', en: '🕵️ Have you seen something?' },
+            {nl: '🕵️ Heb U iets gezien?', en: '🕵️ Have you seen something?'},
         ],
         solution: '🕵️ Heb U iets gezien?',
         answer: {
@@ -81,7 +81,7 @@ export const route1: Phrases = [
                 nl: '🕵️ Uw tuinman is de dief!',
                 en: '🕵️ Your gardener is the thief!',
             },
-            { nl: '🕵️ Jouw tuinman is de dief!', en: '🕵️ Your gardener is the thief!' },
+            {nl: '🕵️ Jouw tuinman is de dief!', en: '🕵️ Your gardener is the thief!'},
         ],
         solution: '🕵️ Uw tuinman is de dief!',
         answer: {

@@ -1,4 +1,8 @@
 <template>
-    <Dashboard :logged="false" />
+  <DashboardContainer :logged="false"/>
 </template>
-<script></script>
+<script setup lang="ts">
+  useHead({
+    title: 'Discover lessons, games and read articles in Dutch - Dutch for Developers',
+  })
+</script>

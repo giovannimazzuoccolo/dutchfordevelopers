@@ -1,35 +1,34 @@
 <template>
-    <div
-        class="opacity-0 duration-700 ease-in-out transition-opacity text-2xl dark:text-white"
-        :class="{
+  <div
+      class="opacity-0 duration-700 ease-in-out transition-opacity text-2xl dark:text-white"
+      :class="{
             'opacity-0': !isVisible,
             'opacity-100': isVisible,
         }"
-    >
-        <slot></slot>
-    </div>
+  >
+    <slot></slot>
+  </div>
 </template>
-<script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
-    props: {
-        delay: Number,
-    },
-    data() {
-        return {
-            isVisible: false,
-            interval: 0,
-        }
-    },
-    created() {
-        this.interval = this.counterFunc()
-    },
-    methods: {
-        counterFunc(): number {
-            return window.setInterval(() => {
-                this.isVisible = true
-            }, this.delay * 700)
-        },
-    },
+<script setup lang="ts">
+
+const props = defineProps({
+  delay: {
+    required: true,
+    type: Number
+  }
+});
+
+const isVisible = ref(true);
+const interval = ref(0);
+
+function counterFunc(): number {
+  return window.setInterval(() => {
+    isVisible.value = true
+  }, props.delay * 700)
+};
+
+onMounted(() => {
+  interval.value = counterFunc()
 })
+
 </script>
