@@ -37,12 +37,31 @@ jobs:
                   npm config delete always-auth || true
                   npm config set registry https://registry.npmjs.org/
 
+            - name: Create clean npmrc
+              run: |
+                  cat > /tmp/npmrc <<'EOF'
+registry=https://registry.npmjs.org/
+always-auth=false
+EOF
+
             - name: Show npm config (debug)
-              run: npm config list
+              run: |
+                  echo "--- npm config list ---"
+                  npm config list
+                  echo "--- npmrc files ---"
+                  npm config get userconfig
+                  npm config get globalconfig
+                  test -f ~/.npmrc && echo "~/.npmrc:" && cat ~/.npmrc || true
+                  test -f /etc/npmrc && echo "/etc/npmrc:" && cat /etc/npmrc || true
+                  test -f /tmp/npmrc && echo "/tmp/npmrc:" && cat /tmp/npmrc || true
 
             - name: Install dependencies 👨🏻‍💻
               run: |
                   npm ci --registry=https://registry.npmjs.org/ --no-audit
+              env:
+                  NPM_CONFIG_USERCONFIG: /tmp/npmrc
+                  NODE_AUTH_TOKEN: ""
+                  NPM_TOKEN: ""
 
             - name: Run linter 👀
               run: npm run lint
