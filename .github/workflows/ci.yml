@@ -39,10 +39,7 @@ jobs:
 
             - name: Create clean npmrc
               run: |
-                  cat > /tmp/npmrc <<'EOF'
-registry=https://registry.npmjs.org/
-always-auth=false
-EOF
+                  printf "registry=https://registry.npmjs.org/\nalways-auth=false\n" > /tmp/npmrc
 
             - name: Show npm config (debug)
               run: |
