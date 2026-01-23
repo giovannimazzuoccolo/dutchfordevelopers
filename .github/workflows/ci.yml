@@ -1,67 +1,25 @@
 name: ci
 
 on:
-    push:
-        branches:
-            - main
-            - master
-    pull_request:
-        branches:
-            - main
-            - master
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    ci:
-        runs-on: ${{ matrix.os }}
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-        strategy:
-            matrix:
-                os: [ubuntu-latest]
-                node: [24]  # Upgraded from 14 to 24 (LTS)
+      - name: Sanity check
+        run: echo "CI is alive"
 
-        steps:
-            - name: Checkout 🛎
-              uses: actions/checkout@v4  # Upgraded from @master
+      - name: Run linter 👀
+        run: npm run lint
 
-            - name: Setup node env 🏗
-              uses: actions/setup-node@v5  # Upgraded from v2.1.5
-              with:
-                  node-version: ${{ matrix.node }}
-                  check-latest: true
-                  registry-url: https://registry.npmjs.org/
-
-            - name: Clear npm auth and config
-              run: |
-                  rm -f ~/.npmrc
-                  npm config delete //registry.npmjs.org/:_authToken || true
-                  npm config delete always-auth || true
-                  npm config set registry https://registry.npmjs.org/
-
-            - name: Create clean npmrc
-              run: |
-                  printf "registry=https://registry.npmjs.org/\nalways-auth=false\n" > /tmp/npmrc
-
-            - name: Show npm config (debug)
-              run: |
-                  echo "--- npm config list ---"
-                  npm config list
-                  echo "--- npmrc files ---"
-                  npm config get userconfig
-                  npm config get globalconfig
-                  test -f ~/.npmrc && echo "~/.npmrc:" && cat ~/.npmrc || true
-                  test -f /etc/npmrc && echo "/etc/npmrc:" && cat /etc/npmrc || true
-                  test -f /tmp/npmrc && echo "/tmp/npmrc:" && cat /tmp/npmrc || true
-
-            - name: Install dependencies 👨🏻‍💻
-              run: |
-                  npm ci --registry=https://registry.npmjs.org/ --no-audit
-              env:
-                  NPM_CONFIG_USERCONFIG: /tmp/npmrc
-                  NODE_AUTH_TOKEN: ""
-                  NPM_TOKEN: ""
-
-            - name: Run linter 👀
-              run: npm run lint
-
-            - name: Run tests 🧪
-              run: npm run test
+      - name: Run tests 🧪
+        run: npm run test
