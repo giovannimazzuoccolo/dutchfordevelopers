@@ -19,7 +19,11 @@ jobs:
         run: echo "CI is alive"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm config set registry https://registry.npmjs.org
+          npm config delete //registry.npmjs.org/:_authToken || true
+          npm config delete always-auth || true
+          npm ci
 
       - name: Run tests 🧪
         run: npm run test
