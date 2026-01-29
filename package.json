@@ -21,7 +21,7 @@
     "@types/node": "^25.0.10",
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.20",
-    "crossws": "^0.4.3",
+    "crossws": "^0.4.4",
     "happy-dom": "^20.4.0",
     "nuxt": "^4.1.1",
     "postcss": "^8.5.1",
