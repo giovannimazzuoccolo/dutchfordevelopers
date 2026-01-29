@@ -21,7 +21,7 @@
     "autoprefixer": "^10.4.20",
     "crossws": "^0.4.3",
     "happy-dom": "^20.4.0",
-    "nuxt": "^4.1.1",
+    "nuxt": "^4.3.0",
     "postcss": "^8.5.1",
     "ts-node": "^10.9.1"
   },

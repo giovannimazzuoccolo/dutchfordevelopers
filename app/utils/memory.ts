@@ -1,4 +1,4 @@
-import { Memory } from '../content/memory'
+import { Memory } from '../../content/memory'
 import { addUuidToObject } from './uuid'
 
 export const shuffler = (memoryCards: Memory[]) => {
