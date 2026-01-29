@@ -10,11 +10,6 @@ export default defineNuxtConfig({
 
   plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.ts"],
   devtools: { enabled: true },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxt/content",
-    "@pinia/nuxt",
-    "@sidebase/nuxt-auth",
-  ],
+  modules: ["@nuxt/content", "@pinia/nuxt", "@sidebase/nuxt-auth"],
   compatibilityDate: "2024-08-14",
 });
