@@ -67,7 +67,7 @@ export const useScores = defineStore("scores", {
           return;
         }
         const res = await $fetch(
-          `/api/scores?userId=${userId}&gameRoute=${encodeURIComponent(gameRoute)}`
+          `/api/scores?userId=${userId}&gameRoute=${encodeURIComponent(gameRoute)}`,
         );
         // @ts-ignore
         this.scores = res.data || [];
@@ -92,7 +92,7 @@ export const useScores = defineStore("scores", {
         if (res?.success) {
           this.request = REQUEST_STATUS.SUCCESS;
           toastStore.showToast(
-            id ? "Score updated successfully" : "Score saved successfully"
+            id ? "Score updated successfully" : "Score saved successfully",
           );
         } else {
           this.request = REQUEST_STATUS.ERROR;
