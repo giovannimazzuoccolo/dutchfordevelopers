@@ -5,7 +5,7 @@
         >
             <div class="md:w-7/12">
                 <h1
-                    class="uppercase font-bold xl text-main-blue dark:text-main-blue-light text-4xl md:text-6xl"
+                    class="tracking-tight uppercase font-bold xl text-main-blue dark:text-main-blue-light text-4xl md:text-6xl"
                 >
                     Learn dutch as you are learning a
                     <span class="text-main-orange dark:text-main-orange-light"

@@ -36,21 +36,6 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["DM sans", "ui-sans-serif", "system-ui", "Helvetica", "Arial"],
-      },
-
-      colors: {
-        "main-orange": "rgb(var(--color-main-orange) / <alpha-value>)",
-        "main-orange-light":
-          "rgb(var(--color-main-light-orange) / <alpha-value>)",
-        "main-blue": "rgb(var(--color-main-blue) / <alpha-value>)",
-        "main-blue-light": "rgb(var(--color-main-light-blue) / <alpha-value>)",
-        "main-header": "var(--color-main-header)",
-        "main-header-dark": "var(--color-main-header-dark)",
-        github: "var(--color-github)",
-        linkedin: "var(--color-linkedin)",
-      },
       typography: {
         DEFAULT: {
           css: {

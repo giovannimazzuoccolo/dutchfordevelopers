@@ -27,7 +27,7 @@
             Name
           </label>
           <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 tracking-tight focus:outline-none focus:shadow-outline"
             id="name"
             type="text"
             placeholder="Your name"
@@ -42,7 +42,7 @@
             Email
           </label>
           <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 tracking-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
             v-model="formData.email"
@@ -57,7 +57,7 @@
             Your request
           </label>
           <textarea
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 tracking-tight focus:outline-none focus:shadow-outline"
             id="textarea"
             placeholder="Your request"
             v-model="formData.request"

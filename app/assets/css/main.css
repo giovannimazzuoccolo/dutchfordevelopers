@@ -1,14 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
 @import "tailwindcss";
 
-@layer theme {
-  :root {
-    --color-main-orange: #ec8a27;
-    --color-main-blue: #121054;
-    --color-main-light-blue: #c0dffa;
-    --color-main-light-orange: #edd0b2;
-    --color-main-header: rgb(255 255 255 / 0.8);
-    --color-main-header-dark: rgb(11 11 11 / 0.8);
-    --color-github: #171515;
-    --color-linkedin: #0e76a8;
-  }
+@theme {
+  --color-main-orange: #ec8a27;
+  --color-main-blue: #121054;
+  --color-main-blue-light: #c0dffa;
+  --color-main-orange-light: #edd0b2;
+  --color-main-header: rgb(255 255 255 / 0.8);
+  --color-main-header-dark: rgb(11 11 11 / 0.8);
+  --color-github: #171515;
+  --color-linkedin: #0e76a8;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, Helvetica, Arial;
 }
