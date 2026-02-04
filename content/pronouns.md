@@ -1,6 +1,7 @@
 ---
 title: Pronouns
 id: pronouns
+slug: pronouns
 ---
 
 ## Pronouns

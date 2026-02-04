@@ -1,6 +1,7 @@
 ---
 title: Nouns
 id: nouns
+slug: nouns
 ---
 
 ## Nouns

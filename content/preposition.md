@@ -1,6 +1,7 @@
 ---
 title: Preposition
 id: preposition
+slug: preposition
 ---
 
 ## Preposition

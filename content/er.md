@@ -1,6 +1,7 @@
 ---
 title: Er
 id: er
+slug: er
 ---
 
 ## Er

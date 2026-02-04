@@ -1,4 +1,5 @@
 import { defineCollection, defineContentConfig } from "@nuxt/content";
+import { z } from "zod";
 
 export default defineContentConfig({
   collections: {
@@ -7,6 +8,12 @@ export default defineContentConfig({
       type: "page",
       // Load every file inside the `content` directory
       source: "**",
+
+      schema: z.object({
+        title: z.string(),
+        id: z.string(),
+        slug: z.string(),
+      }),
     }),
   },
 });

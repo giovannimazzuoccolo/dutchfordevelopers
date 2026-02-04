@@ -1,6 +1,7 @@
 ---
 title: Adjectives
 id: adjectives
+slug: adjectives
 ---
 
 ## Adjectives

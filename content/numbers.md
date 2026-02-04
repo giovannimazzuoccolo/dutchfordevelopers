@@ -1,6 +1,7 @@
 ---
 title: Numbers
 id: numbers
+slug: numbers
 ---
 
 ## Numbers

@@ -1,6 +1,7 @@
 ---
 title: Conjunctions
 id: conjunctions
+slug: conjunctions
 ---
 
 ## Conjunctions

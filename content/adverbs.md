@@ -1,6 +1,7 @@
 ---
 title: Adverbs
 id: adverbs
+slug: adverbs
 ---
 
 ## Adverbs

@@ -1,6 +1,7 @@
 ---
 title: Verbs
 id: verbs
+slug: verbs
 ---
 
 ## Verbs
