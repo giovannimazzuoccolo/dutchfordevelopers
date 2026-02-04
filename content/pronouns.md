@@ -37,9 +37,9 @@ Before starting, we need to talk about stressed and unstressed pronouns. In Dutc
 - **U** bent uitgenodigd voor de bruiloft &nbsp; _You are invited for the wedding_ &nbsp; <small>ℹ️ you in formal version</small>
 - **Hij** werkt voor de Nederlandse regering &nbsp; _He works for the Dutch Government_
 - **Ze** heeft lang haar. &nbsp; _She has long hair_ &nbsp; <small>ℹ️ unstressed version</small>
-- **Wij** komen uit het buitenland &nbsp; _We are from abroad_ &nsbsp; <small>ℹ️ stressed version</small>
+- **Wij** komen uit het buitenland &nbsp; _We are from abroad_ &nbsp; <small>ℹ️ stressed version</small>
 - **We** rennen graag &nbsp; _We like to run_ &nbsp; <small>ℹ️ unstressed version</small>
-- **Julle** lijken klaar om te festeen &nbsp; _You guys seems ready to party_
+- **Jullie** lijken klaar om te feesten &nbsp; _You guys seems ready to party_
 - **U** moet uw ticket laten zien &nbsp; _You must show your ticket_ <small>ℹ️ you (plural) in formal version</small>
 - **Zij** zullen morgen met u spreken &nbsp; _They will speak to you tomorrow_ <small>ℹ️ stressed version</small>
 - **Ze** zien er erg ontspannen uit &nbsp; _They look very relaxed_ <small>ℹ️ unstressed version</small>

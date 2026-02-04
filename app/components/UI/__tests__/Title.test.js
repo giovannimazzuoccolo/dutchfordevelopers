@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import Title from "../../../../components/UI/Title.vue";
+import Title from "../Title.vue";
 
 describe("Title component", () => {
   test("renders a title in orange and blue", () => {
