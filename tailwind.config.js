@@ -39,8 +39,15 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            "--tw-prose-body": "#1f2937",
             "--tw-prose-bold": mainColors.orange,
-            "--tw-prose-invert-body": "#fff",
+            "--tw-prose-headings": mainColors.blue,
+            "--tw-prose-links": mainColors.orange,
+            "--tw-prose-invert-body": "#f3f4f6",
+            "--tw-prose-invert-headings": "#fff",
+            "--tw-prose-invert-bold": mainColors.orange,
+            "--tw-prose-invert-links": mainColors.orange,
+            lineHeight: "1.8",
           },
         },
       },

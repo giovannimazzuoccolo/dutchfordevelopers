@@ -4,7 +4,9 @@
             <article
                 class="container mx-auto px-3 py-2 md:px-2 md:py-2 flex justify-between w-full"
             >
-                <ContentRenderer :value="data" />
+                <div class="prose dark:prose-invert prose-sm lg:prose-base xl:prose-xl max-w-none">
+                    <ContentRenderer :value="data" />
+                </div>
                     
                 <UILessonInfo />
             </article>

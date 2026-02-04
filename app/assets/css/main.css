@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-main-orange: #ec8a27;
@@ -12,4 +13,54 @@
   --color-github: #171515;
   --color-linkedin: #0e76a8;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, Helvetica, Arial;
+  
+  /* Prose/Typography customization */
+  --prose-body: theme(colors.gray.800);
+  --prose-headings: var(--color-main-blue);
+  --prose-bold: var(--color-main-orange);
+  --prose-links: var(--color-main-orange);
+  --prose-lead: theme(colors.gray.700);
+  --prose-counters: theme(colors.gray.600);
+  --prose-bullets: theme(colors.gray.400);
+  --prose-hr: theme(colors.gray.300);
+  --prose-quotes: theme(colors.gray.900);
+  --prose-quote-borders: theme(colors.gray.300);
+  --prose-captions: theme(colors.gray.700);
+  --prose-code: theme(colors.gray.900);
+  --prose-pre-code: theme(colors.gray.200);
+  --prose-pre-bg: theme(colors.gray.800);
+  --prose-th-borders: theme(colors.gray.300);
+  --prose-td-borders: theme(colors.gray.200);
+  
+  /* Dark mode prose */
+  --prose-invert-body: theme(colors.gray.200);
+  --prose-invert-headings: theme(colors.white);
+  --prose-invert-bold: var(--color-main-orange);
+  --prose-invert-links: var(--color-main-orange);
+  --prose-invert-lead: theme(colors.gray.300);
+  --prose-invert-counters: theme(colors.gray.400);
+  --prose-invert-bullets: theme(colors.gray.600);
+  --prose-invert-hr: theme(colors.gray.700);
+  --prose-invert-quotes: theme(colors.gray.100);
+  --prose-invert-quote-borders: theme(colors.gray.700);
+  --prose-invert-captions: theme(colors.gray.400);
+  --prose-invert-code: theme(colors.white);
+  --prose-invert-pre-code: theme(colors.gray.300);
+  --prose-invert-pre-bg: rgb(0 0 0 / 50%);
+  --prose-invert-th-borders: theme(colors.gray.600);
+  --prose-invert-td-borders: theme(colors.gray.700);
 }
+
+/* Increase line height for prose content */
+.prose {
+  line-height: 1.8;
+}
+
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+  line-height: 1.8;
+}
+
+.prose :where(li):not(:where([class~="not-prose"] *)) {
+  line-height: 1.8;
+}
+
