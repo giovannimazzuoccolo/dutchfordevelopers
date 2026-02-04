@@ -132,7 +132,7 @@
   </SharedContainer>
 </template>
 <script setup lang="ts">
-import { TENSE, PERSON, REGULAR_IRREGULAR, wordList } from "~/content/passport";
+import { TENSE, PERSON, REGULAR_IRREGULAR, wordList } from "~/data/passport";
 import shuffle from "lodash/shuffle";
 import GamesSuccess from "~/components/Games/Status/GamesSuccess.vue";
 import GamesOver from "~/components/Games/Status/GamesOver.vue";

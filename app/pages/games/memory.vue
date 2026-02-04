@@ -54,7 +54,7 @@
     </SharedContainer>
 </template>
 <script setup lang="ts">
-import { memoryCardList } from "~/content/memory";
+import { memoryCardList } from "~/data/memory";
 import { shuffler } from "~/utils/memory";
 import { speak } from "~/utils/tts";
 import { evenOrOdd } from "~/utils/math";

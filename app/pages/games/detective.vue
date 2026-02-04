@@ -72,7 +72,7 @@
 import { storeToRefs } from "pinia";
 import AnswerFeedback from "~/components/Games/Detective/AnswerFeedback.vue";
 import QuestionBlock from "~/components/Games/Detective/QuestionBlock.vue";
-import { type Phrases, route1 } from "~/content/detective";
+import { type Phrases, route1 } from "~/data/detective";
 import { useScores } from "~/store/scores";
 import { useUsers } from "~/store/users";
 

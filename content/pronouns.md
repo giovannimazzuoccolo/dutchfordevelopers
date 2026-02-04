@@ -1,5 +1,6 @@
 ---
 title: Pronouns
+id: pronouns
 ---
 
 ## Pronouns
@@ -30,17 +31,17 @@ Before starting, we need to talk about stressed and unstressed pronouns. In Dutc
 
 ### 🗣️ Examples in conversation
 
--   **Ik** woon in Italië, en **jij?** &nbsp; _I live in Italy, and you?_ &nbsp; <small>ℹ️ you in stressed version</small>
--   **Je** hebt een mooie fiets. &nbsp; _You have a nice bike._ &nbsp; <small>ℹ️ you in unstressed version</small>
--   **U** bent uitgenodigd voor de bruiloft &nbsp; _You are invited for the wedding_ &nbsp; <small>ℹ️ you in formal version</small>
--   **Hij** werkt voor de Nederlandse regering &nbsp; _He works for the Dutch Government_
--   **Ze** heeft lang haar. &nbsp; _She has long hair_ &nbsp; <small>ℹ️ unstressed version</small>
--   **Wij** komen uit het buitenland &nbsp; _We are from abroad_ &nsbsp; <small>ℹ️ stressed version</small>
--   **We** rennen graag &nbsp; _We like to run_ &nbsp; <small>ℹ️ unstressed version</small>
--   **Julle** lijken klaar om te festeen &nbsp; _You guys seems ready to party_
--   **U** moet uw ticket laten zien &nbsp; _You must show your ticket_ <small>ℹ️ you (plural) in formal version</small>
--   **Zij** zullen morgen met u spreken &nbsp; _They will speak to you tomorrow_ <small>ℹ️ stressed version</small>
--   **Ze** zien er erg ontspannen uit &nbsp; _They look very relaxed_ <small>ℹ️ unstressed version</small>
+- **Ik** woon in Italië, en **jij?** &nbsp; _I live in Italy, and you?_ &nbsp; <small>ℹ️ you in stressed version</small>
+- **Je** hebt een mooie fiets. &nbsp; _You have a nice bike._ &nbsp; <small>ℹ️ you in unstressed version</small>
+- **U** bent uitgenodigd voor de bruiloft &nbsp; _You are invited for the wedding_ &nbsp; <small>ℹ️ you in formal version</small>
+- **Hij** werkt voor de Nederlandse regering &nbsp; _He works for the Dutch Government_
+- **Ze** heeft lang haar. &nbsp; _She has long hair_ &nbsp; <small>ℹ️ unstressed version</small>
+- **Wij** komen uit het buitenland &nbsp; _We are from abroad_ &nsbsp; <small>ℹ️ stressed version</small>
+- **We** rennen graag &nbsp; _We like to run_ &nbsp; <small>ℹ️ unstressed version</small>
+- **Julle** lijken klaar om te festeen &nbsp; _You guys seems ready to party_
+- **U** moet uw ticket laten zien &nbsp; _You must show your ticket_ <small>ℹ️ you (plural) in formal version</small>
+- **Zij** zullen morgen met u spreken &nbsp; _They will speak to you tomorrow_ <small>ℹ️ stressed version</small>
+- **Ze** zien er erg ontspannen uit &nbsp; _They look very relaxed_ <small>ℹ️ unstressed version</small>
 
 🎮 Do you want to test your stressed and unstressed sentences? Play the <a href="/games/detective">Detective game</a>! 🎮
 

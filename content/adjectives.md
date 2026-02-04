@@ -1,5 +1,6 @@
 ---
 title: Adjectives
+id: adjectives
 ---
 
 ## Adjectives
@@ -19,8 +20,8 @@ De grote markt. (The big market)
 Pretty simple: the adjective "grote" will modify the noun "markt" giving information about its size. Fun fact: many cities in The Netherlands have "Grote Markt" as a name of a square or a place.
 Let's make other examples:
 
--   Mijn nieuwe baan (My new job)
--   Een rode auto (A red car)
+- Mijn nieuwe baan (My new job)
+- Een rode auto (A red car)
 
 As you can see, the adjective follows the noun gender and number.
 
@@ -28,14 +29,14 @@ As you can see, the adjective follows the noun gender and number.
 
 Predicative adjectives (bijvoeglijk naamwoordelijk deel) are used to describe the subject of a sentence. They are very simple, for example:
 
--   De kat is zwart (The cat is black)
--   De hond is groot (The dog is big)
+- De kat is zwart (The cat is black)
+- De hond is groot (The dog is big)
 
 Sometimes, on daily spoken language, the verb is omitted, for example:
 
--   Zij moe. (She's tired)
--   Hij interessant. (He's interesting)
--   De muziek loud (The loud music)
+- Zij moe. (She's tired)
+- Hij interessant. (He's interesting)
+- De muziek loud (The loud music)
 
 The Predicative adjectives don't follow the noun on gender or number, and they are after the verb (or is omitted, as shown on the second case).
 

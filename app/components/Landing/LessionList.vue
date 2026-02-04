@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { courseTopic } from '~/content/courseTopics'
+import { courseTopic } from '~/data/courseTopics'
 
 export default defineComponent({
     data() {

@@ -44,7 +44,7 @@ export const useCoursesStore = defineStore("courses", {
       try {
         // No Prisma model for courses in schema; use local content
         // import course topics from content
-        const topics = await import("~/content/courseTopics");
+        const topics = await import("~/data/courseTopics");
         // @ts-ignore
         this.courses = topics.courseTopic.map((t: any, i: number) => ({
           id: String(i),
@@ -64,7 +64,7 @@ export const useCoursesStore = defineStore("courses", {
       // No server-side model for courses_users; mark locally only
       this.request = REQUEST_STATUS.LOADING;
       const idx = this.courses.findIndex(
-        (c) => String(c.id) === String(courseId)
+        (c) => String(c.id) === String(courseId),
       );
       if (idx !== -1 && this.courses[idx]) {
         this.courses[idx].isRead = true;

@@ -1,5 +1,6 @@
 ---
 title: Nouns
+id: nouns
 ---
 
 ## Nouns

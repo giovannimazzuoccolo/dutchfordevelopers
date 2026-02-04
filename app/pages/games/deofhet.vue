@@ -60,7 +60,7 @@
   </SharedContainer>
 </template>
 <script setup lang="ts">
-import { wordList } from "~/content/deofhet";
+import { wordList } from "~/data/deofhet";
 import shuffle from "lodash/shuffle";
 import GamesSuccess from "~/components/Games/Status/GamesSuccess.vue";
 import GamesOver from "~/components/Games/Status/GamesOver.vue";

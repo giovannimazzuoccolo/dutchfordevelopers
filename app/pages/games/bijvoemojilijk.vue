@@ -67,7 +67,7 @@ import {
     adijlist,
     getEmojis,
     type ResultEmojiList,
-} from "~/content/bijvoemojilijkList";
+} from "~/data/bijvoemojilijkList";
 import shuffle from "lodash/shuffle";
 import { useScores } from "~/store/scores";
 import { storeToRefs } from "pinia";
