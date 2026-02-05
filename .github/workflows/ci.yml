@@ -1,6 +1,4 @@
 name: CI
-permissions:
-  contents: read
 
 on:
   push:
@@ -12,26 +10,9 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node and install
-        uses: actions/setup-node@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "24"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: |
-          npm config get registry
-          npm config get userconfig
-          npm config get globalconfig
-          npm ci --registry https://registry.npmjs.org/
-        env:
-          NODE_AUTH_TOKEN: ""
-          NPM_TOKEN: ""
-          NPM_CONFIG_USERCONFIG: "${{ github.workspace }}/.npmrc"
-          NPM_CONFIG_GLOBALCONFIG: "/dev/null"
-          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org/"
-
-      - name: Run tests 🧪
-        run: npm run test
+      - run: npm ci
+      - run: npm run test
