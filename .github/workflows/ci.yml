@@ -23,11 +23,11 @@ jobs:
       - name: Configure npm for public registry
         run: |
           rm -f ~/.npmrc
-          npm config set registry https://registry.npmjs.org/
-          npm config set always-auth false
         env:
           NODE_AUTH_TOKEN: ""
           NPM_TOKEN: ""
+          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org/"
+          NPM_CONFIG_ALWAYS_AUTH: "false"
 
       - name: Install dependencies
         run: npm ci
