@@ -20,17 +20,13 @@ jobs:
           node-version: "24"
           cache: "npm"
 
-      - name: Configure npm for public registry
-        run: |
-          rm -f ~/.npmrc
+      - name: Install dependencies
+        run: npm ci
         env:
           NODE_AUTH_TOKEN: ""
           NPM_TOKEN: ""
-          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org/"
-          NPM_CONFIG_ALWAYS_AUTH: "false"
-
-      - name: Install dependencies
-        run: npm ci
+          NPM_CONFIG_USERCONFIG: "${{ github.workspace }}/.npmrc"
+          NPM_CONFIG_GLOBALCONFIG: "/dev/null"
 
       - name: Run tests 🧪
         run: npm run test
