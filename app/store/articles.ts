@@ -1,11 +1,5 @@
 import { defineStore } from "pinia";
 import { REQUEST_STATUS } from "~/enums/serverRequests";
-import type { Feed } from "pulse-feed-parser";
-import { Parser } from "pulse-feed-parser";
-import _ from "lodash";
-
-const DE_TELEGRAAF_URL = "https://www.telegraaf.nl/rss/";
-//const RTL_URL = 'https://www.nrc.nl/rss/'
 
 export type Article = {
   title: String;
@@ -29,10 +23,18 @@ export const useArticlesStore = defineStore("articles", {
   }),
   actions: {
     async getArticles() {
-      const rssTelegraaf: Feed = await new Parser().parseURL(DE_TELEGRAAF_URL);
-      const unsortedArticles: any = rssTelegraaf.items;
-      this.request = REQUEST_STATUS.SUCCESS;
-      this.articles = _.sortBy(unsortedArticles, "isoDate").reverse();
+      try {
+        const rssTelegraaf = await $fetch<any>("/api/articles");
+        const unsortedArticles: any = rssTelegraaf.items || [];
+        this.request = REQUEST_STATUS.SUCCESS;
+        this.articles = unsortedArticles;
+      } catch (error) {
+        console.error("Failed to fetch articles:", error);
+        this.request = REQUEST_STATUS.ERROR;
+        this.articles = [];
+        // Keep error handled gracefully - don't throw to avoid full page error
+        // The component will show the error state from REQUEST_STATUS.ERROR
+      }
     },
   },
 });

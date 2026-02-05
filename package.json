@@ -43,7 +43,7 @@
     "next-auth": "^4.21.1",
     "pinia": "^3.0.3",
     "prisma": "^6.16.0",
-    "pulse-feed-parser": "^0.1.0",
+    "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
     "uuid": "^13.0.0",
     "vitest": "^3.2.0",
