@@ -3,6 +3,24 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@utility rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
+@utility perspective {
+  perspective: 1000px;
+}
+
+@utility backface-hidden {
+  backface-visibility: hidden;
+}
+
 @theme {
   --color-main-orange: #ec8a27;
   --color-main-blue: #121054;
@@ -13,7 +31,7 @@
   --color-github: #171515;
   --color-linkedin: #0e76a8;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, Helvetica, Arial;
-  
+
   /* Prose/Typography customization */
   --prose-body: theme(colors.gray.800);
   --prose-headings: var(--color-main-blue);
@@ -31,7 +49,7 @@
   --prose-pre-bg: theme(colors.gray.800);
   --prose-th-borders: theme(colors.gray.300);
   --prose-td-borders: theme(colors.gray.200);
-  
+
   /* Dark mode prose */
   --prose-invert-body: theme(colors.gray.200);
   --prose-invert-headings: theme(colors.white);
@@ -63,4 +81,3 @@
 .prose :where(li):not(:where([class~="not-prose"] *)) {
   line-height: 1.8;
 }
-
