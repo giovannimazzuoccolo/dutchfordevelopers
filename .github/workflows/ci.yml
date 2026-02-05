@@ -14,11 +14,6 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
-      - name: Remove any existing .npmrc
-        run: rm -f ~/.npmrc
-      - name: Configure npm registry
-        run: |
-          npm config delete //registry.npmjs.org/:_authToken
-          npm config set registry https://registry.npmjs.org/
+          registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run test
