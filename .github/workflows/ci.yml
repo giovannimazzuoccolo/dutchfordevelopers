@@ -20,6 +20,15 @@ jobs:
           node-version: "24"
           cache: "npm"
 
+      - name: Configure npm for public registry
+        run: |
+          rm -f ~/.npmrc
+          npm config set registry https://registry.npmjs.org/
+          npm config set always-auth false
+        env:
+          NODE_AUTH_TOKEN: ""
+          NPM_TOKEN: ""
+
       - name: Install dependencies
         run: npm ci
 
