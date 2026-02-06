@@ -10,6 +10,15 @@
         class="flex flex-col gap-3 my-12 justify-center max-w-md mx-auto"
       >
         <button
+          class="py-2 bg-white text-black rounded-lg font-bold border-2 px-20 md:px-28"
+          @click="auth(AuthProviders.GOOGLE)"
+        >
+          <span class="flex gap-2 items-center">
+            <Icon name="fa6-brands:google" class="h-8 w-8" />
+            Continue with Google
+          </span>
+        </button>
+        <button
           class="py-2 bg-github text-white rounded-lg font-bold border-2 px-20 md:px-28"
           @click="auth(AuthProviders.GITHUB)"
         >
@@ -36,6 +45,7 @@ import { type ComputedRef } from "vue";
 import { useUsers } from "~/store/users";
 
 const AuthProviders = {
+  GOOGLE: "google",
   GITHUB: "github",
   LINKEDIN: "linkedin",
 } as const;

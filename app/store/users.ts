@@ -1,9 +1,10 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
 import { ERROR_ROUTE } from "~/utils/navigation";
+import type { Session } from "next-auth";
 
 export interface UsersState {
-  userInfo: Record<string, any> | null;
+  userInfo: Session | null;
   request: REQUEST_STATUS;
 }
 
@@ -19,7 +20,7 @@ export const useUsers = defineStore("users", {
       const auth = useAuth();
       try {
         // signIn redirects to provider's login page
-        await auth.signIn(provider as any);
+        await auth.signIn(provider);
       } catch (e) {
         console.warn(e);
         navigateTo(ERROR_ROUTE);
@@ -29,12 +30,9 @@ export const useUsers = defineStore("users", {
     // Populate user info from nuxt-auth state
     async autoAuth() {
       const auth = useAuth();
-      const session = await auth.getSession?.();
-      if (session) {
-        this.userInfo = session as any;
-      } else {
-        this.userInfo = null;
-      }
+      const status = auth.status?.value;
+      const session = auth.data?.value;
+      this.userInfo = status === "authenticated" ? (session ?? null) : null;
     },
 
     async logout() {
@@ -48,7 +46,7 @@ export const useUsers = defineStore("users", {
     },
 
     isLogged() {
-      return this.userInfo !== null;
+      return !!this.userInfo;
     },
   },
 });
