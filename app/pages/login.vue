@@ -14,10 +14,7 @@
           @click="auth(AuthProviders.GITHUB)"
         >
           <span class="flex gap-2 items-center">
-            <font-awesome-icon
-              icon="fa-brands fa-github"
-              class="fill-current p-1 h-8"
-            />
+            <Icon name="fa6-brands:github" class="h-8 w-8" />
             Continue with Github</span
           >
         </button>
@@ -26,11 +23,7 @@
           @click="auth(AuthProviders.LINKEDIN)"
         >
           <span class="flex gap-2 items-center">
-            <font-awesome-icon
-              icon="fa-brands fa-linkedin"
-              name="brands/linkedin"
-              class="fill-current p-1 h-8"
-            />
+            <Icon name="fa6-brands:linkedin" class="h-8 w-8" />
             Continue with Linkedin
           </span>
         </button>
@@ -40,7 +33,6 @@
 </template>
 <script setup lang="ts">
 import { type ComputedRef } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useUsers } from "~/store/users";
 
 const AuthProviders = {

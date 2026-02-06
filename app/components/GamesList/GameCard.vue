@@ -6,7 +6,7 @@
     >
       <div class="flex items-center w-full">
         <div class="p-6">
-          <font-awesome-icon :icon="`icon=fa-solid fa-${icon}`" class="text-slate-400 w-8"/>
+          <Icon :name="iconName" class="text-slate-400 w-8 h-8" />
         </div>
         <div class="w-full">
           <h3 class="uppercase text-xl text-main-orange my-2">
@@ -24,9 +24,7 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
-
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-
+import { computed } from "vue";
 const props = defineProps({
   name: String,
   description: String,
@@ -40,5 +38,10 @@ const props = defineProps({
     required: false,
   },
 })
+
+const iconName = computed(() => {
+  if (!props.icon) return "fa6-solid:gamepad";
+  return props.icon.includes(":") ? props.icon : `fa6-solid:${props.icon}`;
+});
 
 </script>

@@ -12,7 +12,12 @@ export default defineNuxtConfig({
 
   plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.ts"],
   devtools: { enabled: true },
-  modules: ["@nuxt/content", "@pinia/nuxt", "@sidebase/nuxt-auth"],
+  modules: [
+    "@nuxt/content",
+    "@pinia/nuxt",
+    "@sidebase/nuxt-auth",
+    "@nuxt/icon",
+  ],
   compatibilityDate: "2024-08-14",
   vite: {
     plugins: [tailwindcss()],

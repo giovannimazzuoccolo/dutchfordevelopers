@@ -8,18 +8,16 @@
             <h3 class="uppercase text-xl text-main-orange my-2">
                 {{ title }}
             </h3>
-            <font-awesome-icon
+            <Icon
                 v-if="isRead"
-                :icon="['fas', 'circle-check']"
-                class="text-main-orange w-6"
-                size="sm"
+                name="fa6-solid:circle-check"
+                class="text-main-orange w-6 h-6"
             />
         </div>
         <p class="dark:text-white">{{ description }}</p>
     </div>
 </template>
 <script setup lang="ts">
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const router = useRouter();
 
