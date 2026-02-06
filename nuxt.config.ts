@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
+  srcDir: "app",
   runtimeConfig: {},
 
   app: {
@@ -11,10 +13,14 @@ export default defineNuxtConfig({
   plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.ts"],
   devtools: { enabled: true },
   modules: [
-    "@nuxtjs/tailwindcss",
     "@nuxt/content",
     "@pinia/nuxt",
     "@sidebase/nuxt-auth",
+    "@nuxt/icon",
   ],
   compatibilityDate: "2024-08-14",
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  css: ["./app/assets/css/main.css"],
 });
