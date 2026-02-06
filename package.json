@@ -36,7 +36,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "better-sqlite3": "^12.6.2",
     "lodash": "^4.17.21",
-    "next-auth": "^4.21.1",
+    "next-auth": "^4.24.13",
     "pinia": "^3.0.3",
     "prisma": "^6.16.0",
     "rss-parser": "^3.13.0",
