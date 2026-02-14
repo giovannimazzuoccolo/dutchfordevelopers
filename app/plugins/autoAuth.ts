@@ -1,7 +1,9 @@
+import type { Pinia } from "pinia";
 import { useUsers } from "~/store/users";
 
-export default defineNuxtPlugin(() => {
-  const { autoAuth } = useUsers();
+export default defineNuxtPlugin((nuxtApp) => {
+  const pinia = nuxtApp.$pinia;
+  const usersStore = useUsers(pinia as Pinia);
 
-  autoAuth();
+  usersStore.autoAuth();
 });

@@ -32,6 +32,7 @@ export const useUsers = defineStore("users", {
       const auth = useAuth();
       const status = auth.status?.value;
       const session = auth.data?.value;
+
       this.userInfo = status === "authenticated" ? (session ?? null) : null;
     },
 
