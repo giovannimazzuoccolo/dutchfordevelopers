@@ -30,6 +30,11 @@ export const useUsers = defineStore("users", {
     // Populate user info from nuxt-auth state
     async autoAuth() {
       const auth = useAuth();
+
+      if (auth.status?.value === "loading") {
+        await auth.getSession?.();
+      }
+
       const status = auth.status?.value;
       const session = auth.data?.value;
 

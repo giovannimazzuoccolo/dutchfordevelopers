@@ -4,7 +4,7 @@
             <div class="my-2">
                 <template v-if="user.isLogged()">
                     <h2 class="font-bold dark:text-white">
-                       Hallo {{ userInfo?.user?.name  }}!
+                       Hallo {{ userInfo?.user?.name ?? 'gebruiker' }}!
                     </h2>
                     <p class="dark:text-white">
                         You can start a new lesson, play a game, or read the blog!

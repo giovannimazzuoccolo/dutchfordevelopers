@@ -5,5 +5,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   const pinia = nuxtApp.$pinia;
   const usersStore = useUsers(pinia as Pinia);
 
-  usersStore.autoAuth();
+  return usersStore.autoAuth();
 });
