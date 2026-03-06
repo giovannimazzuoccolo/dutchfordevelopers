@@ -23,6 +23,7 @@
         <CoursesList v-if="tabSelection === TAB_SELECTION.LEARN" />
         <GamesList v-if="tabSelection === TAB_SELECTION.PLAY" />
         <ReadList v-if="tabSelection === TAB_SELECTION.READ" />
+        <ListenList v-if="tabSelection === TAB_SELECTION.LISTEN" />
     </div>
 </template>
 <script setup lang="ts">

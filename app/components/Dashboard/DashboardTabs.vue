@@ -47,6 +47,20 @@
             >Read</a
           >
         </li>
+        <li class="nav-item" role="presentation">
+          <a
+            href="#"
+            class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
+            @click="changeTab(TAB_SELECTION.LISTEN)"
+            :class="{
+              'active border-main-orange text-main-orange':
+                selectedTab === TAB_SELECTION.LISTEN,
+            }"
+            id="tabs-listen-tab"
+            role="tab"
+            >Listen</a
+          >
+        </li>
       </ul>
     </div>
   </div>
