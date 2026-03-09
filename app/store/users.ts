@@ -3,8 +3,16 @@ import { defineStore } from "pinia";
 import { ERROR_ROUTE } from "~/utils/navigation";
 import type { Session } from "next-auth";
 
+interface UserSession extends Session {
+  user: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+}
+
 export interface UsersState {
-  userInfo: Session | null;
+  userInfo: UserSession | null;
   request: REQUEST_STATUS;
 }
 
@@ -38,7 +46,10 @@ export const useUsers = defineStore("users", {
       const status = auth.status?.value;
       const session = auth.data?.value;
 
-      this.userInfo = status === "authenticated" ? (session ?? null) : null;
+      this.userInfo =
+        status === "authenticated" && session?.user
+          ? (session as UserSession)
+          : null;
     },
 
     async logout() {
