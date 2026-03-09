@@ -1,9 +1,7 @@
 <template>
   <SharedContainer>
     <UIBlogWrapper>
-      <UIBanner v-if="isUserAuthenticated"
-        >You need to login to view this section</UIBanner
-      >
+      <AuthErrorBanner />
       <UITitle orange="Enter in" blue="Dutch for Developers" center />
 
       <section
@@ -32,7 +30,6 @@
   </SharedContainer>
 </template>
 <script setup lang="ts">
-import { type ComputedRef } from "vue";
 import { useUsers } from "~/store/users";
 
 const AuthProviders = {
@@ -52,10 +49,6 @@ definePageMeta({
 
 const route = useRoute();
 const user = useUsers();
-
-const isUserAuthenticated: ComputedRef<boolean> = computed(() => {
-  return route.query.hasOwnProperty("reason");
-});
 
 const auth = (auth: string) => {
   return user.authSSO(auth);

@@ -24,6 +24,29 @@ export default NuxtAuthHandler({
     LinkedInProvider.default({
       clientId: process.env.LINKEDIN_CLIENT_ID || "",
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET || "",
+      wellKnown:
+        "https://www.linkedin.com/oauth/.well-known/openid-configuration",
+      authorization: {
+        params: {
+          // Keep scope configurable because LinkedIn apps often lack r_emailaddress by default.
+          scope: "openid profile email",
+        },
+      },
+      async profile(profile: {
+        sub: string;
+        name: string;
+        given_name: string;
+        family_name: string;
+        email: string;
+      }) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          firstname: profile.given_name,
+          lastname: profile.family_name,
+          email: profile.email,
+        };
+      },
     }),
   ],
   pages: {
