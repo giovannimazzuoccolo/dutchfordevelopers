@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const fs = require("fs");
 const path = require("path");
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({ datasourceUrl: process.env.DATABASE_URL });
 
 function extractMetaFromVue(fileContent) {
   const titleMatch = fileContent.match(/<UITitle\s+([^>]*)\/>/);
@@ -86,7 +86,7 @@ async function main() {
 
   if (savedRoutes.length !== expectedRoutes.length) {
     console.error(
-      `Seed verification failed: expected ${expectedRoutes.length} games but found ${savedRoutes.length}`
+      `Seed verification failed: expected ${expectedRoutes.length} games but found ${savedRoutes.length}`,
     );
     process.exitCode = 1;
     return;

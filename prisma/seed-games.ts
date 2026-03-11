@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const fs = require("fs");
 const path = require("path");
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({ datasourceUrl: process.env.DATABASE_URL });
 
 // Helper: attempt to extract a human title and description from a .vue page
 function extractMetaFromVue(fileContent: string) {

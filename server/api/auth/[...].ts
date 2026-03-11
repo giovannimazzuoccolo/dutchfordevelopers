@@ -1,11 +1,9 @@
 import { NuxtAuthHandler } from "#auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../prisma";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import LinkedInProvider from "next-auth/providers/linkedin";
-
-const prisma = new PrismaClient();
 
 export default NuxtAuthHandler({
   adapter: PrismaAdapter(prisma),
