@@ -33,7 +33,7 @@
     "@nuxt/icon": "^2.2.1",
     "@pinia/nuxt": "^0.11.2",
     "@prisma/client": "^6.16.0",
-    "@sidebase/nuxt-auth": "^1.1.1",
+    "@sidebase/nuxt-auth": "^1.2.0",
     "@tailwindcss/vite": "^4.1.18",
     "better-sqlite3": "^12.6.2",
     "lodash": "^4.17.21",
