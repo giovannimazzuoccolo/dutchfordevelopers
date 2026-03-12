@@ -19,9 +19,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
   ],
   compatibilityDate: "2024-08-14",
-  auth: {
-    baseURL: process.env.AUTH_BASE_URL || "/api/auth",
-  },
   vite: {
     plugins: [tailwindcss()],
   },
