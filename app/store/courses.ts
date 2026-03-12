@@ -1,13 +1,14 @@
 import _ from "lodash";
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
+import { courseTopic } from "~/data/courseTopics";
 
 export type Course = {
-  id: String;
-  title: String;
-  description: String;
-  image: String;
-  route: String;
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  route: string;
   isRead?: boolean;
 };
 
@@ -43,15 +44,14 @@ export const useCoursesStore = defineStore("courses", {
       this.request = REQUEST_STATUS.LOADING;
       try {
         // No Prisma model for courses in schema; use local content
-        // import course topics from content
-        const topics = await import("~/data/courseTopics");
-        // @ts-ignore
-        this.courses = topics.courseTopic.map((t: any, i: number) => ({
-          id: String(i),
+        // import course topics from content (statically bundled)
+        this.courses = courseTopic.map((t, i) => ({
+          id: i.toString(),
           title: t.title,
           description: t.description,
           image: "",
           route: `/learn/${t.title.toLowerCase()}`,
+          isRead: false,
         }));
         this.request = REQUEST_STATUS.SUCCESS;
       } catch (error: any) {
