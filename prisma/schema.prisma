@@ -7,10 +7,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // NOTE: Prisma CLI currently requires a `url` in the schema even
-  // though the canonical connection string lives in prisma.config.ts.
-  // This line can simply reference the same env variable.
-  url      = env("DATABASE_URL")
+  // `url` is now moved to prisma.config.ts; having it here causes a validation
+  // error with Prisma 7.  The connection string is still read from
+  // process.env.DATABASE_URL.
 }
 
 model User {
