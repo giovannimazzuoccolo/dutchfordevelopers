@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   ],
   compatibilityDate: "2024-08-14",
   auth: {
-    baseURL: "api/auth",
+    baseURL: process.env.AUTH_BASE_URL || "/api/auth",
   },
   vite: {
     plugins: [tailwindcss()],
