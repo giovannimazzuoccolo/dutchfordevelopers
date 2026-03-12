@@ -1,7 +1,9 @@
 import _ from "lodash";
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { courseTopic } from "~/data/courseTopics";
+
+// courses are now persisted in the database; the client talks to the
+// REST endpoints under /api/courses.
 
 export type Course = {
   id: string;
@@ -9,6 +11,10 @@ export type Course = {
   description: string;
   image: string;
   route: string;
+  // timestamps provided by Prisma
+  createdAt?: string;
+  updatedAt?: string;
+  // the joined endpoint computes this for the current user
   isRead?: boolean;
 };
 
@@ -43,16 +49,10 @@ export const useCoursesStore = defineStore("courses", {
     async getCourses() {
       this.request = REQUEST_STATUS.LOADING;
       try {
-        // No Prisma model for courses in schema; use local content
-        // import course topics from content (statically bundled)
-        this.courses = courseTopic.map((t, i) => ({
-          id: i.toString(),
-          title: t.title,
-          description: t.description,
-          image: "",
-          route: `/learn/${t.title.toLowerCase()}`,
-          isRead: false,
-        }));
+        const res = await $fetch<{ success: boolean; data: Course[] }>(
+          "/api/courses",
+        );
+        this.courses = res.data;
         this.request = REQUEST_STATUS.SUCCESS;
       } catch (error: any) {
         this.request = REQUEST_STATUS.ERROR;
@@ -60,32 +60,57 @@ export const useCoursesStore = defineStore("courses", {
       }
     },
 
-    async markCourseAsRead(courseId: string) {
-      // No server-side model for courses_users; mark locally only
+    async markCourseAsRead(courseIdOrRoute: string) {
       this.request = REQUEST_STATUS.LOADING;
-      const idx = this.courses.findIndex(
-        (c) => String(c.id) === String(courseId),
-      );
-      if (idx !== -1 && this.courses[idx]) {
-        this.courses[idx].isRead = true;
+      try {
+        await $fetch("/api/courses/read", {
+          method: "POST",
+          body: { route: courseIdOrRoute },
+        });
+
+        // reflect change locally so UI updates immediately
+        const idx = this.courses.findIndex(
+          (c) => c.route === courseIdOrRoute || c.id === courseIdOrRoute,
+        );
+        if (idx !== -1 && this.courses[idx]) {
+          this.courses[idx].isRead = true;
+        }
         this.request = REQUEST_STATUS.SUCCESS;
-      } else {
+      } catch (error: any) {
         this.request = REQUEST_STATUS.ERROR;
-        this.error = "Course not found";
+        this.error = error.message;
       }
     },
     async getCourse(courseName: string) {
-      // Return local course that matches the title
+      // ask the server for a course with that title; the endpoint supports
+      // filtering by title or route via query parameters
       this.request = REQUEST_STATUS.LOADING;
-      const title = _.capitalize(courseName);
-      const found = this.courses.filter((c) => String(c.title) === title);
-      this.courses = found;
-      this.request = REQUEST_STATUS.SUCCESS;
+      try {
+        const title = _.capitalize(courseName);
+        const res = await $fetch<{ success: boolean; data: Course[] }>(
+          "/api/courses",
+          { params: { title } },
+        );
+        this.courses = res.data;
+        this.request = REQUEST_STATUS.SUCCESS;
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message;
+      }
     },
 
     async getCoursesJoined() {
-      // Local-only: return courses (no per-user data stored)
-      await this.getCourses();
+      this.request = REQUEST_STATUS.LOADING;
+      try {
+        const res = await $fetch<{ success: boolean; data: Course[] }>(
+          "/api/courses/joined",
+        );
+        this.courses = res.data;
+        this.request = REQUEST_STATUS.SUCCESS;
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message;
+      }
     },
   },
 });
