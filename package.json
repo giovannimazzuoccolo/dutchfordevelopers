@@ -5,6 +5,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "seed:games": "node -r ts-node/register prisma/seed-games.ts",
+    "seed:courses": "node -r ts-node/register prisma/seed-courses.ts",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

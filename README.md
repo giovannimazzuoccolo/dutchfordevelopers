@@ -24,7 +24,7 @@ Dutch for Developers is a comprehensive educational platform that combines gamif
 ### Backend & Database
 
 - **Nuxt Server Routes**: Server-side API built into Nuxt
-- **Prisma**: Modern ORM for database management and migrations
+- **Prisma**: Modern ORM for database management and migrations (courses and user progress are persisted via `Course` and `CourseUser` models; the `/api/courses/joined` route returns a `isRead` flag computed from the join table)
 - **NextAuth**: Authentication and session management
 - **SQLite**: Lightweight database (via better-sqlite3)
 
@@ -147,6 +147,8 @@ Structured lessons covering:
 - Prepositions
 - Conjunctions
 - Numbers
+
+Courses are now fetched from the database using Prisma; each course also exposes a per‑user “read” attribute so the frontend knows which lessons have been completed.
 
 ## 🤝 Contributing
 

@@ -14,16 +14,18 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String       @id @default(cuid())
+  email         String       @unique
   name          String?
   image         String?
   emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
   scores        Score[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  // relation added for courses read by the user
+  courseUsers   CourseUser[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Account {
@@ -68,4 +70,29 @@ model Score {
   userId String
   game   Game   @relation(fields: [gameId], references: [id])
   user   User   @relation(fields: [userId], references: [id])
+}
+
+// courses and user progress are stored in the database so the frontend
+// can fetch them instead of relying on static content.  A join table
+// `CourseUser` tracks which users have marked a course as read.
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  image       String? // can be left blank
+  route       String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  courseUsers CourseUser[]
+}
+
+model CourseUser {
+  id       String @id @default(cuid())
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@unique([courseId, userId])
 }
