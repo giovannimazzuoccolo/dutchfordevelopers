@@ -21,7 +21,7 @@
     "@types/node": "^25.0.10",
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.20",
-    "commander": "^13.1.0",
+    "commander": "^14.0.3",
     "crossws": "^0.4.3",
     "happy-dom": "^20.4.0",
     "nuxt": "^4.3.0",
