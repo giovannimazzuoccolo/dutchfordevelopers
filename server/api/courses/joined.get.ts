@@ -5,15 +5,15 @@ export default defineEventHandler(async (event) => {
     const session = await $fetch("/api/auth/session");
     const userId = session?.user?.id;
 
-    const courses = await prisma.course.findMany({
-      include: { courseUsers: true },
-    });
+    const courses = userId
+      ? await prisma.course.findMany({
+          include: { courseUsers: { where: { userId } } },
+        })
+      : await prisma.course.findMany();
 
     // map to a lighter structure and compute `isRead` for the current user
     const mapped = courses.map((c) => {
-      const isRead = userId
-        ? c.courseUsers.some((cu) => cu.userId === userId)
-        : false;
+      const isRead = userId ? !!c.courseUsers?.length : false;
       return {
         id: c.id,
         title: c.title,
