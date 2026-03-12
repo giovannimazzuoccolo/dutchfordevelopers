@@ -23,4 +23,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   css: ["./app/assets/css/main.css"],
+  nitro: {
+    preset: "netlify",
+  },
 });
