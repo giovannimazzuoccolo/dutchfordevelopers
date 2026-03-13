@@ -1,6 +1,6 @@
 import { NuxtAuthHandler } from "#auth";
 // path is two levels up from this file
-import prisma from "../../prisma";
+import prismaClient from "../../prisma";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import LinkedInProvider from "next-auth/providers/linkedin";
@@ -8,7 +8,7 @@ import { PrismaAdapter } from "@sidebase/authjs-prisma-adapter";
 
 export default NuxtAuthHandler({
   secret: useRuntimeConfig().authSecret as string,
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prismaClient),
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GoogleProvider.default({

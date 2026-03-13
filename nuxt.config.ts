@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     },
   },
 
-  plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.ts"],
+  plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.server.ts"],
   devtools: { enabled: true },
   modules: [
     "@nuxt/content",
