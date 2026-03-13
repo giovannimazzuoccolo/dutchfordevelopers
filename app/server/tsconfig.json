@@ -1,5 +1,0 @@
-{
-  // when building, the .nuxt directory lives at the repo root rather than
-  // under `app/`.  adjust the relative path accordingly so esbuild can resolve it.
-  "extends": "../../.nuxt/tsconfig.server.json"
-}

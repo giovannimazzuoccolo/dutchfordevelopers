@@ -1,4 +1,4 @@
-import prisma from "../prisma";
+import prisma from "~~/server/prisma";
 
 export default defineEventHandler(async (event) => {
   try {

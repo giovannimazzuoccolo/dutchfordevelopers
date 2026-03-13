@@ -1,10 +1,10 @@
 import { NuxtAuthHandler } from "#auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 // path is two levels up from this file
 import prisma from "../../prisma";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import LinkedInProvider from "next-auth/providers/linkedin";
+import { PrismaAdapter } from "@sidebase/authjs-prisma-adapter";
 
 export default NuxtAuthHandler({
   secret: useRuntimeConfig().authSecret as string,

@@ -1,9 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
-  srcDir: "app",
   runtimeConfig: {},
-
+  auth: {
+    provider: {
+      type: "authjs",
+    },
+  },
   app: {
     head: {
       title: "Dutch for Developers",
@@ -17,11 +20,14 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@sidebase/nuxt-auth",
     "@nuxt/icon",
-    "@netlify/nuxt",
+    //  "@netlify/nuxt",
   ],
   compatibilityDate: "2024-08-14",
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [],
+    },
   },
   css: ["./app/assets/css/main.css"],
   nitro: {
