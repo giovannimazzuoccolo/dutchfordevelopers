@@ -7,6 +7,7 @@ import GitHubProvider from "next-auth/providers/github";
 import LinkedInProvider from "next-auth/providers/linkedin";
 
 export default NuxtAuthHandler({
+  secret: useRuntimeConfig().authSecret as string,
   adapter: PrismaAdapter(prisma),
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point

@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@sidebase/nuxt-auth",
     "@nuxt/icon",
+    "@netlify/nuxt",
   ],
   compatibilityDate: "2024-08-14",
   vite: {

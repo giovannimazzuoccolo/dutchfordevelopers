@@ -1,8 +1,10 @@
-import prisma from "../prisma";
+import prisma from "../../prisma";
+import { getServerSession } from "#auth";
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await $fetch("/api/auth/session");
+    // use built-in helper instead of internal fetch to avoid networking and 404s
+    const session = await getServerSession(event);
     const userId = session?.user?.id;
 
     const courses = userId
