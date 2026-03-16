@@ -7,7 +7,7 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import { PrismaAdapter } from "@sidebase/authjs-prisma-adapter";
 
 export default NuxtAuthHandler({
-  secret: useRuntimeConfig().authSecret as string,
+  secret: process.env.AUTH_SECRET as string,
   adapter: PrismaAdapter(prismaClient as any),
   // Ensure the user's id and tokens are available on the session object (for client-side stores)
   callbacks: {
