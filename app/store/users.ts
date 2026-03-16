@@ -1,6 +1,6 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { ERROR_ROUTE } from "~/utils/navigation";
+import { ERROR_ROUTE, REDIRECT_AFTER_LOGIN } from "~/utils/navigation";
 import type { Session } from "next-auth";
 
 interface UserSession extends Session {
@@ -31,7 +31,7 @@ export const useUsers = defineStore("users", {
       const auth = useAuth();
       try {
         // signIn redirects to provider's login page
-        await auth.signIn(provider);
+        await auth.signIn(provider, { callbackUrl: REDIRECT_AFTER_LOGIN });
       } catch (e) {
         console.warn(e);
         navigateTo(ERROR_ROUTE);
