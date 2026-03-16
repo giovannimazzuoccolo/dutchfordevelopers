@@ -4,6 +4,6 @@ export default defineNuxtRouteMiddleware(async () => {
   //   await auth.getSession?.();
   // }
   // if (auth.status?.value === "authenticated") {
-  //   return navigateTo("/dashboard?tab=learn");
+  //   return navigateTo("/dashboard/courses");
   // }
 });

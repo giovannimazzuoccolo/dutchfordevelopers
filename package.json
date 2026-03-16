@@ -4,8 +4,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "seed:games": "node -r ts-node/register prisma/seed-games.ts",
-    "seed:courses": "node -r ts-node/register prisma/seed-courses.ts",
+    "seed:games": "npx tsx prisma/seed-games.ts",
+    "seed:courses": "npx tsx prisma/seed-courses.ts",
     "generate": "nuxt generate",
     "prisma:generate": "prisma generate",
     "preview": "nuxt preview",

@@ -51,11 +51,13 @@ export const useGamesStore = defineStore("games", {
     },
     async getGamesWithScore() {
       this.request = REQUEST_STATUS.LOADING;
-      // Assuming user is from auth
-      const session = (await $fetch("/api/auth/session")) as any;
+      const auth = useAuth();
+      const session = auth.data.value;
       const userId = session?.user?.id;
+
       try {
         const res = (await $fetch("/api/games")) as any;
+
         const games =
           res && res.success && Array.isArray(res.data)
             ? res.data
@@ -67,6 +69,8 @@ export const useGamesStore = defineStore("games", {
           const scoresRes = (await $fetch(
             `/api/scores?userId=${userId}`,
           )) as any;
+          debugger;
+
           const scores =
             scoresRes && scoresRes.success && Array.isArray(scoresRes.data)
               ? scoresRes.data

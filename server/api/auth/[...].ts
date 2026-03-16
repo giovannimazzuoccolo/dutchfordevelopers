@@ -8,7 +8,33 @@ import { PrismaAdapter } from "@sidebase/authjs-prisma-adapter";
 
 export default NuxtAuthHandler({
   secret: useRuntimeConfig().authSecret as string,
-  adapter: PrismaAdapter(prismaClient),
+  adapter: PrismaAdapter(prismaClient as any),
+  // Ensure the user's id and tokens are available on the session object (for client-side stores)
+  callbacks: {
+    async jwt({ token, user, account }: any) {
+      // Persist OAuth tokens for later use (e.g. downstream API calls)
+      if (account) {
+        if (account.access_token) token.accessToken = account.access_token;
+        if (account.id_token) token.idToken = account.id_token;
+      }
+      return token;
+    },
+    async session({ session, token, user }: any) {
+      if (session.user) {
+        // NextAuth does not include the user's id by default in the session payload.
+        // Attach it from the token (sub) or the user record for easy client-side access.
+        session.user.id = token?.sub ?? user?.id ?? session.user.id;
+        // Also forward OAuth tokens if available.
+        if (token?.accessToken) {
+          session.user.accessToken = token.accessToken;
+        }
+        if (token?.idToken) {
+          session.user.idToken = token.idToken;
+        }
+      }
+      return session;
+    },
+  },
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
     GoogleProvider.default({

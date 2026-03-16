@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const fs = require("fs");
 const path = require("path");
 
-const prisma = new PrismaClient({ datasourceUrl: process.env.DATABASE_URL });
+const prisma = new PrismaClient();
 
 function extractMetaFromVue(fileContent) {
   const titleMatch = fileContent.match(/<UITitle\s+([^>]*)\/>/);

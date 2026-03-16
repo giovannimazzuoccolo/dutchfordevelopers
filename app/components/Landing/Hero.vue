@@ -16,7 +16,7 @@
                     A pragmatic approach for developers (and not) living in The
                     Netherlands
                 </p>
-                <NuxtLink to="/discover?tab=learn">
+                <NuxtLink to="/dashboard/courses">
                     <Button text="Start now for free"
                 /></NuxtLink>
             </div>

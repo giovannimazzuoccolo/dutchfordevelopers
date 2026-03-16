@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     },
   },
 
-  plugins: ["~/plugins/autoAuth.ts", "~/plugins/prisma.server.ts"],
+  plugins: ["~/plugins/prisma.server.ts"],
   devtools: { enabled: true },
   modules: [
     "@nuxt/content",
@@ -30,7 +30,4 @@ export default defineNuxtConfig({
     },
   },
   css: ["./app/assets/css/main.css"],
-  nitro: {
-    preset: "netlify",
-  },
 });

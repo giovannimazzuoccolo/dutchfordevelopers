@@ -8,6 +8,9 @@ interface UserSession extends Session {
     name?: string | null;
     email?: string | null;
     image?: string | null;
+    id: string;
+    accessToken?: string;
+    idToken?: string;
   };
 }
 
@@ -18,7 +21,7 @@ export interface UsersState {
 
 export const useUsers = defineStore("users", {
   state: (): UsersState => ({
-    userInfo: null,
+    userInfo: useAuth().data?.value as UserSession | null,
     request: REQUEST_STATUS.IDLE,
   }),
 
@@ -44,12 +47,11 @@ export const useUsers = defineStore("users", {
       }
 
       const status = auth.status?.value;
-      const session = auth.data?.value;
+      const session = auth.data?.value as UserSession | null;
 
+      // Ensure we always have an id on the client session (set by next-auth callbacks)
       this.userInfo =
-        status === "authenticated" && session?.user
-          ? (session as UserSession)
-          : null;
+        status === "authenticated" && session?.user ? session : null;
     },
 
     async logout() {
