@@ -1,6 +1,5 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { PrismaClient } from "@prisma/client";
 
 export type Game = {
   id: string;
@@ -17,11 +16,6 @@ export interface GamesState {
   games: Game[];
   request: REQUEST_STATUS;
   error: string;
-}
-
-function prismaClient() {
-  const { $prisma } = useNuxtApp();
-  return $prisma as PrismaClient;
 }
 
 export const useGamesStore = defineStore("games", {
@@ -57,11 +51,13 @@ export const useGamesStore = defineStore("games", {
     },
     async getGamesWithScore() {
       this.request = REQUEST_STATUS.LOADING;
-      // Assuming user is from auth
-      const session = (await $fetch("/api/auth/session")) as any;
+      const auth = useAuth();
+      const session = auth.data.value;
       const userId = session?.user?.id;
+
       try {
         const res = (await $fetch("/api/games")) as any;
+
         const games =
           res && res.success && Array.isArray(res.data)
             ? res.data
@@ -71,8 +67,10 @@ export const useGamesStore = defineStore("games", {
 
         if (userId) {
           const scoresRes = (await $fetch(
-            `/api/scores?userId=${userId}`
+            `/api/scores?userId=${userId}`,
           )) as any;
+          debugger;
+
           const scores =
             scoresRes && scoresRes.success && Array.isArray(scoresRes.data)
               ? scoresRes.data

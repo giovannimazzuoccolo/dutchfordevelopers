@@ -7,19 +7,24 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // `url` is now moved to prisma.config.ts; having it here causes a validation
+  // error with Prisma 7.  The connection string is still read from
+  // process.env.DATABASE_URL.
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  name      String?
-  image     String?
-  accounts  Account[]
-  sessions  Session[]
-  scores    Score[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id            String       @id @default(cuid())
+  email         String       @unique
+  name          String?
+  image         String?
+  emailVerified DateTime?
+  accounts      Account[]
+  sessions      Session[]
+  scores        Score[]
+  // relation added for courses read by the user
+  courseUsers   CourseUser[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Account {
@@ -48,6 +53,14 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model Game {
   id          String  @id @default(cuid())
   name        String
@@ -64,4 +77,29 @@ model Score {
   userId String
   game   Game   @relation(fields: [gameId], references: [id])
   user   User   @relation(fields: [userId], references: [id])
+}
+
+// courses and user progress are stored in the database so the frontend
+// can fetch them instead of relying on static content.  A join table
+// `CourseUser` tracks which users have marked a course as read.
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  image       String? // can be left blank
+  route       String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  courseUsers CourseUser[]
+}
+
+model CourseUser {
+  id       String @id @default(cuid())
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@unique([courseId, userId])
 }

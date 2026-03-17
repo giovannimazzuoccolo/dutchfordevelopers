@@ -1,6 +1,6 @@
 export enum TAB_SELECTION {
-    LEARN = 'learn',
-    PLAY = 'play',
-    READ = 'read',
-    LISTEN = 'listen',
+  COURSES = "courses",
+  GAMES = "games",
+  READ = "read",
+  LISTEN = "listen",
 }

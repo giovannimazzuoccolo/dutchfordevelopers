@@ -86,7 +86,7 @@ async function main() {
 
   if (savedRoutes.length !== expectedRoutes.length) {
     console.error(
-      `Seed verification failed: expected ${expectedRoutes.length} games but found ${savedRoutes.length}`
+      `Seed verification failed: expected ${expectedRoutes.length} games but found ${savedRoutes.length}`,
     );
     process.exitCode = 1;
     return;

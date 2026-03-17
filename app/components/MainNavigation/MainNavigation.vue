@@ -15,10 +15,10 @@
             @click="closeMenu"
         >
             <MainNavigationItem v-if="isLogged()" class="hover:underline">
-                <NuxtLink to="/dashboard?tab=learn">Learn</NuxtLink>
+                <NuxtLink to="/dashboard/courses">Learn</NuxtLink>
             </MainNavigationItem>
             <MainNavigationItem v-else>
-                <NuxtLink to="/discover?tab=learn">Discover</NuxtLink>
+                <NuxtLink to="/dashboard/courses">Discover</NuxtLink>
             </MainNavigationItem>
             <MainNavigationItem>
                 <NuxtLink to="/about">About</NuxtLink>

@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "~~/server/prisma";
 
 export default defineEventHandler(async (event) => {
   try {
@@ -26,6 +24,7 @@ export default defineEventHandler(async (event) => {
     const scores = await prisma.score.findMany();
     return { success: true, data: scores };
   } catch (error: any) {
+    debugger;
     return createError({ statusCode: 500, statusMessage: error.message });
   }
 });

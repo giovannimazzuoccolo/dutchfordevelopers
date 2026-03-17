@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../prisma";
+import { getServerSession } from "#auth";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const session = await $fetch("/api/auth/session");
+  const session = await getServerSession(event);
   const userId = session?.user?.id;
 
   if (!userId) {

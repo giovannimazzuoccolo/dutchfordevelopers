@@ -1,15 +1,26 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
-import { ERROR_ROUTE } from "~/utils/navigation";
+import { ERROR_ROUTE, REDIRECT_AFTER_LOGIN } from "~/utils/navigation";
+
+interface UserSession {
+  user: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    id: string;
+    accessToken?: string;
+    idToken?: string;
+  };
+}
 
 export interface UsersState {
-  userInfo: Record<string, any> | null;
+  userInfo: UserSession | null;
   request: REQUEST_STATUS;
 }
 
 export const useUsers = defineStore("users", {
   state: (): UsersState => ({
-    userInfo: null,
+    userInfo: useAuth().data?.value as UserSession | null,
     request: REQUEST_STATUS.IDLE,
   }),
 
@@ -19,7 +30,7 @@ export const useUsers = defineStore("users", {
       const auth = useAuth();
       try {
         // signIn redirects to provider's login page
-        await auth.signIn(provider as any);
+        await auth.signIn(provider, { callbackUrl: REDIRECT_AFTER_LOGIN });
       } catch (e) {
         console.warn(e);
         navigateTo(ERROR_ROUTE);
@@ -29,12 +40,17 @@ export const useUsers = defineStore("users", {
     // Populate user info from nuxt-auth state
     async autoAuth() {
       const auth = useAuth();
-      const session = await auth.getSession?.();
-      if (session) {
-        this.userInfo = session as any;
-      } else {
-        this.userInfo = null;
+
+      if (auth.status?.value === "loading") {
+        await auth.getSession?.();
       }
+
+      const status = auth.status?.value;
+      const session = auth.data?.value as UserSession | null;
+
+      // Ensure we always have an id on the client session (set by Auth.js callbacks)
+      this.userInfo =
+        status === "authenticated" && session?.user ? session : null;
     },
 
     async logout() {
@@ -48,7 +64,7 @@ export const useUsers = defineStore("users", {
     },
 
     isLogged() {
-      return this.userInfo !== null;
+      return !!this.userInfo;
     },
   },
 });
