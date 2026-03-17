@@ -1,9 +1,8 @@
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 import { defineStore } from "pinia";
 import { ERROR_ROUTE, REDIRECT_AFTER_LOGIN } from "~/utils/navigation";
-import type { Session } from "next-auth";
 
-interface UserSession extends Session {
+interface UserSession {
   user: {
     name?: string | null;
     email?: string | null;
@@ -49,7 +48,7 @@ export const useUsers = defineStore("users", {
       const status = auth.status?.value;
       const session = auth.data?.value as UserSession | null;
 
-      // Ensure we always have an id on the client session (set by next-auth callbacks)
+      // Ensure we always have an id on the client session (set by Auth.js callbacks)
       this.userInfo =
         status === "authenticated" && session?.user ? session : null;
     },

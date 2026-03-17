@@ -1,10 +1,10 @@
 import { NuxtAuthHandler } from "#auth";
 // path is two levels up from this file
 import prismaClient from "../../prisma";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import LinkedInProvider from "next-auth/providers/linkedin";
-import { PrismaAdapter } from "@sidebase/authjs-prisma-adapter";
+import GoogleProvider from "@auth/core/providers/google";
+import GitHubProvider from "@auth/core/providers/github";
+import LinkedInProvider from "@auth/core/providers/linkedin";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export default NuxtAuthHandler({
   secret: process.env.AUTH_SECRET as string,
@@ -36,18 +36,15 @@ export default NuxtAuthHandler({
     },
   },
   providers: [
-    // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
-    GoogleProvider.default({
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
-    // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
-    GitHubProvider.default({
+    GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || "",
       clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
     }),
-    // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
-    LinkedInProvider.default({
+    LinkedInProvider({
       clientId: process.env.LINKEDIN_CLIENT_ID || "",
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET || "",
       wellKnown:

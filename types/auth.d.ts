@@ -11,10 +11,10 @@ declare module "#auth" {
   export { NuxtAuthHandler };
 }
 
-// Extend NextAuth types so our session always includes `user.id` (and tokens).
+// Extend Auth.js types so our session always includes `user.id` (and tokens).
 // This makes `session.user.id` usable in client code without TS errors.
 
-declare module "next-auth" {
+declare module "@auth/core" {
   interface Session {
     user: {
       name?: string | null;
@@ -25,7 +25,9 @@ declare module "next-auth" {
       idToken?: string;
     };
   }
+}
 
+declare module "@auth/core/jwt" {
   interface JWT {
     accessToken?: string;
     idToken?: string;
