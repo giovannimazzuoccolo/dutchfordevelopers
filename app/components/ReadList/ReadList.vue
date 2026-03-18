@@ -9,9 +9,9 @@
       <em>Jammer,</em> we are sorry, we are not able to retrieve any article 😔
     </div>
     <div v-else>
-      <p class="text-center dark:text-white m-4">
+      <p class="text-left md:text-center dark:text-white m-4">
         A list of news articles in Dutch, which can be translated with just one click.
-        Please note that the news source currently used is De Telegraaf. <br/>
+        The soruces are nu.nl and nrc.nl. <br/>
         If you know of any other RSS resources that you would like me to consider, please
         let me know by.
         <UILink
@@ -23,7 +23,7 @@
         or use the
         <NuxtLink to="/contacts">contact page</NuxtLink>
       </p>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <template v-for="article in articles">
           <ArticleCard
               :description="article.description"
