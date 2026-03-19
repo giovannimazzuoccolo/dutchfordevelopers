@@ -1,12 +1,12 @@
 <template>
   <div
-      class="rounded-md bg-white shadow-sm ring-1 ring-black ring-opacity-5 focus:outline-none p-4 cursor-pointer hover:bg-gray-100 dark:bg-slate-800 hover:dark:bg-slate-600 flex flex-col"
+      class="rounded-md bg-white shadow-sm  ring-opacity-5 focus:outline-none p-3 cursor-pointer hover:bg-gray-100 dark:bg-slate-800 hover:dark:bg-slate-600 flex flex-col"
       role="link"
   >
     <h3 class="text-xl text-main-orange my-2" @click="navigate">
       {{ title }}
     </h3>
-    <div class="gap-2 w-100">
+    <div class="gap-2 w-full break-words">
       <template v-for="word in getWords()">
         <Translatable :word="word"/>
         <!--<p class="dark:text-white">{{ contentSnippet }}</p>-->
@@ -17,17 +17,11 @@
 <script setup lang="ts">
 import Translatable from './Translatable.vue'
 
-const props = defineProps({
-  title: String,
-  link: {
-    required: true,
-    type: String
-  },
-  description: {
-    required: true,
-    type: String
-  },
-});
+const props = defineProps<{
+  title: string
+  link: string
+  description: string
+}>()
 
 const getWords = () => {
   return props.description.split(' ')

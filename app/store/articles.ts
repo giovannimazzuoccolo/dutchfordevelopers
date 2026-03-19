@@ -2,10 +2,10 @@ import { defineStore } from "pinia";
 import { REQUEST_STATUS } from "~/enums/serverRequests";
 
 export type Article = {
-  title: String;
-  description: String;
-  link: String;
-  contentSnippet: String;
+  title: string;
+  description: string;
+  link: string;
+  contentSnippet: string;
 };
 
 export type Articles = Article[];
