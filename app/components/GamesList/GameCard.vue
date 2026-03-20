@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="props.route">
+  <NuxtLink :to="`../${props.route}`">
     <div
         class="rounded-md bg-white shadow-sm ring-1 ring-black ring-opacity-5 focus:outline-none p-2 cursor-pointer hover:bg-gray-100 dark:bg-slate-800 hover:dark:bg-slate-600"
         role="link"
