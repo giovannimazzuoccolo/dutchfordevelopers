@@ -2,7 +2,10 @@ import prisma from "../../prisma";
 import { getServerSession } from "#auth";
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body = (await readBody(event).catch(() => ({}))) as {
+    route?: string;
+  };
+  const query = getQuery(event) as { route?: string };
   const session = await getServerSession(event);
   const userId = session?.user?.id;
 
@@ -10,7 +13,7 @@ export default defineEventHandler(async (event) => {
     return createError({ statusCode: 401, statusMessage: "Unauthorized" });
   }
 
-  const { route } = body as { route: string };
+  const route = body.route ?? query.route;
   if (!route) {
     return createError({ statusCode: 400, statusMessage: "Missing route" });
   }
@@ -27,19 +30,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const existing = await prisma.courseUser.findFirst({
+    await prisma.courseUser.deleteMany({
       where: { courseId: course.id, userId },
     });
-
-    if (existing) {
-      // already marked as read; return success without creating
-      return { success: true, data: existing };
-    }
-
-    const created = await prisma.courseUser.create({
-      data: { courseId: course.id, userId },
-    });
-    return { success: true, data: created };
+    return { success: true };
   } catch (error: any) {
     return createError({ statusCode: 500, statusMessage: error.message });
   }

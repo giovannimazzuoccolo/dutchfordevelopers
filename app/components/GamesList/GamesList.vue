@@ -26,24 +26,28 @@
   </SharedContainer>
 </template>
 <script setup lang="ts">
-import {useUsers} from "~/store/users";
-
 import {useGamesStore} from '~/store/games'
 import {REQUEST_STATUS} from "~/enums/serverRequests";
 import {storeToRefs} from "pinia";
 
 const useGames = useGamesStore();
 
-const {getGames, getGamesWithScore} = useGames;
 const {games, request} = storeToRefs(useGames)
-const {userInfo} = useUsers()
 
-onMounted(() => {
-      if (userInfo) {
-        getGamesWithScore()
-      } else {
-        getGames()
-      }
-    }
+const {data: session} = useAuth();
+const userId = computed(() => (session.value as any)?.user?.id as string | undefined);
+// Captured here (setup top-level) so SSR cookie forwarding is guaranteed.
+const requestFetch = useRequestFetch();
+
+// SSR-friendly initial fetch: runs on the server via useAsyncData so the
+// games grid is present in view-source. getGamesWithScore serves the public
+// games list to anonymous users and merges per-user scores when a session
+// is available (via forwarded cookies on the server). The cache key includes
+// the user id so logging in/out refetches instead of reusing another user's
+// (or anonymous) payload, and hydration reuses the payload without a
+// duplicate request.
+await useAsyncData(
+  () => `games-list-${userId.value ?? "anon"}`,
+  () => useGames.getGamesWithScore(requestFetch, userId.value),
 )
 </script>

@@ -27,20 +27,25 @@
 
 import {useCoursesStore} from "~/store/courses";
 import {REQUEST_STATUS} from "~/enums/serverRequests";
-import {useUsers} from "~/store/users";
 import {storeToRefs} from "pinia";
 
-const {userInfo} = useUsers()
 const useCourses = useCoursesStore();
-const {getCourses, getCoursesJoined} = useCourses;
 const {courses, request} = storeToRefs(useCourses);
 
+const {data: session} = useAuth();
+const userId = computed(() => (session.value as any)?.user?.id as string | undefined);
+// Captured here (setup top-level) so SSR cookie forwarding is guaranteed.
+const requestFetch = useRequestFetch();
 
-onMounted(() => {
-  if (userInfo) {
-    getCoursesJoined()
-  } else {
-    getCourses()
-  }
-});
+// SSR-friendly initial fetch: runs on the server via useAsyncData so the
+// course grid is present in view-source. The joined endpoint resolves the
+// session server-side, serving plain courses to anonymous users and
+// isRead-enriched courses to logged-in users. The cache key includes the
+// user id so logging in/out refetches instead of reusing another user's
+// (or anonymous) payload, and hydration reuses the payload without a
+// duplicate request.
+await useAsyncData(
+  () => `courses-list-${userId.value ?? "anon"}`,
+  () => useCourses.getCoursesJoined(requestFetch),
+);
 </script>

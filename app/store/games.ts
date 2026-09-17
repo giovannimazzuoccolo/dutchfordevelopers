@@ -25,16 +25,24 @@ export const useGamesStore = defineStore("games", {
     error: "",
   }),
   actions: {
+    getRequestFetch() {
+      try {
+        return useRequestFetch() as typeof $fetch;
+      } catch {
+        return $fetch;
+      }
+    },
     async getGames() {
       if (this.games.length > 0) {
         this.request = REQUEST_STATUS.SUCCESS;
-        return;
+        return this.games;
       }
 
       this.request = REQUEST_STATUS.LOADING;
       try {
+        const requestFetch = this.getRequestFetch();
         // Use server API so this works in client-side rendered pages as well
-        const res = (await $fetch("/api/games")) as any;
+        const res = (await requestFetch("/api/games")) as any;
         if (res && res.success && Array.isArray(res.data)) {
           this.games = res.data as Game[];
         } else if (Array.isArray(res)) {
@@ -44,19 +52,26 @@ export const useGamesStore = defineStore("games", {
           this.games = [];
         }
         this.request = REQUEST_STATUS.SUCCESS;
+        return this.games;
       } catch (error: any) {
         this.request = REQUEST_STATUS.ERROR;
         this.error = error.message;
+        return [];
       }
     },
-    async getGamesWithScore() {
+    async getGamesWithScore(fetcher?: typeof $fetch, userId?: string) {
       this.request = REQUEST_STATUS.LOADING;
-      const auth = useAuth();
-      const session = auth.data.value;
-      const userId = session?.user?.id;
+      // Prefer an injected fetch (captured via useRequestFetch at the
+      // component level where Nuxt context is guaranteed) so cookies are
+      // forwarded during SSR. No early-return guard here: the data is
+      // user-scoped (scores) and useAsyncData's per-user cache key handles
+      // de-duplication instead. When userId is unknown (e.g. SSR before the
+      // client auth state resolves), the scores endpoint falls back to
+      // getServerSession via the forwarded cookies.
+      const requestFetch = fetcher ?? this.getRequestFetch();
 
       try {
-        const res = (await $fetch("/api/games")) as any;
+        const res = (await requestFetch("/api/games")) as any;
 
         const games =
           res && res.success && Array.isArray(res.data)
@@ -65,31 +80,28 @@ export const useGamesStore = defineStore("games", {
               ? res
               : [];
 
-        if (userId) {
-          const scoresRes = (await $fetch(
-            `/api/scores?userId=${userId}`,
-          )) as any;
-          debugger;
+        const scoresRes = (await requestFetch("/api/scores", {
+          params: userId ? { userId } : {},
+        }).catch(() => ({ success: true, data: [] }))) as any;
 
-          const scores =
-            scoresRes && scoresRes.success && Array.isArray(scoresRes.data)
-              ? scoresRes.data
-              : Array.isArray(scoresRes)
-                ? scoresRes
-                : [];
+        const scores =
+          scoresRes && scoresRes.success && Array.isArray(scoresRes.data)
+            ? scoresRes.data
+            : Array.isArray(scoresRes)
+              ? scoresRes
+              : [];
 
-          this.games = games.map((d: any) => ({
-            ...d,
-            score: scores.find((s: any) => s.gameId === d.id)?.score,
-          }));
-        } else {
-          this.games = games as Game[];
-        }
+        this.games = games.map((d: any) => ({
+          ...d,
+          score: scores.find((s: any) => s.gameId === d.id)?.score,
+        }));
 
         this.request = REQUEST_STATUS.SUCCESS;
+        return this.games;
       } catch (error: any) {
         this.request = REQUEST_STATUS.ERROR;
         this.error = error.message;
+        return [];
       }
     },
   },

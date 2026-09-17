@@ -11,9 +11,12 @@
                 <UILessonInfo />
             </article>
             <SharedContainer>
-                <div class="my-4" v-if="!isLogged && courseReadResult">
-                    <UIButton @click="markCourse"
+                <div class="my-4" v-if="isLogged">
+                    <UIButton v-if="!isRead" @click="markCourse"
                         >Mark this lesson as read</UIButton
+                    >
+                    <UIButton v-else @click="unmarkCourse"
+                        >Remove from read lessons</UIButton
                     >
                 </div>
             </SharedContainer>
@@ -54,27 +57,50 @@ import { storeToRefs } from "pinia";
 const route = useRoute();
 
 const useCourses = useCoursesStore();
-const { markCourseAsRead, getCourse } = useCourses;
+const { markCourseAsRead, unmarkCourseAsRead, getCoursesJoined } = useCourses;
 
-const { request: courseReadResult } = storeToRefs(useCourses);
-
-const { userInfo } = useUsers();
+const usersStore = useUsers();
+const { userInfo } = storeToRefs(usersStore);
 
 const lesson = route.params.lesson as string;
+const lessonPath = route.path;
 
-const { data, pending } = await useAsyncData(route.path, () => 
+const { data, pending } = await useAsyncData(route.path, () =>
     queryCollection('learn').where('slug', '=', lesson).first()
 );
 
-const isLogged = computed(() => !!userInfo);
+const isLogged = computed(() => !!userInfo.value);
+const userId = computed(() => userInfo.value?.user?.id as string | undefined);
+// Captured here (setup top-level) so SSR cookie forwarding is guaranteed.
+const requestFetch = useRequestFetch();
+
+// Seed the store with the joined list (includes per-lesson isRead flags)
+// so the toggle below renders the correct label during SSR. The key is
+// per-user so login/logout refetches instead of reusing stale payloads.
+await useAsyncData(
+    () => `lesson-read-${lesson}-${userId.value ?? "anon"}`,
+    async () => {
+        if (!userId.value) return [];
+        const known = useCourses.courses.find((c) => c.route === lessonPath);
+        if (known?.isRead !== undefined) return useCourses.courses;
+        return await getCoursesJoined(requestFetch);
+    },
+);
+
+// Derived from the store so mark/unmark reflect immediately via the
+// optimistic updates in the store actions. On failure the flag is left
+// untouched, so the button stays and the learner can retry.
+const isRead = computed(
+    () => useCourses.courses.find((c) => c.route === lessonPath)?.isRead ?? false,
+);
 
 async function markCourse() {
-    await markCourseAsRead(route.params.lesson as string);
+    // Send the canonical course route (/learn/<slug>); the API looks courses
+    // up by route, so the bare slug alone would 404.
+    await markCourseAsRead(lessonPath);
 }
 
-onMounted(async () => {
-    if (userInfo) {
-        await getCourse(route.params.lesson as string);
-    }
-});
+async function unmarkCourse() {
+    await unmarkCourseAsRead(lessonPath);
+}
 </script>
