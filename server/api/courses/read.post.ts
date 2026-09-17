@@ -16,7 +16,10 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const course = await prisma.course.findFirst({ where: { route } });
+    // Accept either the canonical route (/learn/<slug>) or the course id.
+    const course = await prisma.course.findFirst({
+      where: { OR: [{ route }, { id: route }] },
+    });
     if (!course) {
       return createError({
         statusCode: 404,

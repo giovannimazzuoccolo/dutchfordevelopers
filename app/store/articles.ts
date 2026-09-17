@@ -23,17 +23,30 @@ export const useArticlesStore = defineStore("articles", {
   }),
   actions: {
     async getArticles() {
+      if (this.articles.length > 0) {
+        this.request = REQUEST_STATUS.SUCCESS;
+        return this.articles;
+      }
+      this.request = REQUEST_STATUS.LOADING;
       try {
-        const rssTelegraaf = await $fetch<any>("/api/articles");
+        let requestFetch: typeof $fetch = $fetch;
+        try {
+          requestFetch = useRequestFetch() as typeof $fetch;
+        } catch {
+          // outside Nuxt context (e.g. unit tests) fall back to $fetch
+        }
+        const rssTelegraaf = await requestFetch<any>("/api/articles");
         const unsortedArticles: any = rssTelegraaf.items || [];
         this.request = REQUEST_STATUS.SUCCESS;
         this.articles = unsortedArticles;
+        return this.articles;
       } catch (error) {
         console.error("Failed to fetch articles:", error);
         this.request = REQUEST_STATUS.ERROR;
         this.articles = [];
         // Keep error handled gracefully - don't throw to avoid full page error
         // The component will show the error state from REQUEST_STATUS.ERROR
+        return [];
       }
     },
   },

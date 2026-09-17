@@ -45,6 +45,9 @@ const articlesStore = useArticlesStore()
 
 const {articles, request} = storeToRefs(articlesStore)
 
-onMounted(() => articlesStore.getArticles())
+// SSR-friendly initial fetch: runs on the server via useAsyncData so the
+// article grid is present in view-source. Cached in the Nuxt payload, so
+// hydration does not trigger a duplicate request.
+await useAsyncData("articles-list", () => articlesStore.getArticles())
 
 </script>

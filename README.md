@@ -20,13 +20,15 @@ Dutch for Developers is a comprehensive educational platform that combines gamif
 - **Vue 3**: Progressive JavaScript framework for building user interfaces
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development
 - **TypeScript**: Type-safe JavaScript for better code quality and developer experience
+- **SSR data fetching**: list data (courses, games, articles) is fetched via `useAsyncData` backed by Pinia stores using `useRequestFetch`, so it is included in the server-rendered HTML — fetch in `onMounted` alone leaves empty markup for crawlers and no-JS clients
 
 ### Backend & Database
 
 - **Nuxt Server Routes**: Server-side API built into Nuxt
 - **Prisma**: Modern ORM for database management and migrations (courses and user progress are persisted via `Course` and `CourseUser` models; the `/api/courses/joined` route returns a `isRead` flag computed from the join table)
+- **PostgreSQL**: Primary database (local instance via `docker-compose.yml`, configured through `DATABASE_URL`), accessed via Prisma with `@prisma/adapter-pg`
 - **NextAuth**: Authentication and session management
-- **SQLite**: Lightweight database (via better-sqlite3)
+- **SQLite (content index only)**: `@nuxt/content` uses `better-sqlite3` internally for its content index (`.data/content/contents.sqlite`) — app data lives in PostgreSQL, not SQLite
 
 ### Development & Testing
 
@@ -45,6 +47,7 @@ Dutch for Developers is a comprehensive educational platform that combines gamif
 
 - Node.js 24+
 - npm, pnpm, or yarn
+- Docker (for the local PostgreSQL instance)
 
 ### Installation
 
@@ -64,15 +67,19 @@ npm install
 3. Set up environment variables (create a `.env` file):
 
 ```bash
-# Add your authentication and database configuration
+# PostgreSQL connection (matches docker-compose.yml defaults)
+DATABASE_URL="postgresql://postgres:password@localhost:5432/dutchfordevelopers_dev?schema=public"
+# Add your authentication provider configuration (see .env for the full list)
 ```
 
-4. Set up the database:
+4. Start PostgreSQL and set up the database:
 
 ```bash
-npm run prisma
+docker compose up -d
+npm run prisma:generate
 npx prisma migrate dev
 npm run seed:games
+npm run seed:courses
 ```
 
 ### Development Server
@@ -110,6 +117,15 @@ Run tests in watch mode:
 ```bash
 npm run test:watch
 ```
+
+> **Troubleshooting:** if `npm run test` fails with
+> `was compiled against a different Node.js version (NODE_MODULE_VERSION ...)`
+> for `better_sqlite3.node`, the `@nuxt/content` native module was built for a
+> different Node version. Rebuild it with:
+>
+> ```bash
+> npm rebuild better-sqlite3
+> ```
 
 ## 📁 Project Structure
 

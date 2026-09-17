@@ -1,10 +1,22 @@
 import prisma from "~~/server/prisma";
+import { getServerSession } from "#auth";
 
 export default defineEventHandler(async (event) => {
   try {
     const url = getQuery(event);
-    const userId = url.userId as string | undefined;
     const gameRoute = url.gameRoute as string | undefined;
+    // Prefer the explicit query param (client-side), but fall back to the
+    // server session so SSR requests with forwarded cookies still resolve
+    // the current user without leaking other users' scores.
+    let userId = url.userId as string | undefined;
+    if (!userId) {
+      try {
+        const session = await getServerSession(event);
+        userId = (session as any)?.user?.id;
+      } catch {
+        userId = undefined;
+      }
+    }
 
     if (userId && gameRoute) {
       // find game id by route
@@ -21,10 +33,9 @@ export default defineEventHandler(async (event) => {
       return { success: true, data: scores };
     }
 
-    const scores = await prisma.score.findMany();
-    return { success: true, data: scores };
+    // Anonymous users get no scores (public games list still renders SSR).
+    return { success: true, data: [] };
   } catch (error: any) {
-    debugger;
     return createError({ statusCode: 500, statusMessage: error.message });
   }
 });

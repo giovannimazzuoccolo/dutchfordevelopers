@@ -11,7 +11,7 @@
                 <UILessonInfo />
             </article>
             <SharedContainer>
-                <div class="my-4" v-if="!isLogged && courseReadResult">
+                <div class="my-4" v-if="isLogged && !justMarked">
                     <UIButton @click="markCourse"
                         >Mark this lesson as read</UIButton
                     >
@@ -56,9 +56,8 @@ const route = useRoute();
 const useCourses = useCoursesStore();
 const { markCourseAsRead, getCourse } = useCourses;
 
-const { request: courseReadResult } = storeToRefs(useCourses);
-
-const { userInfo } = useUsers();
+const usersStore = useUsers();
+const { userInfo } = storeToRefs(usersStore);
 
 const lesson = route.params.lesson as string;
 
@@ -66,14 +65,18 @@ const { data, pending } = await useAsyncData(route.path, () =>
     queryCollection('learn').where('slug', '=', lesson).first()
 );
 
-const isLogged = computed(() => !!userInfo);
+const isLogged = computed(() => !!userInfo.value);
+const justMarked = ref(false);
 
 async function markCourse() {
-    await markCourseAsRead(route.params.lesson as string);
+    // Send the canonical course route (/learn/<slug>); the API looks courses
+    // up by route, so the bare slug alone would 404.
+    await markCourseAsRead(route.path);
+    justMarked.value = true;
 }
 
 onMounted(async () => {
-    if (userInfo) {
+    if (userInfo.value) {
         await getCourse(route.params.lesson as string);
     }
 });
