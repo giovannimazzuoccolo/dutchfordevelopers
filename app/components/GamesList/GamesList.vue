@@ -40,14 +40,14 @@ const userId = computed(() => (session.value as any)?.user?.id as string | undef
 const requestFetch = useRequestFetch();
 
 // SSR-friendly initial fetch: runs on the server via useAsyncData so the
-// games grid is present in view-source. getGamesWithScore serves the public
-// games list to anonymous users and merges per-user scores when a session
-// is available (via forwarded cookies on the server). The cache key includes
-// the user id so logging in/out refetches instead of reusing another user's
-// (or anonymous) payload, and hydration reuses the payload without a
-// duplicate request.
+// games grid is present in view-source. Single round trip to
+// /api/games/with-scores, which merges per-user scores server-side when a
+// session is available (via forwarded cookies on the server). The cache key
+// includes the user id so logging in/out refetches instead of reusing
+// another user's (or anonymous) payload, and hydration reuses the payload
+// without a duplicate request.
 await useAsyncData(
   () => `games-list-${userId.value ?? "anon"}`,
-  () => useGames.getGamesWithScore(requestFetch, userId.value),
+  () => useGames.getGamesWithScore(requestFetch),
 )
 </script>
