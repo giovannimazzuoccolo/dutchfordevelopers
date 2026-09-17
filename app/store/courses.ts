@@ -102,6 +102,31 @@ export const useCoursesStore = defineStore("courses", {
         toastStore.showToast("Error marking lesson as read");
       }
     },
+
+    async unmarkCourseAsRead(courseIdOrRoute: string) {
+      this.request = REQUEST_STATUS.LOADING;
+      const toastStore = useToastStore();
+      try {
+        await $fetch("/api/courses/read", {
+          method: "DELETE",
+          body: { route: courseIdOrRoute },
+        });
+
+        // reflect change locally so UI updates immediately
+        const idx = this.courses.findIndex(
+          (c) => c.route === courseIdOrRoute || c.id === courseIdOrRoute,
+        );
+        if (idx !== -1 && this.courses[idx]) {
+          this.courses[idx].isRead = false;
+        }
+        this.request = REQUEST_STATUS.SUCCESS;
+        toastStore.showToast("Removed from read lessons");
+      } catch (error: any) {
+        this.request = REQUEST_STATUS.ERROR;
+        this.error = error.message;
+        toastStore.showToast("Error removing lesson from read lessons");
+      }
+    },
     async getCourse(courseName: string) {
       // ask the server for a course with that title; the endpoint supports
       // filtering by title or route via query parameters
