@@ -2,7 +2,7 @@
   <SharedContainer>
     <UITitle orange="Passport" blue="Control" />
     <div class="relative">
-      <GamesSuccess v-if="success">
+      <GamesSuccess v-if="success" :new-score="score" score-type="verbs" game="passport" description="Play passport control, put the verbs in the right queue!">
         <p class="text-white">
           You guessed {{ score }} verbs! Your best score was
           {{ pastScore }} verbs

@@ -2,7 +2,7 @@
   <SharedContainer>
     <UITitle orange="De or" blue="(B)het" />
     <div class="relative">
-      <GamesSuccess v-if="success">
+      <GamesSuccess v-if="success" :new-score="score" score-type="words" game="deofhet" description="Play &quot;De or (b)het&quot;, guess if the word is a de or an het word!">
         <p class="text-white">
           You guessed {{ score }} words! Your best score is
           {{ pastScore }} words

@@ -59,42 +59,28 @@ export const useGamesStore = defineStore("games", {
         return [];
       }
     },
-    async getGamesWithScore(fetcher?: typeof $fetch, userId?: string) {
+    async getGamesWithScore(fetcher?: typeof $fetch) {
       this.request = REQUEST_STATUS.LOADING;
       // Prefer an injected fetch (captured via useRequestFetch at the
       // component level where Nuxt context is guaranteed) so cookies are
-      // forwarded during SSR. No early-return guard here: the data is
+      // forwarded during SSR. Single round trip: the endpoint merges
+      // per-user scores server-side via the session, serving the plain
+      // list to anonymous callers. No early-return guard here: the data is
       // user-scoped (scores) and useAsyncData's per-user cache key handles
-      // de-duplication instead. When userId is unknown (e.g. SSR before the
-      // client auth state resolves), the scores endpoint falls back to
-      // getServerSession via the forwarded cookies.
+      // de-duplication instead.
       const requestFetch = fetcher ?? this.getRequestFetch();
 
       try {
-        const res = (await requestFetch("/api/games")) as any;
+        const res = (await requestFetch("/api/games/with-scores")) as any;
 
-        const games =
-          res && res.success && Array.isArray(res.data)
-            ? res.data
-            : Array.isArray(res)
-              ? res
-              : [];
-
-        const scoresRes = (await requestFetch("/api/scores", {
-          params: userId ? { userId } : {},
-        }).catch(() => ({ success: true, data: [] }))) as any;
-
-        const scores =
-          scoresRes && scoresRes.success && Array.isArray(scoresRes.data)
-            ? scoresRes.data
-            : Array.isArray(scoresRes)
-              ? scoresRes
-              : [];
-
-        this.games = games.map((d: any) => ({
-          ...d,
-          score: scores.find((s: any) => s.gameId === d.id)?.score,
-        }));
+        if (res && res.success && Array.isArray(res.data)) {
+          this.games = res.data as Game[];
+        } else if (Array.isArray(res)) {
+          // fallback if API returns raw array
+          this.games = res as Game[];
+        } else {
+          this.games = [];
+        }
 
         this.request = REQUEST_STATUS.SUCCESS;
         return this.games;

@@ -5,9 +5,14 @@
         <h2 class="text-3xl md:text-5xl text-bold text-main-orange uppercase text-center">
             🎉 Gefeliciteerd 🎉
         </h2>
-        <p class="text-white">
+        <p v-if="isLogged()" class="text-white">
                     You guessed {{ newScore }} {{scoreType}}! Your best score is
                     {{ pastScore }} {{scoreType}}
+                </p>
+                <p v-else class="text-white text-center px-4">
+                    <span v-if="description">{{ description }}<br /></span>
+                    <NuxtLink to="/login" class="underline text-main-orange">Log in</NuxtLink>
+                    to save your best score!
                 </p>
                 <div class="flex gap-4">
                     <p v-if="saved" class="text-white py-2 px-4">Saved!</p>
@@ -46,6 +51,11 @@ const props = defineProps({
     scoreType: {
         type: String,
         required: true
+    },
+    description: {
+        type: String,
+        required: false,
+        default: ""
     }
 })
 
